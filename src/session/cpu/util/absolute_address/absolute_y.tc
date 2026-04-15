@@ -13,7 +13,7 @@ PARAM addr: var;
 #!expand macro/util/mem_read_16.tcm
 
 # Add Y to a
-#!expand macro/util/wrapping_add_with_y.tcm
+#!expand macro/util/wrapping_add_with_y_16.tcm
 
 # Calculate page_cross of addr and a
 #!expand macro/util/page_cross.tcm
