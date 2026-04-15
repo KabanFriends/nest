@@ -9,10 +9,10 @@ line value: num;
 
 #!expand macro/session_vars.tcm
 
-if (global VAR_S_PPU_SCRL_LATCH == TRUE) {
+if (global VAR_S_PPU_LATCH == FALSE) {
     global VAR_S_PPU_REG_SCRL_Y = line value;
-    global VAR_S_PPU_SCRL_LATCH = FALSE;
+    global VAR_S_PPU_LATCH = TRUE;
 } else {
     global VAR_S_PPU_REG_SCRL_X = line value;
-    global VAR_S_PPU_SCRL_LATCH = TRUE;
+    global VAR_S_PPU_LATCH = FALSE;
 }

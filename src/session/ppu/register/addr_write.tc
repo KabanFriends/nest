@@ -9,11 +9,12 @@ line value: num;
 
 #!expand macro/session_vars.tcm
 
-if (global VAR_S_PPU_ADDR_LATCH == TRUE) {
-    global VAR_S_PPU_REG_ADDR = line value << 8;
-    global VAR_S_PPU_ADDR_LATCH = FALSE;
+if (global VAR_S_PPU_LATCH == FALSE) {
+    line value = line value & 0x3F;
+    global VAR_S_PPU_ADDR_TEMP = line value << 8;
+    global VAR_S_PPU_LATCH = TRUE;
 } else {
-    global VAR_S_PPU_REG_ADDR = global VAR_S_PPU_REG_ADDR | line value;
-    global VAR_S_PPU_ADDR_LATCH = TRUE;
+    global VAR_S_PPU_ADDR_TEMP = global VAR_S_PPU_ADDR_TEMP | line value;
+    global VAR_S_PPU_REG_ADDR = global VAR_S_PPU_ADDR_TEMP & 0x3FFF;
+    global VAR_S_PPU_LATCH = FALSE;
 }
-global VAR_S_PPU_REG_ADDR = global VAR_S_PPU_REG_ADDR & 0x3FFF;

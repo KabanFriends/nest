@@ -22,8 +22,8 @@ if (line address <= C_BUS_MEM_PPU_END) {
     if (line ppuAddress == 0x2002) {
         line ret = global VAR_S_PPU_REG_STATUS;
         global VAR_S_PPU_REG_STATUS = global VAR_S_PPU_REG_STATUS & ~E_PPU_STATUS_FLAG_VBLANK_STARTED;
-        global VAR_S_PPU_ADDR_LATCH = TRUE;
-        global VAR_S_PPU_SCRL_LATCH = TRUE;
+        global VAR_S_PPU_ADDR_LATCH = FALSE;
+        global VAR_S_PPU_SCRL_LATCH = FALSE;
         return line ret;
     }
     
@@ -52,5 +52,5 @@ if (line address >= C_BUS_MEM_PRG_START) {
     }
 }
 
-call s_log_error(line _id, s"Memory read from unsupported address: " + call u_num_to_radix(line address, 4));
+call s_log_error(line _id, s"Memory read from unsupported address: " + call u_num_to_radix(line address, 4) + " (PC=" + call u_num_to_radix(global VAR_S_CPU_PC, 4) + ")");
 return 0;
