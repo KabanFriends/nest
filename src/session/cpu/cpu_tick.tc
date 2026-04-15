@@ -41,7 +41,7 @@ if (global VAR_S_CPU_ERROR_STATE != E_CPU_ERROR_STATE_NONE) {
 
 # If the instruction didn't change the program counter, increment it by the instruction length
 if (global VAR_S_CPU_PC_STATE == global VAR_S_CPU_REG_PC) {
-    global VAR_S_CPU_REG_PC += global g_opcode_lengths[line index];
+    global VAR_S_CPU_REG_PC += global g_opcode_lengths[line index]: num;
 }
 
-global VAR_S_MANAGER_BUS_TICKS_LEFT += global g_opcode_cycles[line index];
+global VAR_S_MANAGER_BUS_TICKS_LEFT += global g_opcode_cycles[line index]: num;
