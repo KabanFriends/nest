@@ -62,6 +62,17 @@ if (global VAR_S_MANAGER_STATE == E_MANAGER_STATE_CPU_TICK) {
             call s_log_debug_high(line _id, s"Executed: <white>%var(funcName) | %var(code)</white>");
         }
     }
+    # test
+    if (global VAR_S_CPU_REG_PC == 0x94F7) {
+        if (global VAR_S_MANAGER_CPU_SUSPEND == 0) {
+            global VAR_S_DEBUG_PAUSE_AT = global VAR_S_MANAGER_STATE;
+            global VAR_S_MANAGER_STATE = E_MANAGER_STATE_IDLE;
+            call s_log_debug_high(line _id, s"CPU stepped - <white><click:run_command:@inspect cpu>Click to open inspector</click></white>");
+            line funcName: str = global g_opcode_func_names[global VAR_S_CPU_CODE + 1];
+            line code = call u_num_to_radix(global VAR_S_CPU_CODE);
+            call s_log_debug_high(line _id, s"Executed: <white>%var(funcName) | %var(code)</white>");
+        }
+    }
     return;
 }
 

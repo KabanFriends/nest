@@ -26,6 +26,7 @@ jobs:
       - name: Create dummy ROM macro files
         run: |
           touch ./src/macro/rom/mario.tcm
+          touch ./src/macro/rom/pacman.tcm
       - name: Compile project
         run: |
           chmod +x ./compile.sh
