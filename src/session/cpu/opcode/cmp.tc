@@ -1,0 +1,22 @@
+#!import macro/enum/cpu.tcm
+#!import macro/session_vars.tcm
+
+FUNCTION s_cpu_op_cmp;
+PARAM _id: var;
+PARAM addr_mode: var;
+
+#!expand macro/session_vars.tcm
+
+#!expand macro/cpu/get_operand_address.tcm
+
+line a = global VAR_S_CPU_REG_A;
+line b = call s_bus_mem_read(line _id, line addr);
+
+if (line b <= line a) {
+    global VAR_S_CPU_REG_P = global VAR_S_CPU_REG_P | E_CPU_FLAG_CARRY;
+} else {
+    global VAR_S_CPU_REG_P = global VAR_S_CPU_REG_P & ~E_CPU_FLAG_CARRY;
+}
+
+#!expand macro/util/wrapping_sub.tcm
+#!expand macro/cpu/flag_zero_negative.tcm

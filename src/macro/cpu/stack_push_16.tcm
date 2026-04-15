@@ -1,0 +1,16 @@
+# Inline Function: stack_push_16
+# in = a: 16-bit value to push onto the stack
+
+#!import macro/const.tcm
+#!import macro/session_vars.tcm
+
+line b = line a >> 8;
+line a = line a & 0xFF;
+
+call s_bus_mem_write(line _id, C_CPU_STACK + global VAR_S_CPU_REG_SP, line a);
+global VAR_S_CPU_REG_SP -= 1;
+global VAR_S_CPU_REG_SP = global VAR_S_CPU_REG_SP & 0xFF;
+
+call s_bus_mem_write(line _id, C_CPU_STACK + global VAR_S_CPU_REG_SP, line b);
+global VAR_S_CPU_REG_SP -= 1;
+global VAR_S_CPU_REG_SP = global VAR_S_CPU_REG_SP & 0xFF;

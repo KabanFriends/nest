@@ -1,0 +1,20 @@
+#!import macro/const.tcm
+
+FUNCTION g_init;
+
+#!expand macro/global_vars.tcm
+
+call g_opcode_registry;
+
+global g_debug_enabled = TRUE;
+
+global g_radix_symbols = [
+    "0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
+    "A", "B", "C", "D", "E", "F"
+];
+
+global g_last_session_id = 0;
+global g_active_sessions = [];
+global g_ticks = 0;
+
+start g_loop_process;

@@ -1,0 +1,32 @@
+name: Build
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 20
+      - name: Download Terracotta compiler
+        run: |
+          curl -L "https://github.com/Owlfroggy/terracotta/releases/download/v0.4.0/terracotta-linux-x64.gz" -o terracotta-linux-x64.gz
+          gunzip -f terracotta-linux-x64.gz
+          chmod +x terracotta-linux-x64
+          mkdir -p "$GITHUB_WORKSPACE/bin"
+          mv terracotta-linux-x64 "$GITHUB_WORKSPACE/bin/terracotta-linux-x64"
+          echo "$GITHUB_WORKSPACE/bin" >> "$GITHUB_PATH"
+      - name: Create dummy ROM macro files
+        run: |
+          touch ./src/macro/rom/mario.tcm
+      - name: Compile project
+        run: |
+          chmod +x ./compile.sh
+          ./compile.sh

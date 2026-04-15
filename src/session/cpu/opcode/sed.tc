@@ -1,0 +1,10 @@
+#!import macro/enum/cpu.tcm
+#!import macro/session_vars.tcm
+
+FUNCTION s_cpu_op_sed;
+PARAM _id: var;
+PARAM addr_mode: var;
+
+#!expand macro/session_vars.tcm
+
+global VAR_S_CPU_REG_P = global VAR_S_CPU_REG_P | E_CPU_FLAG_DECIMAL_MODE;

@@ -1,0 +1,3 @@
+#!import macro/session_vars.tcm
+
+select PlayersByName(global VAR_S_META_ATTACHED);

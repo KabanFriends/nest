@@ -1,0 +1,6 @@
+PROCESS g_loop_process;
+
+repeat {
+    call g_loop;
+    wait(1);
+}

@@ -1,0 +1,30 @@
+# Inline Function: mirror_vram_address
+# in = addr: address to mirror
+# out = addr_out: mirrored address
+
+#!import macro/enum/ppu.tcm
+#!import macro/const.tcm
+#!import macro/session_vars.tcm
+
+line addr_out = line addr & 0b00101111_11111111;
+line addr_out -= C_PPU_MEM_VRAM_START;
+
+line nametable = num:Round(line addr_out / 0x400){"Round Mode" = "Floor"};
+
+if (global VAR_S_PPU_MIRRORING == E_PPU_MIRRORING_VERTICAL) {
+    if (line nametable >= 2) {
+        line addr_out -= 0x800;
+    }
+} else {
+    if (global VAR_S_PPU_MIRRORING == E_PPU_MIRRORING_HORIZONTAL) {
+        if (line nametable == 1) {
+            line addr_out -= 0x400;
+        }
+        if (line nametable == 2) {
+            line addr_out -= 0x400;
+        }
+        if (line nametable == 3) {
+            line addr_out -= 0x800;
+        }
+    }
+}

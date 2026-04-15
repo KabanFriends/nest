@@ -1,0 +1,9 @@
+# Inline Function: stack_push
+# in = a: byte to push onto the stack
+
+#!import macro/const.tcm
+#!import macro/session_vars.tcm
+
+call s_bus_mem_write(line _id, C_CPU_STACK + global VAR_S_CPU_REG_SP, line a);
+global VAR_S_CPU_REG_SP -= 1;
+global VAR_S_CPU_REG_SP = global VAR_S_CPU_REG_SP & 0xFF;

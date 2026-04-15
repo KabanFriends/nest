@@ -1,0 +1,11 @@
+FUNCTION g_make_session;
+RETURNS str;
+
+#!expand macro/global_vars.tcm
+
+global g_last_session_id += 1;
+
+line session_id = "s" + global g_last_session_id;
+list:Append(global g_active_sessions, line session_id);
+
+return line session_id;

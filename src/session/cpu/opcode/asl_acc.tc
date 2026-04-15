@@ -1,0 +1,19 @@
+#!import macro/const.tcm
+#!import macro/enum/cpu.tcm
+#!import macro/session_vars.tcm
+
+FUNCTION s_cpu_op_asl_acc;
+PARAM _id: var;
+PARAM addr_mode: var;
+
+#!expand macro/session_vars.tcm
+
+line carry = global VAR_S_CPU_REG_A & 0b10000000;
+if (line carry != 0) {
+    global VAR_S_CPU_REG_P = global VAR_S_CPU_REG_P | E_CPU_FLAG_CARRY;
+} else {
+    global VAR_S_CPU_REG_P = global VAR_S_CPU_REG_P & ~E_CPU_FLAG_CARRY;
+}
+
+global VAR_S_CPU_REG_A = global VAR_S_CPU_REG_A << 1;
+#!expand macro/cpu/flag_zero_negative_with_a.tcm

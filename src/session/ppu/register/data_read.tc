@@ -1,0 +1,35 @@
+#!import macro/enum/ppu.tcm
+#!import macro/const.tcm
+#!import macro/session_vars.tcm
+
+FUNCTION s_ppu_data_read;
+PARAM _id: var;
+RETURNS num;
+
+#!expand macro/session_vars.tcm
+
+#!define    ADDR    global VAR_S_PPU_REG_ADDR
+
+# increment addr register address
+if (ADDR & E_PPU_CTRL_FLAG_VRAM_ADDR_INCREMENT > 0) {
+    ADDR += 32;
+} else {
+    ADDR += 1;
+}
+ADDR = ADDR & 0x3FFF;
+
+if (ADDR <= C_PPU_MEM_CHR_END) {
+    return global VAR_S_PPU_CHR[ADDR + 1];
+}
+if (ADDR <= C_PPU_MEM_VRAM_END) {
+    line addr = ADDR;
+#!expand macro/ppu/mirror_vram_address.tcm
+    return global VAR_S_PPU_VRAM[line addr_out + 1];
+}
+if (ADDR <= C_PPU_MEM_PALETTE_END) {
+    line index = (ADDR & 0x1F) + 1;
+    return global VAR_S_PPU_PALETTE_TABLE[line index];
+}
+
+call s_log_error(line _id, s"PPU data read from unsupported address: " + call u_num_to_radix(ADDR, 4));
+return 0;

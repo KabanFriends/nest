@@ -1,0 +1,35 @@
+#!import macro/enum/cpu.tcm
+#!import macro/session_vars.tcm
+
+FUNCTION s_cpu_op_jmp;
+PARAM _id: var;
+PARAM addr_mode: var;
+
+#!expand macro/session_vars.tcm
+
+line lo = call s_bus_mem_read(line _id, global VAR_S_CPU_REG_PC);
+global VAR_S_CPU_REG_PC += 1;
+global VAR_S_CPU_REG_PC = call s_bus_mem_read(line _id, global VAR_S_CPU_REG_PC);
+global VAR_S_CPU_REG_PC = global VAR_S_CPU_REG_PC << 8;
+global VAR_S_CPU_REG_PC = global VAR_S_CPU_REG_PC | line lo;
+
+# VAR_S_CPU_REG_PC = the address to read the final jump target from.
+
+# 6502 bug mode with with page boundary:
+# if address $3000 contains $40, $30FF contains $80, and $3100 contains $50,
+# the result of JMP ($30FF) will be a transfer of control to $4080 rather than $5080 as you intended
+# i.e. the 6502 took the low byte of the address from $30FF and the high byte from $3000
+
+if (global VAR_S_CPU_REG_PC & 0x00FF == 0x00FF) {
+    line lo = call s_bus_mem_read(line _id, global VAR_S_CPU_REG_PC);
+    global VAR_S_CPU_REG_PC = global VAR_S_CPU_REG_PC & 0xFF00;
+    global VAR_S_CPU_REG_PC = call s_bus_mem_read(line _id, global VAR_S_CPU_REG_PC);
+    global VAR_S_CPU_REG_PC = global VAR_S_CPU_REG_PC << 8;
+    global VAR_S_CPU_REG_PC = global VAR_S_CPU_REG_PC | line lo;
+} else {
+    line lo = call s_bus_mem_read(line _id, global VAR_S_CPU_REG_PC);
+    global VAR_S_CPU_REG_PC += 1;
+    global VAR_S_CPU_REG_PC = call s_bus_mem_read(line _id, global VAR_S_CPU_REG_PC);
+    global VAR_S_CPU_REG_PC = global VAR_S_CPU_REG_PC << 8;
+    global VAR_S_CPU_REG_PC = global VAR_S_CPU_REG_PC | line lo;
+}

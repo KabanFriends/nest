@@ -1,0 +1,19 @@
+#!import macro/const.tcm
+#!import macro/session_vars.tcm
+
+FUNCTION s_cpu_u_absaddr_5; # Absolute X
+PARAM _id: var;
+PARAM a: var; # (addr_out)
+PARAM page_cross: var; # (page_cross_out)
+PARAM addr: var;
+
+#!expand macro/session_vars.tcm
+
+# Read 16 mem bytes into a
+#!expand macro/util/mem_read_16.tcm
+
+# Add X to a
+#!expand macro/util/wrapping_add_with_x.tcm
+
+# Calculate page_cross of addr and a
+#!expand macro/util/page_cross.tcm

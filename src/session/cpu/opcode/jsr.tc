@@ -1,0 +1,14 @@
+#!import macro/enum/cpu.tcm
+#!import macro/session_vars.tcm
+
+FUNCTION s_cpu_op_jsr;
+PARAM _id: var;
+PARAM addr_mode: var;
+
+#!expand macro/session_vars.tcm
+
+line a = global VAR_S_CPU_REG_SP + 1;
+
+#!expand macro/cpu/stack_push_16.tcm
+
+#!expand macro/util/mem_read_16_jump.tcm

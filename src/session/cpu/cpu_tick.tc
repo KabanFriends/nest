@@ -1,0 +1,51 @@
+#!import macro/enum/cpu.tcm
+#!import macro/session_vars.tcm
+
+FUNCTION s_cpu_tick;
+PARAM _id: var;
+
+#!expand macro/global_vars.tcm
+#!expand macro/session_vars.tcm
+
+# Read the next instruction and increment the program counter
+# If CPU is suspended, continue executing the current instruction
+if (global VAR_S_MANAGER_CPU_SUSPEND == 0) {
+    global VAR_S_CPU_CODE = call s_bus_mem_read(line _id, global VAR_S_CPU_REG_PC);
+    global VAR_S_CPU_REG_PC += 1;
+    global VAR_S_CPU_PC_STATE = global VAR_S_CPU_REG_PC;
+}
+
+line index = global VAR_S_CPU_CODE + 1;
+line funcName: str = global g_opcode_func_names[line index];
+line length: num = global g_opcode_lengths[line index];
+line cycles: num = global g_opcode_cycles[line index];
+line addrMode: num = global g_opcode_addr_modes[line index];
+
+call ("%var(funcName)")(line _id, line addrMode);
+
+# CPU entered the suspended state during the instruction. Skip to the bus tick
+if (global VAR_S_MANAGER_CPU_SUSPEND > 0) {
+    return;
+}
+
+# Check for CPU error state
+if (global VAR_S_CPU_ERROR_STATE != E_CPU_ERROR_STATE_NONE) {
+    line message = s"Error state " + global VAR_S_CPU_ERROR_STATE;
+
+    if (global VAR_S_CPU_ERROR_STATE == E_CPU_ERROR_STATE_INVALID_OPCODE) {
+        line message = s"Invalid opcode: " + call u_num_to_radix(global VAR_S_CPU_CODE);
+    }
+    if (global VAR_S_CPU_ERROR_STATE == E_CPU_ERROR_STATE_BREAKPOINT) {
+        line message = s"Breakpoint hit at PC: " + call u_num_to_radix(global VAR_S_CPU_REG_PC - 1, 4);
+    }
+    
+    call s_log_error(line _id, s"[CPU] " + line message);
+    return;
+}
+
+# If the instruction didn't change the program counter, increment it by the instruction length
+if (global VAR_S_CPU_PC_STATE == global VAR_S_CPU_REG_PC) {
+    global VAR_S_CPU_REG_PC += line length - 1;
+}
+
+global VAR_S_MANAGER_BUS_TICKS_LEFT += line cycles;

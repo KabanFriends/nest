@@ -1,0 +1,14 @@
+#!import macro/enum/debug.tcm
+#!import macro/session_vars.tcm
+
+FUNCTION s_log_debug_med;
+PARAM _id: var;
+PARAM message: txt;
+
+#!expand macro/session_vars.tcm
+
+if (global VAR_S_DEBUG_LEVEL == E_DEBUG_LOG_LEVEL_NONE) {
+    return;
+}
+
+call s_log_debug(line _id, E_DEBUG_LOG_LEVEL_MED, line message);

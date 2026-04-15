@@ -1,0 +1,18 @@
+# Inline Function: page_cross
+# in = addr: first address
+# in = a: second address
+# out = page_cross: whether addr and a are on different pages
+
+#!import macro/const.tcm
+
+line addr: num;
+line a: num;
+
+line addr_page = line addr & 0xFF00;
+line a_page = line a & 0xFF00;
+
+if (line addr_page == line a_page) {
+    line page_cross = FALSE;
+} else {
+    line page_cross = TRUE;
+}

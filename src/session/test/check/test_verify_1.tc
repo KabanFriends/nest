@@ -1,0 +1,10 @@
+#!import macro/enum/test.tcm
+#!import macro/enum/manager.tcm
+#!import macro/session_vars.tcm
+
+FUNCTION s_test_verify_1;
+PARAM _id: var;
+RETURNS num;
+
+# No checks for sandbox test
+return E_TEST_RESULT_PASS;

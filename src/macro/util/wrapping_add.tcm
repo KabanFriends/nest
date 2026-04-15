@@ -1,0 +1,10 @@
+# Inline Function: wrapping_add
+# in = a: value to add to
+# in = b: value to add
+# out = a: result of a + b, wrapped to 8 bits
+
+line a: num;
+line b: num;
+
+line a += line b;
+line a = line a & 0xFF;

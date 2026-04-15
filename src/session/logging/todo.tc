@@ -1,0 +1,7 @@
+FUNCTION s_log_todo;
+PARAM _id: var;
+PARAM message: txt;
+
+#!expand macro/select_attached.tcm
+selected:SendMessage(s"<gold>TODO:</gold> ", line message){"Text Value Merging" = "No spaces"};
+select Nothing;

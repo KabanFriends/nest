@@ -1,0 +1,21 @@
+#!import macro/session_vars.tcm
+
+FUNCTION s_test_6;
+PARAM _id: var;
+
+#!expand macro/session_vars.tcm
+
+global VAR_S_TEST_NAME = "5 operations";
+
+line cpuData = [
+    0xA9, 0xC0, # LDA #$C0
+    0xAA,       # TAX
+    0xE8,       # INX
+    0x00        # BRK
+];
+line cpuAddress = 0x200;
+
+for (line value in line cpuData) {
+    global VAR_S_RAM[line cpuAddress + 1] = line value;
+    line cpuAddress += 1;
+}

@@ -1,0 +1,13 @@
+#!import macro/enum/cpu.tcm
+#!import macro/session_vars.tcm
+
+FUNCTION s_cpu_op_php;
+PARAM _id: var;
+PARAM addr_mode: var;
+
+#!expand macro/session_vars.tcm
+
+line a = global VAR_S_CPU_REG_P | E_CPU_FLAG_BREAK;
+line a = line a | E_CPU_FLAG_BREAK2;
+
+#!expand macro/cpu/stack_push.tcm

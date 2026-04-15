@@ -1,0 +1,56 @@
+#!import macro/enum/ppu.tcm
+#!import macro/const.tcm
+#!import macro/session_vars.tcm
+
+FUNCTION s_bus_mem_read;
+PARAM _id: var;
+PARAM address: num;
+RETURNS num;
+
+#!expand macro/session_vars.tcm
+
+if (line address <= C_BUS_MEM_RAM_END) {
+    # RAM address is mirrored every C_RAM_SIZE bytes
+    line index = (line address & C_RAM_WRAP_MASK) + 1;
+    return global VAR_S_RAM[line index];
+}
+
+if (line address <= C_BUS_MEM_PPU_END) {
+    # PPU register addresses are mirrored every 8 bytes
+    line ppuAddress = line address & C_PPU_WRAP_MASK;
+
+    if (line ppuAddress == 0x2002) {
+        line ret = global VAR_S_PPU_REG_STATUS;
+        global VAR_S_PPU_REG_STATUS = global VAR_S_PPU_REG_STATUS & ~E_PPU_STATUS_FLAG_VBLANK_STARTED;
+        global VAR_S_PPU_ADDR_LATCH = TRUE;
+        global VAR_S_PPU_SCRL_LATCH = TRUE;
+        return line ret;
+    }
+    
+    if (line ppuAddress == 0x2004) {
+        return global VAR_S_PPU_OAM_DATA[global VAR_S_PPU_OAM_ADDR + 1];
+    }
+
+    if (line ppuAddress == 0x2007) {
+        return call s_ppu_data_read(line _id);
+    }
+}
+
+if (line address >= C_BUS_MEM_PRG_START) {
+    line index = line address - C_BUS_MEM_PRG_START + 1;
+    if (line index <= 0x2000) {
+        return global VAR_S_PRG0[line index];
+    }
+    if (line index <= 0x4000) {
+        return global VAR_S_PRG1[line index - 0x2000];
+    }
+    if (line index <= 0x6000) {
+        return global VAR_S_PRG2[line index - 0x4000];
+    }
+    if (line index <= 0x8000) {
+        return global VAR_S_PRG3[line index - 0x6000];
+    }
+}
+
+call s_log_error(line _id, s"Memory read from unsupported address: " + call u_num_to_radix(line address, 4));
+return 0;

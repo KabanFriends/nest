@@ -1,0 +1,37 @@
+#!define    FALSE           0
+#!define    TRUE            1
+
+#!define    C_ATTACHED_NONE "null"
+
+#!define    C_CPU_STACK                 0x0100
+#!define    C_CPU_PC_RESET              0x8000
+#!define    C_CPU_SP_RESET              0xFD
+#!define    C_CPU_P_RESET               0b100100
+#!define    C_CPU_NMI_HANDLER_LOW       0xFFFA
+#!define    C_CPU_NMI_HANDLER_HIGH      0xFFFB
+
+#!define    C_RAM_SIZE      0x0800
+#!define    C_RAM_WRAP_MASK 0x07FF
+
+#!define    C_ROM_PRG_SIZE      0x8000
+#!define    C_ROM_PRG_PART_SIZE 0x2000
+
+#!define    C_PPU_CYCLES_PER_TICK   3
+#!define    C_PPU_CHR_SIZE          0x2000
+#!define    C_PPU_VRAM_SIZE         0x0800
+#!define    C_PPU_OAM_SIZE          0x100
+#!define    C_PPU_PALETTE_SIZE      0x20
+#!define    C_PPU_WRAP_MASK         0b00100000_00000111
+#!define    C_PPU_MEM_CHR_START     0x0000
+#!define    C_PPU_MEM_CHR_END       0x1FFF
+#!define    C_PPU_MEM_VRAM_START    0x2000
+#!define    C_PPU_MEM_VRAM_END      0x2FFF
+#!define    C_PPU_MEM_PALETTE_START 0x3F00
+#!define    C_PPU_MEM_PALETTE_END   0x3FFF
+
+#!define    C_BUS_MEM_RAM_START 0x0000
+#!define    C_BUS_MEM_RAM_END   0x1FFF
+#!define    C_BUS_MEM_PPU_START 0x2000
+#!define    C_BUS_MEM_PPU_END   0x3FFF
+#!define    C_BUS_MEM_PRG_START     0x8000
+#!define    C_BUS_MEM_PRG_END       0xFFFF

@@ -1,0 +1,17 @@
+#!import macro/const.tcm
+#!import macro/enum/cpu.tcm
+#!import macro/session_vars.tcm
+
+FUNCTION s_cpu_op_adc;
+PARAM _id: var;
+PARAM addr_mode: var;
+
+#!expand macro/session_vars.tcm
+
+#!expand macro/cpu/get_operand_address.tcm
+
+call s_cpu_u_add_to_reg_a(line _id, call s_bus_mem_read(line _id, line addr));
+
+if (line page_cross == TRUE) {
+    global VAR_S_MANAGER_BUS_TICKS_LEFT += 1;
+}

@@ -1,0 +1,15 @@
+#!import macro/session_vars.tcm
+
+FUNCTION s_test_init;
+PARAM _id: var;
+
+#!expand macro/session_vars.tcm
+
+call s_manager_init(line _id);
+call s_bus_init(line _id);
+call s_ram_init(line _id);
+call s_ppu_init(line _id);
+call s_cpu_init(line _id);
+
+global VAR_S_TEST_ID = 0;
+global VAR_S_TEST_NAME = "Unknown";

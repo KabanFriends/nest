@@ -1,0 +1,13 @@
+# Inline Function: flag_zero_negative
+# in = a: value to check
+
+#!import macro/enum/cpu.tcm
+#!import macro/session_vars.tcm
+
+if (line a == 0) {
+    global VAR_S_CPU_REG_P = (global VAR_S_CPU_REG_P | E_CPU_FLAG_ZERO);
+} else {
+    global VAR_S_CPU_REG_P = (global VAR_S_CPU_REG_P & ~E_CPU_FLAG_ZERO);
+}
+
+#!expand macro/cpu/flag_negative.tcm

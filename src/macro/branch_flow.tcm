@@ -1,0 +1,31 @@
+#!import macro/session_vars.tcm
+
+# flow 2
+
+if (global VAR_S_MANAGER_CPU_SUSPEND == 1) {
+    global VAR_S_MANAGER_CPU_SUSPEND = 2;
+    
+    global VAR_S_CPU_TEMP = call s_bus_mem_read(line _id, global VAR_S_CPU_REG_PC);
+
+    if (global VAR_S_CPU_TEMP >= 0b10000000) {
+        global VAR_S_CPU_TEMP -= 256; # convert to signed value
+    }
+
+    global VAR_S_CPU_REG_PC += 1;
+    global VAR_S_CPU_REG_PC = global VAR_S_CPU_REG_PC & 0xFFFF;
+
+    # save the jump address in temp var
+    global VAR_S_CPU_TEMP += global VAR_S_CPU_REG_PC;
+    global VAR_S_CPU_TEMP = global VAR_S_CPU_TEMP & 0xFFFF;
+
+    if (global VAR_S_CPU_REG_PC & 0xFF00 != global VAR_S_CPU_TEMP & 0xFF) {
+        global VAR_S_MANAGER_BUS_TICKS_LEFT += 1;
+        return; # let the bus tick
+    }
+}
+
+# flow 3
+if (global VAR_S_MANAGER_CPU_SUSPEND == 2) {
+    global VAR_S_MANAGER_CPU_SUSPEND = 0;
+    global VAR_S_CPU_REG_PC = global VAR_S_CPU_TEMP;
+}

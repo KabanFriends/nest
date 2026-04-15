@@ -1,0 +1,11 @@
+.env
+.terracotta/
+.build/
+
+src/macro/rom/*.tcm
+*.nes
+rom_chr.txt
+rom_prg.txt
+
+supervisord.log
+supervisord.pid

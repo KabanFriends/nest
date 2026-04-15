@@ -1,0 +1,17 @@
+#!import macro/enum/cpu.tcm
+#!import macro/session_vars.tcm
+
+FUNCTION s_cpu_op_dec;
+PARAM _id: var;
+PARAM addr_mode: var;
+
+#!expand macro/session_vars.tcm
+
+#!expand macro/cpu/get_operand_address.tcm
+
+line a = call s_bus_mem_read(line _id, line addr);
+
+#!expand macro/util/wrapping_sub_1.tcm
+
+call s_bus_mem_write(line _id, line addr, line a);
+#!expand macro/cpu/flag_zero_negative.tcm

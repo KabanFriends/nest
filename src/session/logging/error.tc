@@ -1,0 +1,7 @@
+FUNCTION s_log_error;
+PARAM _id: var;
+PARAM message: txt;
+
+#!expand macro/select_attached.tcm
+selected:SendMessage(s"<red>Error:</red> ", line message){"Text Value Merging" = "No spaces"};
+select Nothing;

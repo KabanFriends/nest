@@ -1,0 +1,101 @@
+#!define    VAR_S_DEBUG_LEVEL       ("%var(_id)_debug_level")
+#!define    VAR_S_DEBUG_STEP_MODE   ("%var(_id)_debug_step_mode")
+#!define    VAR_S_DEBUG_PAUSE_AT    ("%var(_id)_debug_pause_at")
+
+#!define    VAR_S_TEST_ID   ("%var(_id)_test_id")
+#!define    VAR_S_TEST_NAME ("%var(_id)_test_name")
+
+#!define    VAR_S_META_ATTACHED     ("%var(_id)_meta_attached")
+
+#!define    VAR_S_MANAGER_STATE             ("%var(_id)_mn_state")
+#!define    VAR_S_MANAGER_CPU_SUSPEND       ("%var(_id)_mn_cpu_suspend")
+#!define    VAR_S_MANAGER_CPU_TICKS_LEFT    ("%var(_id)_mn_cpu_ticks")
+#!define    VAR_S_MANAGER_BUS_TICKS_LEFT    ("%var(_id)_mn_bus_ticks")
+
+#!define    VAR_S_BUS_NMI   ("%var(_id)_bus_nmi")
+
+#!define    VAR_S_RAM   ("%var(_id)_ram")
+
+#!define    VAR_S_PRG0  ("%var(_id)_prg0")
+#!define    VAR_S_PRG1  ("%var(_id)_prg1")
+#!define    VAR_S_PRG2  ("%var(_id)_prg2")
+#!define    VAR_S_PRG3  ("%var(_id)_prg3")
+
+#!define    VAR_S_CPU_REG_A         ("%var(_id)_cpu_reg_a")
+#!define    VAR_S_CPU_REG_X         ("%var(_id)_cpu_reg_x")
+#!define    VAR_S_CPU_REG_Y         ("%var(_id)_cpu_reg_y")
+#!define    VAR_S_CPU_REG_PC        ("%var(_id)_cpu_reg_pc")
+#!define    VAR_S_CPU_REG_SP        ("%var(_id)_cpu_reg_sp")
+#!define    VAR_S_CPU_REG_P         ("%var(_id)_cpu_reg_p")
+#!define    VAR_S_CPU_TEMP          ("%var(_id)_cpu_temp")
+#!define    VAR_S_CPU_CODE          ("%var(_id)_cpu_code")
+#!define    VAR_S_CPU_PC_STATE      ("%var(_id)_cpu_pc_state")
+#!define    VAR_S_CPU_ERROR_STATE   ("%var(_id)_cpu_error_state")
+
+#!define    VAR_S_PPU_CYCLES        ("%var(_id)_ppu_cycles")
+#!define    VAR_S_PPU_SCANLINE      ("%var(_id)_ppu_scanline")
+#!define    VAR_S_PPU_CHR           ("%var(_id)_ppu_chr")
+#!define    VAR_S_PPU_VRAM          ("%var(_id)_ppu_vram")
+#!define    VAR_S_PPU_PALETTE_TABLE ("%var(_id)_ppu_pal")
+#!define    VAR_S_PPU_OAM_DATA      ("%var(_id)_ppu_oam")
+#!define    VAR_S_PPU_OAM_ADDR      ("%var(_id)_ppu_oam_addr")
+#!define    VAR_S_PPU_REG_ADDR      ("%var(_id)_ppu_reg_addr")
+#!define    VAR_S_PPU_REG_DATA      ("%var(_id)_ppu_reg_data")
+#!define    VAR_S_PPU_REG_CTRL      ("%var(_id)_ppu_reg_ctrl")
+#!define    VAR_S_PPU_REG_MASK      ("%var(_id)_ppu_reg_mask")
+#!define    VAR_S_PPU_REG_SCRL_X    ("%var(_id)_ppu_reg_scrl_x")
+#!define    VAR_S_PPU_REG_SCRL_Y    ("%var(_id)_ppu_reg_scrl_y")
+#!define    VAR_S_PPU_REG_STATUS    ("%var(_id)_ppu_reg_status")
+#!define    VAR_S_PPU_ADDR_LATCH    ("%var(_id)_ppu_addr_latch")
+#!define    VAR_S_PPU_SCRL_LATCH    ("%var(_id)_ppu_scrl_latch")
+#!define    VAR_S_PPU_MIRRORING     ("%var(_id)_ppu_mirroring")
+
+global VAR_S_DEBUG_LEVEL: num;
+global VAR_S_DEBUG_STEP_MODE: num;
+global VAR_S_DEBUG_PAUSE_AT: num;
+global VAR_S_TEST_ID: num;
+global VAR_S_TEST_NAME: str;
+
+global VAR_S_META_ATTACHED: list;
+
+global VAR_S_MANAGER_STATE: num;
+global VAR_S_MANAGER_CPU_SUSPEND: num;
+global VAR_S_MANAGER_CPU_TICKS_LEFT: num;
+global VAR_S_MANAGER_BUS_TICKS_LEFT: num;
+global VAR_S_BUS_NMI: num;
+
+global VAR_S_RAM: list;
+
+global VAR_S_PRG0: list;
+global VAR_S_PRG1: list;
+global VAR_S_PRG2: list;
+global VAR_S_PRG3: list;
+
+global VAR_S_CPU_REG_A: num;
+global VAR_S_CPU_REG_X: num;
+global VAR_S_CPU_REG_Y: num;
+global VAR_S_CPU_REG_PC: num;
+global VAR_S_CPU_REG_SP: num;
+global VAR_S_CPU_REG_P: num;
+global VAR_S_CPU_TEMP: num;
+global VAR_S_CPU_CODE: num;
+global VAR_S_CPU_PC_STATE: num;
+global VAR_S_CPU_ERROR_STATE: num;
+
+global VAR_S_PPU_CYCLES: num;
+global VAR_S_PPU_SCANLINE: num;
+global VAR_S_PPU_CHR: list;
+global VAR_S_PPU_VRAM: list;
+global VAR_S_PPU_PALETTE_TABLE: list;
+global VAR_S_PPU_OAM_DATA: list;
+global VAR_S_PPU_OAM_ADDR: num;
+global VAR_S_PPU_REG_ADDR: num;
+global VAR_S_PPU_REG_DATA: num;
+global VAR_S_PPU_REG_CTRL: num;
+global VAR_S_PPU_REG_MASK: num;
+global VAR_S_PPU_REG_SCRL_X: num;
+global VAR_S_PPU_REG_SCRL_Y: num;
+global VAR_S_PPU_REG_STATUS: num;
+global VAR_S_PPU_ADDR_LATCH: num;
+global VAR_S_PPU_SCRL_LATCH: num;
+global VAR_S_PPU_MIRRORING: num;

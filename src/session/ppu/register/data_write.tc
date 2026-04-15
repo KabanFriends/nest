@@ -1,0 +1,25 @@
+#!import macro/enum/ppu.tcm
+#!import macro/const.tcm
+#!import macro/session_vars.tcm
+
+FUNCTION s_ppu_data_write;
+PARAM _id: var;
+PARAM value: var;
+
+line value: num;
+
+#!expand macro/session_vars.tcm
+
+#!define    ADDR    global VAR_S_PPU_REG_ADDR
+
+if (var?IsInRange(ADDR, C_PPU_MEM_VRAM_START, C_PPU_MEM_VRAM_END)) {
+    line addr = ADDR;
+#!expand macro/ppu/mirror_vram_address.tcm
+    global VAR_S_PPU_VRAM[line addr_out + 1] = line value;
+}
+if (var?IsInRange(ADDR, C_PPU_MEM_PALETTE_START, C_PPU_MEM_PALETTE_END)) {
+    line index = (ADDR & 0x1F) + 1;
+    global VAR_S_PPU_PALETTE_TABLE[line index] = line value;
+}
+
+call s_log_error(line _id, s"PPU data write to unsupported address: " + call u_num_to_radix(ADDR, 4));

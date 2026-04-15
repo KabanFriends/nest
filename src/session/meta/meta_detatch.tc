@@ -1,0 +1,14 @@
+#!import macro/session_vars.tcm
+#!import macro/player_vars.tcm
+#!import macro/const.tcm
+
+FUNCTION s_meta_detatch;
+PARAM _id: var;
+PARAM _p: var;
+PARAM uuid: str;
+
+#!expand macro/session_vars.tcm
+#!expand macro/player_vars.tcm
+
+list:RemoveValue(global VAR_S_META_ATTACHED, line _p);
+global VAR_P_META_ATTACHED = C_ATTACHED_NONE;

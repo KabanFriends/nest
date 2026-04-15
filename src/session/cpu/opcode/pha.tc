@@ -1,0 +1,13 @@
+#!import macro/enum/cpu.tcm
+#!import macro/const.tcm
+#!import macro/session_vars.tcm
+
+FUNCTION s_cpu_op_pha;
+PARAM _id: var;
+PARAM addr_mode: var;
+
+#!expand macro/session_vars.tcm
+
+call s_bus_mem_write(line _id, C_CPU_STACK + global VAR_S_CPU_REG_SP, global VAR_S_CPU_REG_A);
+global VAR_S_CPU_REG_SP -= 1;
+global VAR_S_CPU_REG_SP = global VAR_S_CPU_REG_SP & 0xFF;

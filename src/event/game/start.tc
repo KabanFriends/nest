@@ -1,0 +1,3 @@
+GAME_EVENT  PlotStartup;
+
+call g_init;

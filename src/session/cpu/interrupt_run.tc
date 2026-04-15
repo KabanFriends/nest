@@ -1,0 +1,13 @@
+#!import macro/enum/cpu.tcm
+#!import macro/const.tcm
+#!import macro/session_vars.tcm
+
+FUNCTION s_cpu_interrupt_run;
+PARAM _id: var;
+
+#!expand macro/session_vars.tcm
+
+line lo = call s_bus_mem_read(line _id, C_CPU_NMI_HANDLER_LOW);
+global VAR_S_CPU_REG_PC = call s_bus_mem_read(line _id, C_CPU_NMI_HANDLER_HIGH);
+global VAR_S_CPU_REG_PC = global VAR_S_CPU_REG_PC << 8;
+global VAR_S_CPU_REG_PC = global VAR_S_CPU_REG_PC | line lo;

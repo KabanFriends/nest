@@ -1,0 +1,33 @@
+#!import macro/global_vars.tcm
+#!import macro/const.tcm
+
+#!define    TICK_THRESHOLD  50000
+
+FUNCTION g_loop;
+
+#!expand macro/global_vars.tcm
+
+line startMicro = game.MicrosecondsSinceStartup;
+line slen = list:Len(global g_active_sessions);
+
+repeat {
+    if (line slen > 0) {
+        line sid = global g_active_sessions[global g_ticks % line slen + 1];
+        call s_manager_tick(line sid);
+    } else {
+        # No sessions to process during this tick
+        break;
+    }
+
+    line mdiff = game.MicrosecondsSinceStartup - line startMicro;
+    global g_ticks += 1;
+
+    if (line mdiff > TICK_THRESHOLD) {
+        break;
+    }
+}
+
+if (global g_debug_enabled == TRUE) {
+    line tps = game.ServerTPS;
+    allPlayers:SetScoreboardObjectiveName(s"<red>TPS:</red> %var(tps)");
+}

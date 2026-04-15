@@ -1,0 +1,10 @@
+# Inline Function: mem_read_16
+# in = addr: address to read from
+# out = a: 16-bit value read from memory
+
+line addr: num;
+
+line lo = call s_bus_mem_read(line _id, line addr);
+line a = call s_bus_mem_read(line _id, line addr + 1);
+line a = line a << 8;
+line a = line a | line lo;

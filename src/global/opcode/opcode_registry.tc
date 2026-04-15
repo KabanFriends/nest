@@ -1,0 +1,332 @@
+#!import macro/enum/cpu.tcm
+
+FUNCTION g_opcode_registry;
+
+#!expand macro/global_vars.tcm
+
+# Initialize opcode registry
+global g_opcode_func_names = [];
+global g_opcode_lengths = [];
+global g_opcode_cycles = [];
+global g_opcode_addr_modes = [];
+
+repeat (0x100) {
+    list:Append(global g_opcode_func_names, "s_cpu_op_invalid");
+    list:Append(global g_opcode_lengths, 0);
+    list:Append(global g_opcode_cycles, 0);
+    list:Append(global g_opcode_addr_modes, E_CPU_ADDR_MODE_NONE);
+}
+
+# Register opcodes
+# 0. special
+call g_opcode_add(0x00, "s_cpu_op_brk", 1, 7, E_CPU_ADDR_MODE_NONE);
+call g_opcode_add(0xEA, "s_cpu_op_nop", 1, 2, E_CPU_ADDR_MODE_NONE);
+
+# 1. arithmetic
+call g_opcode_add(0x69, "s_cpu_op_adc", 2, 2, E_CPU_ADDR_MODE_IMMEDIATE);
+call g_opcode_add(0x65, "s_cpu_op_adc", 2, 3, E_CPU_ADDR_MODE_ZERO_PAGE);
+call g_opcode_add(0x75, "s_cpu_op_adc", 2, 4, E_CPU_ADDR_MODE_ZERO_PAGE_X);
+call g_opcode_add(0x6D, "s_cpu_op_adc", 3, 4, E_CPU_ADDR_MODE_ABSOLUTE);
+call g_opcode_add(0x7D, "s_cpu_op_adc", 3, 4, E_CPU_ADDR_MODE_ABSOLUTE_X);
+call g_opcode_add(0x79, "s_cpu_op_adc", 3, 4, E_CPU_ADDR_MODE_ABSOLUTE_Y);
+call g_opcode_add(0x61, "s_cpu_op_adc", 2, 6, E_CPU_ADDR_MODE_INDIRECT_X);
+call g_opcode_add(0x71, "s_cpu_op_adc", 2, 5, E_CPU_ADDR_MODE_INDIRECT_Y);
+
+call g_opcode_add(0xE9, "s_cpu_op_sbc", 2, 2, E_CPU_ADDR_MODE_IMMEDIATE);
+call g_opcode_add(0xE5, "s_cpu_op_sbc", 2, 3, E_CPU_ADDR_MODE_ZERO_PAGE);
+call g_opcode_add(0xF5, "s_cpu_op_sbc", 2, 4, E_CPU_ADDR_MODE_ZERO_PAGE_X);
+call g_opcode_add(0xED, "s_cpu_op_sbc", 3, 4, E_CPU_ADDR_MODE_ABSOLUTE);
+call g_opcode_add(0xFD, "s_cpu_op_sbc", 3, 4, E_CPU_ADDR_MODE_ABSOLUTE_X);
+call g_opcode_add(0xF9, "s_cpu_op_sbc", 3, 4, E_CPU_ADDR_MODE_ABSOLUTE_Y);
+call g_opcode_add(0xE1, "s_cpu_op_sbc", 2, 6, E_CPU_ADDR_MODE_INDIRECT_X);
+call g_opcode_add(0xF1, "s_cpu_op_sbc", 2, 5, E_CPU_ADDR_MODE_INDIRECT_Y);
+
+call g_opcode_add(0x29, "s_cpu_op_and", 2, 2, E_CPU_ADDR_MODE_IMMEDIATE);
+call g_opcode_add(0x25, "s_cpu_op_and", 2, 3, E_CPU_ADDR_MODE_ZERO_PAGE);
+call g_opcode_add(0x35, "s_cpu_op_and", 2, 4, E_CPU_ADDR_MODE_ZERO_PAGE_X);
+call g_opcode_add(0x2D, "s_cpu_op_and", 3, 4, E_CPU_ADDR_MODE_ABSOLUTE);
+call g_opcode_add(0x3D, "s_cpu_op_and", 3, 4, E_CPU_ADDR_MODE_ABSOLUTE_X);
+call g_opcode_add(0x39, "s_cpu_op_and", 3, 4, E_CPU_ADDR_MODE_ABSOLUTE_Y);
+call g_opcode_add(0x21, "s_cpu_op_and", 2, 6, E_CPU_ADDR_MODE_INDIRECT_X);
+call g_opcode_add(0x31, "s_cpu_op_and", 2, 5, E_CPU_ADDR_MODE_INDIRECT_Y);
+
+call g_opcode_add(0x49, "s_cpu_op_eor", 2, 2, E_CPU_ADDR_MODE_IMMEDIATE);
+call g_opcode_add(0x45, "s_cpu_op_eor", 2, 3, E_CPU_ADDR_MODE_ZERO_PAGE);
+call g_opcode_add(0x55, "s_cpu_op_eor", 2, 4, E_CPU_ADDR_MODE_ZERO_PAGE_X);
+call g_opcode_add(0x4D, "s_cpu_op_eor", 3, 4, E_CPU_ADDR_MODE_ABSOLUTE);
+call g_opcode_add(0x5D, "s_cpu_op_eor", 3, 4, E_CPU_ADDR_MODE_ABSOLUTE_X);
+call g_opcode_add(0x59, "s_cpu_op_eor", 3, 4, E_CPU_ADDR_MODE_ABSOLUTE_Y);
+call g_opcode_add(0x41, "s_cpu_op_eor", 2, 6, E_CPU_ADDR_MODE_INDIRECT_X);
+call g_opcode_add(0x51, "s_cpu_op_eor", 2, 5, E_CPU_ADDR_MODE_INDIRECT_Y);
+
+call g_opcode_add(0x09, "s_cpu_op_ora", 2, 2, E_CPU_ADDR_MODE_IMMEDIATE);
+call g_opcode_add(0x05, "s_cpu_op_ora", 2, 3, E_CPU_ADDR_MODE_ZERO_PAGE);
+call g_opcode_add(0x15, "s_cpu_op_ora", 2, 4, E_CPU_ADDR_MODE_ZERO_PAGE_X);
+call g_opcode_add(0x0D, "s_cpu_op_ora", 3, 4, E_CPU_ADDR_MODE_ABSOLUTE);
+call g_opcode_add(0x1D, "s_cpu_op_ora", 3, 4, E_CPU_ADDR_MODE_ABSOLUTE_X);
+call g_opcode_add(0x19, "s_cpu_op_ora", 3, 4, E_CPU_ADDR_MODE_ABSOLUTE_Y);
+call g_opcode_add(0x01, "s_cpu_op_ora", 2, 6, E_CPU_ADDR_MODE_INDIRECT_X);
+call g_opcode_add(0x11, "s_cpu_op_ora", 2, 5, E_CPU_ADDR_MODE_INDIRECT_Y);
+
+# 2. shifts
+call g_opcode_add(0x0A, "s_cpu_op_asl_acc", 1, 2, E_CPU_ADDR_MODE_NONE);
+call g_opcode_add(0x06, "s_cpu_op_asl", 2, 5, E_CPU_ADDR_MODE_ZERO_PAGE);
+call g_opcode_add(0x16, "s_cpu_op_asl", 2, 6, E_CPU_ADDR_MODE_ZERO_PAGE_X);
+call g_opcode_add(0x0E, "s_cpu_op_asl", 3, 6, E_CPU_ADDR_MODE_ABSOLUTE);
+call g_opcode_add(0x1E, "s_cpu_op_asl", 3, 7, E_CPU_ADDR_MODE_ABSOLUTE_X);
+
+call g_opcode_add(0x4A, "s_cpu_op_lsr_acc", 1, 2, E_CPU_ADDR_MODE_NONE);
+call g_opcode_add(0x46, "s_cpu_op_lsr", 2, 5, E_CPU_ADDR_MODE_ZERO_PAGE);
+call g_opcode_add(0x56, "s_cpu_op_lsr", 2, 6, E_CPU_ADDR_MODE_ZERO_PAGE_X);
+call g_opcode_add(0x4E, "s_cpu_op_lsr", 3, 6, E_CPU_ADDR_MODE_ABSOLUTE);
+call g_opcode_add(0x5E, "s_cpu_op_lsr", 3, 7, E_CPU_ADDR_MODE_ABSOLUTE_X);
+
+call g_opcode_add(0x2A, "s_cpu_op_rol_acc", 1, 2, E_CPU_ADDR_MODE_NONE);
+call g_opcode_add(0x26, "s_cpu_op_rol", 2, 5, E_CPU_ADDR_MODE_ZERO_PAGE);
+call g_opcode_add(0x36, "s_cpu_op_rol", 2, 6, E_CPU_ADDR_MODE_ZERO_PAGE_X);
+call g_opcode_add(0x2E, "s_cpu_op_rol", 3, 6, E_CPU_ADDR_MODE_ABSOLUTE);
+call g_opcode_add(0x3E, "s_cpu_op_rol", 3, 7, E_CPU_ADDR_MODE_ABSOLUTE_X);
+
+call g_opcode_add(0x6A, "s_cpu_op_ror_acc", 1, 2, E_CPU_ADDR_MODE_NONE);
+call g_opcode_add(0x66, "s_cpu_op_ror", 2, 5, E_CPU_ADDR_MODE_ZERO_PAGE);
+call g_opcode_add(0x76, "s_cpu_op_ror", 2, 6, E_CPU_ADDR_MODE_ZERO_PAGE_X);
+call g_opcode_add(0x6E, "s_cpu_op_ror", 3, 6, E_CPU_ADDR_MODE_ABSOLUTE);
+call g_opcode_add(0x7E, "s_cpu_op_ror", 3, 7, E_CPU_ADDR_MODE_ABSOLUTE_X);
+
+call g_opcode_add(0xE6, "s_cpu_op_inc", 2, 5, E_CPU_ADDR_MODE_ZERO_PAGE);
+call g_opcode_add(0xF6, "s_cpu_op_inc", 2, 6, E_CPU_ADDR_MODE_ZERO_PAGE_X);
+call g_opcode_add(0xEE, "s_cpu_op_inc", 3, 6, E_CPU_ADDR_MODE_ABSOLUTE);
+call g_opcode_add(0xFE, "s_cpu_op_inc", 3, 7, E_CPU_ADDR_MODE_ABSOLUTE_X);
+
+call g_opcode_add(0xE8, "s_cpu_op_inx", 1, 2, E_CPU_ADDR_MODE_NONE);
+call g_opcode_add(0xC8, "s_cpu_op_iny", 1, 2, E_CPU_ADDR_MODE_NONE);
+
+call g_opcode_add(0xC6, "s_cpu_op_dec", 2, 5, E_CPU_ADDR_MODE_ZERO_PAGE);
+call g_opcode_add(0xD6, "s_cpu_op_dec", 2, 6, E_CPU_ADDR_MODE_ZERO_PAGE_X);
+call g_opcode_add(0xCE, "s_cpu_op_dec", 3, 6, E_CPU_ADDR_MODE_ABSOLUTE);
+call g_opcode_add(0xDE, "s_cpu_op_dec", 3, 7, E_CPU_ADDR_MODE_ABSOLUTE_X);
+
+call g_opcode_add(0xCA, "s_cpu_op_dex", 1, 2, E_CPU_ADDR_MODE_NONE);
+call g_opcode_add(0x88, "s_cpu_op_dey", 1, 2, E_CPU_ADDR_MODE_NONE);
+
+call g_opcode_add(0xC9, "s_cpu_op_cmp", 2, 2, E_CPU_ADDR_MODE_IMMEDIATE);
+call g_opcode_add(0xC5, "s_cpu_op_cmp", 2, 3, E_CPU_ADDR_MODE_ZERO_PAGE);
+call g_opcode_add(0xD5, "s_cpu_op_cmp", 2, 4, E_CPU_ADDR_MODE_ZERO_PAGE_X);
+call g_opcode_add(0xCD, "s_cpu_op_cmp", 3, 4, E_CPU_ADDR_MODE_ABSOLUTE);
+call g_opcode_add(0xDD, "s_cpu_op_cmp", 3, 4, E_CPU_ADDR_MODE_ABSOLUTE_X);
+call g_opcode_add(0xD9, "s_cpu_op_cmp", 3, 4, E_CPU_ADDR_MODE_ABSOLUTE_Y);
+call g_opcode_add(0xC1, "s_cpu_op_cmp", 2, 6, E_CPU_ADDR_MODE_INDIRECT_X);
+call g_opcode_add(0xD1, "s_cpu_op_cmp", 2, 5, E_CPU_ADDR_MODE_INDIRECT_Y);
+
+call g_opcode_add(0xC0, "s_cpu_op_cpy", 2, 2, E_CPU_ADDR_MODE_IMMEDIATE);
+call g_opcode_add(0xC4, "s_cpu_op_cpy", 2, 3, E_CPU_ADDR_MODE_ZERO_PAGE);
+call g_opcode_add(0xCC, "s_cpu_op_cpy", 3, 4, E_CPU_ADDR_MODE_ABSOLUTE);
+
+call g_opcode_add(0xE0, "s_cpu_op_cpx", 2, 2, E_CPU_ADDR_MODE_IMMEDIATE);
+call g_opcode_add(0xE4, "s_cpu_op_cpx", 2, 3, E_CPU_ADDR_MODE_ZERO_PAGE);
+call g_opcode_add(0xEC, "s_cpu_op_cpx", 3, 4, E_CPU_ADDR_MODE_ABSOLUTE);
+
+# 3. branching
+call g_opcode_add(0x4C, "s_cpu_op_jmp_abs", 3, 3, E_CPU_ADDR_MODE_NONE);
+call g_opcode_add(0x6C, "s_cpu_op_jmp", 3, 5, E_CPU_ADDR_MODE_NONE);
+
+call g_opcode_add(0x20, "s_cpu_op_jsr", 3, 6, E_CPU_ADDR_MODE_NONE);
+call g_opcode_add(0x60, "s_cpu_op_rts", 1, 6, E_CPU_ADDR_MODE_NONE);
+
+call g_opcode_add(0x40, "s_cpu_op_rti", 1, 6, E_CPU_ADDR_MODE_NONE);
+
+call g_opcode_add(0xD0, "s_cpu_op_bne", 2, 2, E_CPU_ADDR_MODE_NONE);
+call g_opcode_add(0x70, "s_cpu_op_bvs", 2, 2, E_CPU_ADDR_MODE_NONE);
+call g_opcode_add(0x50, "s_cpu_op_bvc", 2, 2, E_CPU_ADDR_MODE_NONE);
+call g_opcode_add(0x30, "s_cpu_op_bmi", 2, 2, E_CPU_ADDR_MODE_NONE);
+call g_opcode_add(0xF0, "s_cpu_op_beq", 2, 2, E_CPU_ADDR_MODE_NONE);
+call g_opcode_add(0xB0, "s_cpu_op_bcs", 2, 2, E_CPU_ADDR_MODE_NONE);
+call g_opcode_add(0x90, "s_cpu_op_bcc", 2, 2, E_CPU_ADDR_MODE_NONE);
+call g_opcode_add(0x10, "s_cpu_op_bpl", 2, 2, E_CPU_ADDR_MODE_NONE);
+
+call g_opcode_add(0x24, "s_cpu_op_bit", 2, 3, E_CPU_ADDR_MODE_ZERO_PAGE);
+call g_opcode_add(0x2C, "s_cpu_op_bit", 3, 4, E_CPU_ADDR_MODE_ABSOLUTE);
+
+# 4. stores, loads
+call g_opcode_add(0xA9, "s_cpu_op_lda", 2, 2, E_CPU_ADDR_MODE_IMMEDIATE);
+call g_opcode_add(0xA5, "s_cpu_op_lda", 2, 3, E_CPU_ADDR_MODE_ZERO_PAGE);
+call g_opcode_add(0xB5, "s_cpu_op_lda", 2, 4, E_CPU_ADDR_MODE_ZERO_PAGE_X);
+call g_opcode_add(0xAD, "s_cpu_op_lda", 3, 4, E_CPU_ADDR_MODE_ABSOLUTE);
+call g_opcode_add(0xBD, "s_cpu_op_lda", 3, 4, E_CPU_ADDR_MODE_ABSOLUTE_X);
+call g_opcode_add(0xB9, "s_cpu_op_lda", 3, 4, E_CPU_ADDR_MODE_ABSOLUTE_Y);
+call g_opcode_add(0xA1, "s_cpu_op_lda", 2, 6, E_CPU_ADDR_MODE_INDIRECT_X);
+call g_opcode_add(0xB1, "s_cpu_op_lda", 2, 5, E_CPU_ADDR_MODE_INDIRECT_Y);
+
+call g_opcode_add(0xA2, "s_cpu_op_ldx", 2, 2, E_CPU_ADDR_MODE_IMMEDIATE);
+call g_opcode_add(0xA6, "s_cpu_op_ldx", 2, 3, E_CPU_ADDR_MODE_ZERO_PAGE);
+call g_opcode_add(0xB6, "s_cpu_op_ldx", 2, 4, E_CPU_ADDR_MODE_ZERO_PAGE_Y);
+call g_opcode_add(0xAE, "s_cpu_op_ldx", 3, 4, E_CPU_ADDR_MODE_ABSOLUTE);
+call g_opcode_add(0xBE, "s_cpu_op_ldx", 3, 4, E_CPU_ADDR_MODE_ABSOLUTE_Y);
+
+call g_opcode_add(0xA0, "s_cpu_op_ldy", 2, 2, E_CPU_ADDR_MODE_IMMEDIATE);
+call g_opcode_add(0xA4, "s_cpu_op_ldy", 2, 3, E_CPU_ADDR_MODE_ZERO_PAGE);
+call g_opcode_add(0xB4, "s_cpu_op_ldy", 2, 4, E_CPU_ADDR_MODE_ZERO_PAGE_X);
+call g_opcode_add(0xAC, "s_cpu_op_ldy", 3, 4, E_CPU_ADDR_MODE_ABSOLUTE);
+call g_opcode_add(0xBC, "s_cpu_op_ldy", 3, 4, E_CPU_ADDR_MODE_ABSOLUTE_X);
+
+call g_opcode_add(0x85, "s_cpu_op_sta", 2, 3, E_CPU_ADDR_MODE_ZERO_PAGE);
+call g_opcode_add(0x95, "s_cpu_op_sta", 2, 4, E_CPU_ADDR_MODE_ZERO_PAGE_X);
+call g_opcode_add(0x8D, "s_cpu_op_sta", 3, 4, E_CPU_ADDR_MODE_ABSOLUTE);
+call g_opcode_add(0x9D, "s_cpu_op_sta", 3, 5, E_CPU_ADDR_MODE_ABSOLUTE_X);
+call g_opcode_add(0x99, "s_cpu_op_sta", 3, 5, E_CPU_ADDR_MODE_ABSOLUTE_Y);
+call g_opcode_add(0x81, "s_cpu_op_sta", 2, 6, E_CPU_ADDR_MODE_INDIRECT_X);
+call g_opcode_add(0x91, "s_cpu_op_sta", 2, 6, E_CPU_ADDR_MODE_INDIRECT_Y);
+
+call g_opcode_add(0x86, "s_cpu_op_stx", 2, 3, E_CPU_ADDR_MODE_ZERO_PAGE);
+call g_opcode_add(0x96, "s_cpu_op_stx", 2, 4, E_CPU_ADDR_MODE_ZERO_PAGE_Y);
+call g_opcode_add(0x8E, "s_cpu_op_stx", 3, 4, E_CPU_ADDR_MODE_ABSOLUTE);
+
+call g_opcode_add(0x84, "s_cpu_op_sty", 2, 3, E_CPU_ADDR_MODE_ZERO_PAGE);
+call g_opcode_add(0x94, "s_cpu_op_sty", 2, 4, E_CPU_ADDR_MODE_ZERO_PAGE_X);
+call g_opcode_add(0x8C, "s_cpu_op_sty", 3, 4, E_CPU_ADDR_MODE_ABSOLUTE);
+
+# 5. clear flags
+call g_opcode_add(0xD8, "s_cpu_op_cld", 1, 2, E_CPU_ADDR_MODE_NONE);
+call g_opcode_add(0x58, "s_cpu_op_cli", 1, 2, E_CPU_ADDR_MODE_NONE);
+call g_opcode_add(0xB8, "s_cpu_op_clv", 1, 2, E_CPU_ADDR_MODE_NONE);
+call g_opcode_add(0x18, "s_cpu_op_clc", 1, 2, E_CPU_ADDR_MODE_NONE);
+call g_opcode_add(0x38, "s_cpu_op_sec", 1, 2, E_CPU_ADDR_MODE_NONE);
+call g_opcode_add(0x78, "s_cpu_op_sei", 1, 2, E_CPU_ADDR_MODE_NONE);
+call g_opcode_add(0xF8, "s_cpu_op_sed", 1, 2, E_CPU_ADDR_MODE_NONE);
+
+call g_opcode_add(0xAA, "s_cpu_op_tax", 1, 2, E_CPU_ADDR_MODE_NONE);
+call g_opcode_add(0xA8, "s_cpu_op_tay", 1, 2, E_CPU_ADDR_MODE_NONE);
+call g_opcode_add(0xBA, "s_cpu_op_tsx", 1, 2, E_CPU_ADDR_MODE_NONE);
+call g_opcode_add(0x8A, "s_cpu_op_txa", 1, 2, E_CPU_ADDR_MODE_NONE);
+call g_opcode_add(0x9A, "s_cpu_op_txs", 1, 2, E_CPU_ADDR_MODE_NONE);
+call g_opcode_add(0x98, "s_cpu_op_tya", 1, 2, E_CPU_ADDR_MODE_NONE);
+
+# 6. stack
+call g_opcode_add(0x48, "s_cpu_op_pha", 1, 3, E_CPU_ADDR_MODE_NONE);
+call g_opcode_add(0x68, "s_cpu_op_pla", 1, 4, E_CPU_ADDR_MODE_NONE);
+call g_opcode_add(0x08, "s_cpu_op_php", 1, 3, E_CPU_ADDR_MODE_NONE);
+call g_opcode_add(0x28, "s_cpu_op_plp", 1, 4, E_CPU_ADDR_MODE_NONE);
+
+# 7. unofficial
+# call g_opcode_add(0xC7, "s_cpu_op_*dcp", 2, 5, E_CPU_ADDR_MODE_ZERO_PAGE);
+# call g_opcode_add(0xD7, "s_cpu_op_*dcp", 2, 6, E_CPU_ADDR_MODE_ZERO_PAGE_X);
+# call g_opcode_add(0xCF, "s_cpu_op_*dcp", 3, 6, E_CPU_ADDR_MODE_ABSOLUTE);
+# call g_opcode_add(0xDF, "s_cpu_op_*dcp", 3, 7, E_CPU_ADDR_MODE_ABSOLUTE_X);
+# call g_opcode_add(0xDB, "s_cpu_op_*dcp", 3, 7, E_CPU_ADDR_MODE_ABSOLUTE_Y);
+# call g_opcode_add(0xD3, "s_cpu_op_*dcp", 2, 8, E_CPU_ADDR_MODE_INDIRECT_Y);
+# call g_opcode_add(0xC3, "s_cpu_op_*dcp", 2, 8, E_CPU_ADDR_MODE_INDIRECT_X);
+
+# call g_opcode_add(0x27, "s_cpu_op_*rla", 2, 5, E_CPU_ADDR_MODE_ZERO_PAGE);
+# call g_opcode_add(0x37, "s_cpu_op_*rla", 2, 6, E_CPU_ADDR_MODE_ZERO_PAGE_X);
+# call g_opcode_add(0x2F, "s_cpu_op_*rla", 3, 6, E_CPU_ADDR_MODE_ABSOLUTE);
+# call g_opcode_add(0x3F, "s_cpu_op_*rla", 3, 7, E_CPU_ADDR_MODE_ABSOLUTE_X);
+# call g_opcode_add(0x3B, "s_cpu_op_*rla", 3, 7, E_CPU_ADDR_MODE_ABSOLUTE_Y);
+# call g_opcode_add(0x33, "s_cpu_op_*rla", 2, 8, E_CPU_ADDR_MODE_INDIRECT_Y);
+# call g_opcode_add(0x23, "s_cpu_op_*rla", 2, 8, E_CPU_ADDR_MODE_INDIRECT_X);
+
+# call g_opcode_add(0x07, "s_cpu_op_*slo", 2, 5, E_CPU_ADDR_MODE_ZERO_PAGE);
+# call g_opcode_add(0x17, "s_cpu_op_*slo", 2, 6, E_CPU_ADDR_MODE_ZERO_PAGE_X);
+# call g_opcode_add(0x0F, "s_cpu_op_*slo", 3, 6, E_CPU_ADDR_MODE_ABSOLUTE);
+# call g_opcode_add(0x1F, "s_cpu_op_*slo", 3, 7, E_CPU_ADDR_MODE_ABSOLUTE_X);
+# call g_opcode_add(0x1B, "s_cpu_op_*slo", 3, 7, E_CPU_ADDR_MODE_ABSOLUTE_Y);
+# call g_opcode_add(0x03, "s_cpu_op_*slo", 2, 8, E_CPU_ADDR_MODE_INDIRECT_X);
+# call g_opcode_add(0x13, "s_cpu_op_*slo", 2, 8, E_CPU_ADDR_MODE_INDIRECT_Y);
+
+# call g_opcode_add(0x47, "s_cpu_op_*sre", 2, 5, E_CPU_ADDR_MODE_ZERO_PAGE);
+# call g_opcode_add(0x57, "s_cpu_op_*sre", 2, 6, E_CPU_ADDR_MODE_ZERO_PAGE_X);
+# call g_opcode_add(0x4F, "s_cpu_op_*sre", 3, 6, E_CPU_ADDR_MODE_ABSOLUTE);
+# call g_opcode_add(0x5F, "s_cpu_op_*sre", 3, 7, E_CPU_ADDR_MODE_ABSOLUTE_X);
+# call g_opcode_add(0x5B, "s_cpu_op_*sre", 3, 7, E_CPU_ADDR_MODE_ABSOLUTE_Y);
+# call g_opcode_add(0x43, "s_cpu_op_*sre", 2, 8, E_CPU_ADDR_MODE_INDIRECT_X);
+# call g_opcode_add(0x53, "s_cpu_op_*sre", 2, 8, E_CPU_ADDR_MODE_INDIRECT_Y);
+
+# call g_opcode_add(0x80, "s_cpu_op_*nop", 2,2, E_CPU_ADDR_MODE_IMMEDIATE);
+# call g_opcode_add(0x82, "s_cpu_op_*nop", 2,2, E_CPU_ADDR_MODE_IMMEDIATE);
+# call g_opcode_add(0x89, "s_cpu_op_*nop", 2,2, E_CPU_ADDR_MODE_IMMEDIATE);
+# call g_opcode_add(0xC2, "s_cpu_op_*nop", 2,2, E_CPU_ADDR_MODE_IMMEDIATE);
+# call g_opcode_add(0xE2, "s_cpu_op_*nop", 2,2, E_CPU_ADDR_MODE_IMMEDIATE);
+
+# call g_opcode_add(0xCB, "s_cpu_op_*axs", 2,2, E_CPU_ADDR_MODE_IMMEDIATE);
+
+# call g_opcode_add(0x6B, "s_cpu_op_*arr", 2,2, E_CPU_ADDR_MODE_IMMEDIATE);
+
+# call g_opcode_add(0xEB, "s_cpu_op_*sbc", 2,2, E_CPU_ADDR_MODE_IMMEDIATE);
+
+# call g_opcode_add(0x0B, "s_cpu_op_*anc", 2,2, E_CPU_ADDR_MODE_IMMEDIATE);
+# call g_opcode_add(0x2B, "s_cpu_op_*anc", 2,2, E_CPU_ADDR_MODE_IMMEDIATE);
+
+# call g_opcode_add(0x4B, "s_cpu_op_*alr", 2,2, E_CPU_ADDR_MODE_IMMEDIATE);
+
+# call g_opcode_add(0x04, "s_cpu_op_*nop", 2,3, E_CPU_ADDR_MODE_ZERO_PAGE);
+# call g_opcode_add(0x44, "s_cpu_op_*nop", 2,3, E_CPU_ADDR_MODE_ZERO_PAGE);
+# call g_opcode_add(0x64, "s_cpu_op_*nop", 2,3, E_CPU_ADDR_MODE_ZERO_PAGE);
+# call g_opcode_add(0x14, "s_cpu_op_*nop", 2, 4, E_CPU_ADDR_MODE_ZERO_PAGE_X);
+# call g_opcode_add(0x34, "s_cpu_op_*nop", 2, 4, E_CPU_ADDR_MODE_ZERO_PAGE_X);
+# call g_opcode_add(0x54, "s_cpu_op_*nop", 2, 4, E_CPU_ADDR_MODE_ZERO_PAGE_X);
+# call g_opcode_add(0x74, "s_cpu_op_*nop", 2, 4, E_CPU_ADDR_MODE_ZERO_PAGE_X);
+# call g_opcode_add(0xD4, "s_cpu_op_*nop", 2, 4, E_CPU_ADDR_MODE_ZERO_PAGE_X);
+# call g_opcode_add(0xF4, "s_cpu_op_*nop", 2, 4, E_CPU_ADDR_MODE_ZERO_PAGE_X);
+# call g_opcode_add(0x0C, "s_cpu_op_*nop", 3, 4, E_CPU_ADDR_MODE_ABSOLUTE);
+# call g_opcode_add(0x1C, "s_cpu_op_*nop", 3, 4, E_CPU_ADDR_MODE_ABSOLUTE_X);
+# call g_opcode_add(0x3C, "s_cpu_op_*nop", 3, 4, E_CPU_ADDR_MODE_ABSOLUTE_X);
+# call g_opcode_add(0x5C, "s_cpu_op_*nop", 3, 4, E_CPU_ADDR_MODE_ABSOLUTE_X);
+# call g_opcode_add(0x7C, "s_cpu_op_*nop", 3, 4, E_CPU_ADDR_MODE_ABSOLUTE_X);
+# call g_opcode_add(0xDC, "s_cpu_op_*nop", 3, 4, E_CPU_ADDR_MODE_ABSOLUTE_X);
+# call g_opcode_add(0xFC, "s_cpu_op_*nop", 3, 4, E_CPU_ADDR_MODE_ABSOLUTE_X);
+
+# call g_opcode_add(0x67, "s_cpu_op_*rra", 2, 5, E_CPU_ADDR_MODE_ZERO_PAGE);
+# call g_opcode_add(0x77, "s_cpu_op_*rra", 2, 6, E_CPU_ADDR_MODE_ZERO_PAGE_X);
+# call g_opcode_add(0x6F, "s_cpu_op_*rra", 3, 6, E_CPU_ADDR_MODE_ABSOLUTE);
+# call g_opcode_add(0x7F, "s_cpu_op_*rra", 3, 7, E_CPU_ADDR_MODE_ABSOLUTE_X);
+# call g_opcode_add(0x7B, "s_cpu_op_*rra", 3, 7, E_CPU_ADDR_MODE_ABSOLUTE_Y);
+# call g_opcode_add(0x63, "s_cpu_op_*rra", 2, 8, E_CPU_ADDR_MODE_INDIRECT_X);
+# call g_opcode_add(0x73, "s_cpu_op_*rra", 2, 8, E_CPU_ADDR_MODE_INDIRECT_Y);
+
+# call g_opcode_add(0xE7, "s_cpu_op_*isb", 2,5, E_CPU_ADDR_MODE_ZERO_PAGE);
+# call g_opcode_add(0xF7, "s_cpu_op_*isb", 2,6, E_CPU_ADDR_MODE_ZERO_PAGE_X);
+# call g_opcode_add(0xEF, "s_cpu_op_*isb", 3,6, E_CPU_ADDR_MODE_ABSOLUTE);
+# call g_opcode_add(0xFF, "s_cpu_op_*isb", 3,7, E_CPU_ADDR_MODE_ABSOLUTE_X);
+# call g_opcode_add(0xFB, "s_cpu_op_*isb", 3,7, E_CPU_ADDR_MODE_ABSOLUTE_Y);
+# call g_opcode_add(0xE3, "s_cpu_op_*isb", 2,8, E_CPU_ADDR_MODE_INDIRECT_X);
+# call g_opcode_add(0xF3, "s_cpu_op_*isb", 2,8, E_CPU_ADDR_MODE_INDIRECT_Y);
+
+# call g_opcode_add(0x02, "s_cpu_op_*nop", 1,2, E_CPU_ADDR_MODE_NONE);
+# call g_opcode_add(0x12, "s_cpu_op_*nop", 1,2, E_CPU_ADDR_MODE_NONE);
+# call g_opcode_add(0x22, "s_cpu_op_*nop", 1,2, E_CPU_ADDR_MODE_NONE);
+# call g_opcode_add(0x32, "s_cpu_op_*nop", 1,2, E_CPU_ADDR_MODE_NONE);
+# call g_opcode_add(0x42, "s_cpu_op_*nop", 1,2, E_CPU_ADDR_MODE_NONE);
+# call g_opcode_add(0x52, "s_cpu_op_*nop", 1,2, E_CPU_ADDR_MODE_NONE);
+# call g_opcode_add(0x62, "s_cpu_op_*nop", 1,2, E_CPU_ADDR_MODE_NONE);
+# call g_opcode_add(0x72, "s_cpu_op_*nop", 1,2, E_CPU_ADDR_MODE_NONE);
+# call g_opcode_add(0x92, "s_cpu_op_*nop", 1,2, E_CPU_ADDR_MODE_NONE);
+# call g_opcode_add(0xB2, "s_cpu_op_*nop", 1,2, E_CPU_ADDR_MODE_NONE);
+# call g_opcode_add(0xD2, "s_cpu_op_*nop", 1,2, E_CPU_ADDR_MODE_NONE);
+# call g_opcode_add(0xF2, "s_cpu_op_*nop", 1,2, E_CPU_ADDR_MODE_NONE);
+
+# call g_opcode_add(0x1A, "s_cpu_op_*nop", 1,2, E_CPU_ADDR_MODE_NONE);
+# call g_opcode_add(0x3A, "s_cpu_op_*nop", 1,2, E_CPU_ADDR_MODE_NONE);
+# call g_opcode_add(0x5A, "s_cpu_op_*nop", 1,2, E_CPU_ADDR_MODE_NONE);
+# call g_opcode_add(0x7A, "s_cpu_op_*nop", 1,2, E_CPU_ADDR_MODE_NONE);
+# call g_opcode_add(0xDA, "s_cpu_op_*nop", 1,2, E_CPU_ADDR_MODE_NONE);
+# call g_opcode_add(0xFA, "s_cpu_op_*nop", 1,2, E_CPU_ADDR_MODE_NONE);
+
+# call g_opcode_add(0xAB, "s_cpu_op_*lxa", 2, 3, E_CPU_ADDR_MODE_IMMEDIATE); # highly unstable and not used
+# call g_opcode_add(0x8B, "s_cpu_op_*xaa", 2, 3, E_CPU_ADDR_MODE_IMMEDIATE); # highly unstable and not used
+# call g_opcode_add(0xBB, "s_cpu_op_*las", 3, 2, E_CPU_ADDR_MODE_ABSOLUTE_Y); # highly unstable and not used
+# call g_opcode_add(0x9B, "s_cpu_op_*tas", 3, 2, E_CPU_ADDR_MODE_ABSOLUTE_Y); # highly unstable and not used
+# call g_opcode_add(0x93, "s_cpu_op_*ahx", 2, 8, E_CPU_ADDR_MODE_INDIRECT_Y); # highly unstable and not used
+# call g_opcode_add(0x9F, "s_cpu_op_*ahx", 3, 4, E_CPU_ADDR_MODE_ABSOLUTE_Y); # highly unstable and not used
+# call g_opcode_add(0x9E, "s_cpu_op_*shx", 3, 4, E_CPU_ADDR_MODE_ABSOLUTE_Y); # highly unstable and not used
+# call g_opcode_add(0x9C, "s_cpu_op_*shy", 3, 4, E_CPU_ADDR_MODE_ABSOLUTE_X); # highly unstable and not used
+
+# call g_opcode_add(0xA7, "s_cpu_op_*lax", 2, 3, E_CPU_ADDR_MODE_ZERO_PAGE);
+# call g_opcode_add(0xB7, "s_cpu_op_*lax", 2, 4, E_CPU_ADDR_MODE_ZERO_PAGE_Y);
+# call g_opcode_add(0xAF, "s_cpu_op_*lax", 3, 4, E_CPU_ADDR_MODE_ABSOLUTE);
+# call g_opcode_add(0xBF, "s_cpu_op_*lax", 3, 4, E_CPU_ADDR_MODE_ABSOLUTE_Y);
+# call g_opcode_add(0xA3, "s_cpu_op_*lax", 2, 6, E_CPU_ADDR_MODE_INDIRECT_X);
+# call g_opcode_add(0xB3, "s_cpu_op_*lax", 2, 5, E_CPU_ADDR_MODE_INDIRECT_Y);
+
+# call g_opcode_add(0x87, "s_cpu_op_*sax", 2, 3, E_CPU_ADDR_MODE_ZERO_PAGE);
+# call g_opcode_add(0x97, "s_cpu_op_*sax", 2, 4, E_CPU_ADDR_MODE_ZERO_PAGE_Y);
+# call g_opcode_add(0x8F, "s_cpu_op_*sax", 3, 4, E_CPU_ADDR_MODE_ABSOLUTE);
+# call g_opcode_add(0x83, "s_cpu_op_*sax", 2, 6, E_CPU_ADDR_MODE_INDIRECT_X);

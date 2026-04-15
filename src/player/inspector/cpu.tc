@@ -1,0 +1,33 @@
+#!import macro/player_vars.tcm
+#!import macro/session_vars.tcm
+
+FUNCTION p_inspector_cpu;
+PARAM _p: var;
+PARAM _id: var;
+
+#!expand macro/player_vars.tcm
+#!expand macro/session_vars.tcm
+
+default:SendMessage(s"");
+default:SendMessage(s"");
+default:SendMessage(s"");
+
+default:SendMessage(
+    s"<gray>A:</gray> 0x" + call u_num_to_radix(global VAR_S_CPU_REG_A, 2) + s"   " +
+    s"   <gray>X:</gray> 0x" + call u_num_to_radix(global VAR_S_CPU_REG_X, 2) + s"   " +
+    s"   <gray>Y:</gray> 0x" + call u_num_to_radix(global VAR_S_CPU_REG_Y, 2)
+);
+default:SendMessage(
+    s"<gray>PC:</gray> 0x" + call u_num_to_radix(global VAR_S_CPU_REG_PC, 4) + s"   " +
+    s"<gray>SP:</gray> 0x" + call u_num_to_radix(global VAR_S_CPU_REG_SP, 2)
+);
+default:SendMessage(s"<gray>P:</gray> 0b" + call u_num_to_radix(global VAR_S_CPU_REG_P, 8, 2));
+
+default:SendMessage(s"<gold><click:run_command:@inspect cpu>[Refresh]</click></gold>");
+default:SendMessage(
+    s"<dark_gray>[CPU]</dark_gray> " +
+    s"<yellow><click:run_command:@inspect ram>[RAM]</click></yellow> " +
+    s"<red><click:run_command:@inspect rom>[ROM]</click></red> " +
+    s"<light_purple><click:run_command:@inspect bus>[BUS]</click></light_purple> " +
+    s"<aqua><click:run_command:@inspect mn>[MN]</click></aqua>"
+);

@@ -1,0 +1,26 @@
+#!import macro/enum/test.tcm
+#!import macro/enum/cpu.tcm
+#!import macro/enum/manager.tcm
+#!import macro/session_vars.tcm
+
+FUNCTION s_test_verify_3;
+PARAM _id: var;
+RETURNS num;
+
+#!expand macro/session_vars.tcm
+
+if (global VAR_S_CPU_REG_A != 0x55) {
+    return E_TEST_RESULT_FAIL;
+}
+
+line negative = global VAR_S_CPU_REG_P & E_CPU_FLAG_NEGATIVE;
+if (line negative != 0) {
+    return E_TEST_RESULT_FAIL;
+}
+
+line zero = global VAR_S_CPU_REG_P & E_CPU_FLAG_ZERO;
+if (line zero != 0) {
+    return E_TEST_RESULT_FAIL;
+}
+
+return E_TEST_RESULT_PASS;

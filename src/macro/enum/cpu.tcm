@@ -1,0 +1,23 @@
+#!define    E_CPU_ERROR_STATE_NONE              0
+#!define    E_CPU_ERROR_STATE_INVALID_OPCODE    1
+#!define    E_CPU_ERROR_STATE_BREAKPOINT        2
+
+#!define    E_CPU_ADDR_MODE_IMMEDIATE       0
+#!define    E_CPU_ADDR_MODE_ZERO_PAGE       1
+#!define    E_CPU_ADDR_MODE_ZERO_PAGE_X     2
+#!define    E_CPU_ADDR_MODE_ZERO_PAGE_Y     3
+#!define    E_CPU_ADDR_MODE_ABSOLUTE        4
+#!define    E_CPU_ADDR_MODE_ABSOLUTE_X      5
+#!define    E_CPU_ADDR_MODE_ABSOLUTE_Y      6
+#!define    E_CPU_ADDR_MODE_INDIRECT_X      7
+#!define    E_CPU_ADDR_MODE_INDIRECT_Y      8
+#!define    E_CPU_ADDR_MODE_NONE            9
+
+#!define    E_CPU_FLAG_CARRY                0b00000001
+#!define    E_CPU_FLAG_ZERO                 0b00000010
+#!define    E_CPU_FLAG_INTERRUPT_DISABLE    0b00000100
+#!define    E_CPU_FLAG_DECIMAL_MODE         0b00001000
+#!define    E_CPU_FLAG_BREAK                0b00010000
+#!define    E_CPU_FLAG_BREAK2               0b00100000
+#!define    E_CPU_FLAG_OVERFLOW             0b01000000
+#!define    E_CPU_FLAG_NEGATIVE             0b10000000

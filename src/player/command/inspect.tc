@@ -1,0 +1,49 @@
+#!import macro/player_vars.tcm
+#!import macro/const.tcm
+
+FUNCTION p_command_inspect;
+PARAM _p: var;
+
+if (game?CommandEquals("inspect"){"Check Mode" = "Check beginning"}) {
+    if (!default?HasPlotPermission(){"Permission" = "Developer"}) {
+        default:SendMessage(s"<red>You do not have permission to use this command.</red>");
+        return;
+    }
+
+    if (global VAR_P_META_ATTACHED == C_ATTACHED_NONE) {
+        default:SendMessage(s"<red>You are not attached to a session.</red>");
+        return;
+    }
+
+    line mode = "new";
+    line alen = list:Len(game.EventCommandArguments);
+
+    if (line alen > 1) {
+        line mode = game.EventCommandArguments[2];
+    } else {
+        global VAR_P_INSPECTOR_RAM_PAGE = 0;
+        line mode = "cpu";
+    }
+
+    if (line mode == "cpu") {
+        call p_inspector_cpu(line _p, global VAR_P_META_ATTACHED);
+        return;
+    }
+    if (line mode == "ram") {
+        if (line alen > 2) {
+            global VAR_P_INSPECTOR_RAM_PAGE = num:Parse(game.EventCommandArguments[3]);
+        }
+        call p_inspector_ram(line _p, global VAR_P_META_ATTACHED, global VAR_P_INSPECTOR_RAM_PAGE);
+        return;
+    }
+    if (line mode == "rom") {
+        if (line alen > 2) {
+            global VAR_P_INSPECTOR_ROM_PAGE = num:Parse(game.EventCommandArguments[3]);
+        }
+        call p_inspector_rom(line _p, global VAR_P_META_ATTACHED, global VAR_P_INSPECTOR_ROM_PAGE);
+        return;
+    }
+
+    default:SendMessage(s"<red>Invalid inspector mode.</red>");
+    return;
+}

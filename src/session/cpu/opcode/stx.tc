@@ -1,0 +1,12 @@
+#!import macro/enum/cpu.tcm
+#!import macro/session_vars.tcm
+
+FUNCTION s_cpu_op_stx;
+PARAM _id: var;
+PARAM addr_mode: var;
+
+#!expand macro/session_vars.tcm
+
+#!expand macro/cpu/get_operand_address.tcm
+
+call s_bus_mem_write(line _id, line addr, global VAR_S_CPU_REG_X);

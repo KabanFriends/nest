@@ -1,0 +1,7 @@
+#!define    E_DEBUG_LOG_LEVEL_NONE  0
+#!define    E_DEBUG_LOG_LEVEL_HIGH  10
+#!define    E_DEBUG_LOG_LEVEL_MED   20
+#!define    E_DEBUG_LOG_LEVEL_LOW   30
+
+#!define    E_DEBUG_STEP_MODE_NONE  0
+#!define    E_DEBUG_STEP_MODE_CPU   1

@@ -1,0 +1,23 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Compile and Run",
+            "type": "terracotta",
+            "request": "launch",
+            "preLaunchTask": "macro-process",
+            "folder": "${workspaceFolder}/.build",
+            "exportMode": "sendToCodeClient",
+            "autoSwitchToDev": true,
+            "autoSwitchToPlay": true,
+            "plotSize": 100
+        },
+        {
+            "name": "Compile",
+            "type": "node",
+            "request": "launch",
+            "preLaunchTask": "compile",
+            "program": "${workspaceFolder}/scripts/noop.js"
+        }
+    ]
+}

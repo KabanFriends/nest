@@ -1,0 +1,79 @@
+#!import macro/enum/ppu.tcm
+#!import macro/const.tcm
+#!import macro/session_vars.tcm
+
+FUNCTION s_bus_mem_write;
+PARAM _id: var;
+PARAM address: var;
+PARAM value: var;
+
+line address: num;
+line value: num;
+
+#!expand macro/session_vars.tcm
+
+if (line address <= C_BUS_MEM_RAM_END) {
+    # RAM address is mirrored every C_RAM_SIZE bytes
+    line index = (line address & C_RAM_WRAP_MASK) + 1;
+    global VAR_S_RAM[line index] = line value;
+    return;
+}
+
+if (line address <= C_BUS_MEM_PPU_END) {
+    # PPU register addresses are mirrored every 8 bytes
+    line ppuAddress = line address & C_PPU_WRAP_MASK;
+
+    if (line ppuAddress == 0x2000) {
+        call s_log_debug_low(line _id, s"[BUS] Write to PPU CTRL");
+        line prevNmi = global VAR_S_PPU_REG_CTRL & E_PPU_CTRL_FLAG_GENERATE_NMI;
+        global VAR_S_PPU_REG_CTRL = line value;
+        if (line prevNmi == 0) {
+            if (global VAR_S_PPU_REG_CTRL & E_PPU_CTRL_FLAG_GENERATE_NMI > 0) {
+                if (global VAR_S_PPU_REG_STATUS & E_PPU_STATUS_FLAG_VBLANK_STARTED > 0) {
+                    global VAR_S_BUS_NMI = TRUE;
+                }
+            }
+        }
+        return;
+    }
+
+    if (line ppuAddress == 0x2001) {
+        call s_log_debug_low(line _id, s"[BUS] Write to PPU MASK");
+        global VAR_S_PPU_REG_MASK = line value;
+        return;
+    }
+
+    if (line ppuAddress == 0x2003) {
+        call s_log_debug_low(line _id, s"[BUS] Write to PPU OAM ADDR");
+        global VAR_S_PPU_OAM_ADDR = line value;
+        return;
+    }
+
+    if (line ppuAddress == 0x2004) {
+        call s_log_debug_low(line _id, s"[BUS] Write to PPU OAM DATA");
+        global VAR_S_PPU_OAM_DATA[global VAR_S_PPU_OAM_ADDR + 1] = line value;
+        global VAR_S_PPU_OAM_ADDR += 1;
+        global VAR_S_PPU_OAM_ADDR = global VAR_S_PPU_OAM_ADDR & 0xFF;
+        return;
+    }
+
+    if (line ppuAddress == 0x2005) {
+        call s_log_debug_low(line _id, s"[BUS] Write to PPU SCRL");
+        call s_ppu_scrl_write(line _id, line value);
+        return;
+    }
+
+    if (line ppuAddress == 0x2006) {
+        call s_log_debug_low(line _id, s"[BUS] Write to PPU ADDR");
+        call s_ppu_addr_write(line _id, line value);
+        return;
+    }
+
+    if (line ppuAddress == 0x2007) {
+        call s_log_debug_low(line _id, s"[BUS] Write to PPU DATA");
+        call s_ppu_data_write(line _id, line value);
+        return;
+    }
+}
+
+call s_log_error(line _id, s"Memory write to unsupported address: " + call u_num_to_radix(line address, 4));

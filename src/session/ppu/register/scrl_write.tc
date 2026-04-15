@@ -1,0 +1,18 @@
+#!import macro/const.tcm
+#!import macro/session_vars.tcm
+
+FUNCTION s_ppu_scrl_write;
+PARAM _id: var;
+PARAM value: var;
+
+line value: num;
+
+#!expand macro/session_vars.tcm
+
+if (global VAR_S_PPU_SCRL_LATCH == TRUE) {
+    global VAR_S_PPU_REG_SCRL_Y = line value;
+    global VAR_S_PPU_SCRL_LATCH = FALSE;
+} else {
+    global VAR_S_PPU_REG_SCRL_X = line value;
+    global VAR_S_PPU_SCRL_LATCH = TRUE;
+}

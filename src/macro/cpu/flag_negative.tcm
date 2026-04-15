@@ -1,0 +1,15 @@
+# Inline Function: flag_negative
+# in = a: value to check
+
+#!import macro/enum/cpu.tcm
+#!import macro/session_vars.tcm
+
+line a: num;
+
+line sign_bit = line a >> 7;
+
+if (line sign_bit == 1) {
+    global VAR_S_CPU_REG_P = (global VAR_S_CPU_REG_P | E_CPU_FLAG_NEGATIVE);
+} else {
+    global VAR_S_CPU_REG_P = (global VAR_S_CPU_REG_P & ~E_CPU_FLAG_NEGATIVE);
+}

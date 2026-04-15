@@ -1,0 +1,31 @@
+#!import macro/enum/cpu.tcm
+#!import macro/session_vars.tcm
+
+FUNCTION s_cpu_op_bit;
+PARAM _id: var;
+PARAM addr_mode: var;
+
+#!expand macro/session_vars.tcm
+
+#!expand macro/cpu/get_operand_address.tcm
+
+line data = call s_bus_mem_read(line _id, line addr);
+
+if (global VAR_S_CPU_REG_A & line data == 0) {
+    global VAR_S_CPU_REG_P = global VAR_S_CPU_REG_P | E_CPU_FLAG_ZERO;
+} else {
+    global VAR_S_CPU_REG_P = global VAR_S_CPU_REG_P & ~E_CPU_FLAG_ZERO;
+}
+
+if (line data & 0b10000000 > 0) {
+    global VAR_S_CPU_REG_P = global VAR_S_CPU_REG_P | E_CPU_FLAG_NEGATIVE;
+} else {
+    global VAR_S_CPU_REG_P = global VAR_S_CPU_REG_P & ~E_CPU_FLAG_NEGATIVE;
+}
+
+line data = line data & 0b01000000;
+if (line data > 0) {
+    global VAR_S_CPU_REG_P = global VAR_S_CPU_REG_P | E_CPU_FLAG_OVERFLOW;
+} else {
+    global VAR_S_CPU_REG_P = global VAR_S_CPU_REG_P & ~E_CPU_FLAG_OVERFLOW;
+}

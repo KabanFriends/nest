@@ -1,0 +1,10 @@
+# Inline Function: wrapping_sub
+# in = a: value to subtract from
+# in = b: value to subtract
+# out = a: result of a - b, wrapped to 8 bits
+
+line a: num;
+line b: num;
+
+line a -= line b;
+line a = line a & 0xFF;

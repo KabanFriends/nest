@@ -1,0 +1,21 @@
+#!import macro/enum/test.tcm
+#!import macro/session_vars.tcm
+
+FUNCTION s_test_result;
+PARAM _id: var;
+PARAM result: var;
+
+line result: num;
+
+#!expand macro/session_vars.tcm
+
+call s_log_debug_high(line _id, s"<aqua>Test %var(%var(_id)_test_id):</aqua> <white>%var(%var(_id)_test_name)</white>");
+
+line message = s"<gray>No result</gray>";
+if (line result == E_TEST_RESULT_PASS) {
+    line message = s"<green>Test passed</green> - <white><click:run_command:@inspect>Click to open inspector</click></white>";
+}
+if (line result == E_TEST_RESULT_FAIL) {
+    line message = s"<red>Test failed</red> - <white><click:run_command:@inspect>Click to open inspector</click></white>";
+}
+call s_log_debug_high(line _id, line message);

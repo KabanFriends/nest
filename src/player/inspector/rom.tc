@@ -1,0 +1,79 @@
+#!import macro/player_vars.tcm
+#!import macro/session_vars.tcm
+#!import macro/const.tcm
+
+#!define    PAGE_SIZE   0x100
+
+FUNCTION p_inspector_rom;
+PARAM _p: var;
+PARAM _id: var;
+PARAM page: num;
+
+#!expand macro/player_vars.tcm
+#!expand macro/session_vars.tcm
+
+default:SendMessage(s"");
+default:SendMessage(s"");
+default:SendMessage(s"");
+
+line maxPages = num:Round(C_ROM_PRG_SIZE / PAGE_SIZE){"Round Mode" = "Ceiling"};
+line realPage = num:Clamp(line page, 0, line maxPages - 1);
+line start = line realPage * PAGE_SIZE;
+line lines = num:Round(PAGE_SIZE / 16){"Round Mode" = "Ceiling"};
+
+default:SendMessage(s"<gray>______ _0 _1 _2 _3 _4 _5 _6 _7 _8 _9 _A _B _C _D _E _F</gray>");
+
+repeat (line i to line lines) {
+    line offset = line i - 1;
+    line base = line start + line offset * 16;
+
+    line baseAddr = call u_num_to_radix(line base + C_BUS_MEM_PRG_START, 4);
+    line line = s"<gray>0x%var(baseAddr)</gray> ";
+    repeat (line j to 16) {
+        line index = line j - 1;
+        line addr = line base + line index;
+        if (line addr < C_ROM_PRG_SIZE) {
+            if (line addr < 0x2000) {
+                line val = global VAR_S_PRG0[line addr + 1];
+            } else {
+                if (line addr < 0x4000) {
+                    line val = global VAR_S_PRG1[line addr - 0x2000 + 1];
+                } else {
+                    if (line addr < 0x6000) {
+                        line val = global VAR_S_PRG2[line addr - 0x4000 + 1];
+                    } else {
+                        line val = global VAR_S_PRG3[line addr - 0x6000 + 1];
+                    }
+                }
+            }
+            line line += call u_num_to_radix(line val, 2) + s" ";
+        } else {
+            line line += s"__ ";
+        }
+    }
+
+    default:SendMessage(line line);
+}
+
+line ex = "<gold><click:run_command:@inspect rom>[Refresh]</click></gold> ";
+if (line page > 0) {
+    line target = line page - 1;
+    line ex += "<red><click:run_command:@inspect rom " + (line page - 1) + ">[Prev]</click></red> ";
+} else {
+    line ex += "<dark_gray>[Prev]</dark_gray> ";
+}
+
+if (line page < line maxPages - 1) {
+    line ex += "<green><click:run_command:@inspect rom " + (line page + 1) + ">[Next]</click></green>";
+} else {
+    line ex += "<dark_gray>[Next]</dark_gray>";
+}
+
+default:SendMessage(txt:ParseExpression(line ex){"Allowed Tags" = "Full"});
+default:SendMessage(
+    s"<green><click:run_command:@inspect cpu>[CPU]</click></green> " +
+    s"<yellow><click:run_command:@inspect ram>[RAM]</click></yellow> " +
+    s"<dark_gray>[ROM]</dark_gray> " +
+    s"<light_purple><click:run_command:@inspect bus>[BUS]</click></light_purple> " +
+    s"<aqua><click:run_command:@inspect mn>[MN]</click></aqua>"
+);

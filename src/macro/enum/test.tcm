@@ -1,0 +1,2 @@
+#!define    E_TEST_RESULT_PASS 0
+#!define    E_TEST_RESULT_FAIL 1

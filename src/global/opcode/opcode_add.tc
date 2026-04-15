@@ -1,0 +1,14 @@
+FUNCTION g_opcode_add;
+PARAM code: num;
+PARAM func_name: str;
+PARAM length: num;
+PARAM cycles: num;
+PARAM addr_mode: num;
+
+#!expand macro/global_vars.tcm
+
+line index = line code + 1;
+list:Set(global g_opcode_func_names, line index, line func_name);
+list:Set(global g_opcode_lengths, line index, line length);
+list:Set(global g_opcode_cycles, line index, line cycles);
+list:Set(global g_opcode_addr_modes, line index, line addr_mode);

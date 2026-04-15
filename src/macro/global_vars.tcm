@@ -1,0 +1,12 @@
+global g_debug_enabled: num;
+
+global g_radix_symbols: list;
+
+global g_last_session_id: num;
+global g_active_sessions: list;
+global g_ticks: num;
+
+global g_opcode_func_names: list;
+global g_opcode_lengths: list;
+global g_opcode_cycles: list;
+global g_opcode_addr_modes: list;

@@ -1,0 +1,10 @@
+# Inline Function: wrapping_add_with_y
+# in = a: value to add to
+# out = a: result of a + Y, wrapped to 8 bits
+
+#!import macro/session_vars.tcm
+
+line a: num;
+
+line a += global VAR_S_CPU_REG_Y;
+line a = line a & 0xFF;

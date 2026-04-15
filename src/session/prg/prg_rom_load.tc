@@ -1,0 +1,57 @@
+#!import macro/session_vars.tcm
+#!import macro/const.tcm
+
+FUNCTION s_prg_rom_load;
+PARAM _id: var;
+PARAM mirroring: num;
+PARAM prg: list;
+PARAM chr: list;
+
+#!expand macro/session_vars.tcm
+
+# Write CHR data to the PPU CHR memory
+line addr = 1;
+for (line code: str in line chr) {
+    line base = str:ToBytes(line code);
+    line bytes = str:Base64Decode(line base);
+    for (line byte: num in line bytes) {
+        if (line byte < 0) {
+            line byte += 256;
+        }
+        global VAR_S_PPU_CHR[line addr] = line byte;
+        line addr += 1;
+    }
+}
+
+# Write ROM data to 4 PRG vars
+line addr = 0;
+for (line code: str in line prg) {
+    line base = str:ToBytes(line code);
+    line bytes = str:Base64Decode(line base);
+    for (line byte: num in line bytes) {
+        if (line byte < 0) {
+            line byte += 256;
+        }
+        line index = num:Round(line addr / C_ROM_PRG_PART_SIZE){"Round Mode" = "Floor"};
+        line offset = line addr % C_ROM_PRG_PART_SIZE;
+        line offset += 1;
+        line addr += 1;
+        if (line index == 0) {
+            global VAR_S_PRG0[line offset] = line byte;
+            continue;
+        }
+        if (line index == 1) {
+            global VAR_S_PRG1[line offset] = line byte;
+            continue;
+        }
+        if (line index == 2) {
+            global VAR_S_PRG2[line offset] = line byte;
+            continue;
+        }
+        if (line index == 3) {
+            global VAR_S_PRG3[line offset] = line byte;
+            continue;
+        }
+        call s_log_error(line _id, s"ROM data overflow! " + call u_num_to_radix(line addr, 4));
+    }
+}

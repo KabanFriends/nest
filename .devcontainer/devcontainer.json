@@ -1,0 +1,21 @@
+{
+    "name": "Terracotta Dev Container",
+    "build": {
+        "dockerfile": "Dockerfile"
+    },
+    "runArgs": ["--env-file", ".devcontainer/.env"],
+    "postStartCommand": "supervisord -c ${containerWorkspaceFolder}/.devcontainer/supervisord.conf",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "Owlfroggy.terracotta"
+            ],
+            "settings": {
+                "terracotta.version": "0.4.0",
+                "files.associations": {
+                    "*.tcm": "terracotta"
+                }
+            }
+        }
+    }
+}

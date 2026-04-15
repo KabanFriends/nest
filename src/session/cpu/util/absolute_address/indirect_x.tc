@@ -1,0 +1,27 @@
+#!import macro/const.tcm
+#!import macro/session_vars.tcm
+
+FUNCTION s_cpu_u_absaddr_7; # Indirect X
+PARAM _id: var;
+PARAM addr_out: var;
+PARAM page_cross_out: var;
+PARAM addr: var;
+
+#!expand macro/session_vars.tcm
+
+# Read 16 mem bytes into a
+#!expand macro/util/mem_read_16.tcm
+
+# Add X to a
+#!expand macro/util/wrapping_add_with_x.tcm
+
+line lo = call s_bus_mem_read(line _id, line a);
+
+# Add 1 to a
+#!expand macro/util/wrapping_add_1.tcm
+
+line addr_out = call s_bus_mem_read(line _id, line a);
+line addr_out = line addr_out << 8;
+line addr_out = line addr_out | line lo;
+
+line page_cross_out = FALSE;

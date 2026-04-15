@@ -1,0 +1,28 @@
+#!import macro/enum/cpu.tcm
+#!import macro/session_vars.tcm
+
+FUNCTION s_cpu_u_sub_from_reg_a;
+PARAM _id: var;
+PARAM value: num;
+
+#!expand macro/session_vars.tcm
+
+line cflag = global VAR_S_CPU_REG_P & E_CPU_FLAG_CARRY;
+line sum = global VAR_S_CPU_REG_A;
+num:Increment(line sum, line value ^ 0xFF, line cflag);
+
+if (line sum > 0xFF) {
+    global VAR_S_CPU_REG_P = global VAR_S_CPU_REG_P | E_CPU_FLAG_CARRY;
+} else {
+    global VAR_S_CPU_REG_P = global VAR_S_CPU_REG_P & ~E_CPU_FLAG_CARRY;
+}
+
+line sum = line sum & 0xFF;
+if ((global VAR_S_CPU_REG_A ^ line sum) & (global VAR_S_CPU_REG_A ^ line value) & 0x80 != 0) {
+    global VAR_S_CPU_REG_P = global VAR_S_CPU_REG_P | E_CPU_FLAG_OVERFLOW;
+} else {
+    global VAR_S_CPU_REG_P = global VAR_S_CPU_REG_P & ~E_CPU_FLAG_OVERFLOW;
+}
+
+global VAR_S_CPU_REG_A = line sum;
+#!expand macro/cpu/flag_zero_negative_with_a.tcm

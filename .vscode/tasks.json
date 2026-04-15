@@ -1,0 +1,17 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "macro-process",
+            "type": "shell",
+            "command": "node scripts/macro.js",
+            "problemMatcher": []
+        },
+        {
+            "label": "compile",
+            "type": "shell",
+            "command": "chmod +x ${workspaceFolder}/compile.sh && ${workspaceFolder}/compile.sh",
+            "problemMatcher": []
+        }
+    ]
+}

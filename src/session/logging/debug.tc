@@ -1,0 +1,18 @@
+#!import macro/enum/debug.tcm
+#!import macro/session_vars.tcm
+
+FUNCTION s_log_debug;
+PARAM _id: var;
+PARAM level: num;
+PARAM message: txt;
+
+#!expand macro/session_vars.tcm
+
+if (global VAR_S_DEBUG_LEVEL < line level) {
+    return;
+}
+
+#!expand macro/select_attached.tcm
+selected:SendMessage(s"<gray>%var(message)</gray>");
+select Nothing;
+

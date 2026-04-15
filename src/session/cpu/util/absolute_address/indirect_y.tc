@@ -1,0 +1,32 @@
+#!import macro/const.tcm
+#!import macro/session_vars.tcm
+
+FUNCTION s_cpu_u_absaddr_8; # Indirect Y
+PARAM _id: var;
+PARAM a: var; # (addr_out)
+PARAM page_cross_out: var;
+PARAM addr: num; # must not let page_cross overwrite the original var
+
+#!expand macro/session_vars.tcm
+
+# Read 16 mem bytes into a
+#!expand macro/util/mem_read_16.tcm
+
+line lo = call s_bus_mem_read(line _id, line a);
+
+# Add 1 to a
+#!expand macro/util/wrapping_add_1.tcm
+
+# Reuse a here for page_cross calc
+line a = call s_bus_mem_read(line _id, line a);
+line a = line a << 8;
+line a = line a | line lo;
+
+# Keep the base address for page_cross calc
+line addr = line a;
+
+# Add Y to a (16 bit wrapping)
+#!expand macro/util/wrapping_add_with_y_16.tcm
+
+# Calculate page_cross of addr and a
+#!expand macro/util/page_cross.tcm

@@ -1,0 +1,19 @@
+# Inline Function: get_operand_address
+# in = addr_mode: addressing mode
+# out = addr: the effective address of the operand
+# out = page_cross: whether a page boundary was crossed
+
+#!import macro/enum/cpu.tcm
+#!import macro/const.tcm
+#!import macro/session_vars.tcm
+
+line addr_mode: num;
+line addr: num;
+line page_cross: num;
+
+if (line addr_mode == E_CPU_ADDR_MODE_IMMEDIATE) {
+    line page_cross = FALSE;
+    line addr = global VAR_S_CPU_REG_PC;
+} else {
+    call ("s_cpu_u_absaddr_%var(addr_mode)")(line _id, line addr, line page_cross, global VAR_S_CPU_REG_PC);
+}

@@ -1,0 +1,21 @@
+#!import macro/enum/debug.tcm
+#!import macro/enum/manager.tcm
+#!import macro/session_vars.tcm
+
+FUNCTION s_init_device;
+PARAM _id: var;
+
+#!expand macro/session_vars.tcm
+
+global VAR_S_DEBUG_LEVEL = E_DEBUG_LOG_LEVEL_LOW;
+global VAR_S_DEBUG_STEP_MODE = E_DEBUG_STEP_MODE_CPU;
+global VAR_S_DEBUG_PAUSE_AT = E_MANAGER_STATE_IDLE;
+
+call s_test_init(line _id);
+call s_meta_init(line _id);
+call s_manager_init(line _id);
+call s_bus_init(line _id);
+call s_ram_init(line _id);
+call s_prg_init(line _id);
+call s_ppu_init(line _id);
+call s_cpu_init(line _id);

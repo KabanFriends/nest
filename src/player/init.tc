@@ -1,0 +1,17 @@
+#!import macro/player_vars.tcm
+#!import macro/global_vars.tcm
+#!import macro/const.tcm
+
+FUNCTION p_init;
+PARAM _p: var;
+
+#!expand macro/player_vars.tcm
+#!expand macro/global_vars.tcm
+
+global VAR_P_META_ATTACHED = C_ATTACHED_NONE;
+global VAR_P_INSPECTOR_RAM_PAGE = 0;
+global VAR_P_INSPECTOR_ROM_PAGE = 0;
+
+if (global g_debug_enabled == TRUE) {
+    default:SetSidebarVisible(){"Sidebar" = "Enable"};
+}

@@ -1,0 +1,26 @@
+#!import macro/session_vars.tcm
+
+PLAYER_EVENT Join;
+
+#!expand macro/session_vars.tcm
+
+# Init player
+line _p = default.UUID;
+call p_init(line _p);
+
+# Create session and attach
+line _id = call g_make_session;
+
+call s_init_device(line _id);
+call s_meta_attach(line _id, line _p);
+
+call s_prg_rom_mario(line _id);
+
+call s_prg_run(line _id);
+
+# Run tests
+# global VAR_S_TEST_ID = 7;
+
+# call s_test_pre_begin(line _id);
+# call ("s_test_%var(%var(_id)_test_id)")(line _id);
+# call s_test_begin(line _id);

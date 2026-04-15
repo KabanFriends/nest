@@ -1,0 +1,8 @@
+#!import macro/session_vars.tcm
+
+FUNCTION s_debug_step;
+PARAM _id: var;
+
+#!expand macro/session_vars.tcm
+
+global VAR_S_MANAGER_STATE = global VAR_S_DEBUG_PAUSE_AT;

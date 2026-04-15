@@ -1,0 +1,13 @@
+#!import macro/const.tcm
+#!import macro/session_vars.tcm
+
+FUNCTION s_cpu_u_absaddr_4; # Absolute
+PARAM _id: var;
+PARAM a: var; # (addr_out)
+PARAM page_cross_out: var;
+PARAM addr: var;
+
+#!expand macro/session_vars.tcm
+
+#!expand macro/util/mem_read_16.tcm
+line page_cross_out = FALSE;

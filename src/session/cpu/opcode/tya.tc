@@ -1,0 +1,12 @@
+#!import macro/enum/cpu.tcm
+#!import macro/session_vars.tcm
+
+FUNCTION s_cpu_op_tya;
+PARAM _id: var;
+PARAM addr_mode: var;
+
+#!expand macro/session_vars.tcm
+
+global VAR_S_CPU_REG_A = global VAR_S_CPU_REG_Y;
+
+#!expand macro/cpu/flag_zero_negative_with_a.tcm

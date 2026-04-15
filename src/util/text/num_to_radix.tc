@@ -1,0 +1,34 @@
+FUNCTION u_num_to_radix;
+PARAM value: num;
+PARAM digits: optional num = 2;
+PARAM radix: optional num = 16;
+RETURNS str;
+
+#!expand macro/global_vars.tcm
+
+line result = "";
+
+if (line radix < 2) {
+    return "ERROR";
+}
+if (line radix > 16) {
+    return "ERROR";
+}
+
+# Build digits from right to left
+while (line value > 0) {
+    line rem = line value % line radix;
+    line result = global g_radix_symbols[line rem + 1]: str + line result;
+    line value = num:Round(line value / line radix){"Round Mode" = "Floor"};
+}
+
+# Pad with leading zeros
+line length = str:Len(line result);
+line result = str:Repeat("0", line digits - line length) + line result;
+
+# Trim overflow
+if (line length > line digits) {
+    line result = str:Trim(line result, line length - line digits + 1);
+}
+
+return line result;
