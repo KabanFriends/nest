@@ -1,0 +1,24 @@
+#!import macro/enum/ppu.tcm
+#!import macro/rom/nestest.tcm
+
+FUNCTION s_prg_rom_nestest;
+PARAM _id: var;
+
+line prg = [
+    "ROM_PRG0",
+    "ROM_PRG1",
+    "ROM_PRG2",
+    "ROM_PRG3"
+];
+
+line chr = [
+    "ROM_CHR0",
+    "ROM_CHR1"
+];
+
+call s_prg_rom_load(
+    line _id,
+    E_PPU_MIRRORING_HORIZONTAL,
+    line prg,
+    line chr
+);

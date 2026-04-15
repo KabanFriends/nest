@@ -3,6 +3,8 @@
 .build/
 
 src/macro/rom/*.tcm
+!src/macro/rom/nestest.tcm
+
 *.nes
 *.fdb
 *.nl
