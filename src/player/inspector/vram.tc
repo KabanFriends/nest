@@ -4,7 +4,7 @@
 
 #!define    PAGE_SIZE   0x100
 
-FUNCTION p_inspector_ram;
+FUNCTION p_inspector_vram;
 PARAM _p: var;
 PARAM _id: var;
 PARAM page: num;
@@ -16,7 +16,7 @@ default:SendMessage(s"");
 default:SendMessage(s"");
 default:SendMessage(s"");
 
-line maxPages = num:Round(C_RAM_SIZE / PAGE_SIZE){"Round Mode" = "Ceiling"};
+line maxPages = num:Round(C_PPU_VRAM_SIZE / PAGE_SIZE){"Round Mode" = "Ceiling"};
 line realPage = num:Clamp(line page, 0, line maxPages - 1);
 line start = line realPage * PAGE_SIZE;
 line lines = num:Round(PAGE_SIZE / 16){"Round Mode" = "Ceiling"};
@@ -32,8 +32,8 @@ repeat (line i to line lines) {
     repeat (line j to 16) {
         line index = line j - 1;
         line addr = line base + line index;
-        if (line addr < C_RAM_SIZE) {
-            line line += call u_num_to_radix(global VAR_S_RAM[line addr + 1], 2) + s" ";
+        if (line addr < C_PPU_VRAM_SIZE) {
+            line line += call u_num_to_radix(global VAR_S_PPU_VRAM[line addr + 1], 2) + s" ";
         } else {
             line line += s"__ ";
         }
@@ -42,16 +42,16 @@ repeat (line i to line lines) {
     default:SendMessage(line line);
 }
 
-line ex = "<gold><click:run_command:@inspect ram>[Refresh]</click></gold> ";
+line ex = "<gold><click:run_command:@inspect vram>[Refresh]</click></gold> ";
 if (line page > 0) {
     line target = line page - 1;
-    line ex += "<red><click:run_command:@inspect ram " + (line page - 1) + ">[Prev]</click></red> ";
+    line ex += "<red><click:run_command:@inspect vram " + (line page - 1) + ">[Prev]</click></red> ";
 } else {
     line ex += "<dark_gray>[Prev]</dark_gray> ";
 }
 
 if (line page < line maxPages - 1) {
-    line ex += "<green><click:run_command:@inspect ram " + (line page + 1) + ">[Next]</click></green>";
+    line ex += "<green><click:run_command:@inspect vram " + (line page + 1) + ">[Next]</click></green>";
 } else {
     line ex += "<dark_gray>[Next]</dark_gray>";
 }
@@ -59,8 +59,8 @@ if (line page < line maxPages - 1) {
 default:SendMessage(txt:ParseExpression(line ex){"Allowed Tags" = "Full"});
 default:SendMessage(
     s"<green><click:run_command:@inspect cpu>[CPU]</click></green> " +
-    s"<dark_gray>[RAM]</dark_gray> " +
+    s"<yellow><click:run_command:@inspect ram>[RAM]</click></yellow> " +
     s"<red><click:run_command:@inspect rom>[ROM]</click></red> " +
-    s"<light_purple><click:run_command:@inspect vram>[VRAM]</click></light_purple> " +
+    s"<dark_gray>[VRAM]</dark_gray> " +
     s"<aqua><click:run_command:@inspect mn>[MN]</click></aqua>"
 );

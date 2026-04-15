@@ -2,8 +2,10 @@
 
 #!define    VAR_P_INSPECTOR_RAM_PAGE    ("%var(_p)_inspector_ram_page")
 #!define    VAR_P_INSPECTOR_ROM_PAGE    ("%var(_p)_inspector_rom_page")
+#!define    VAR_P_INSPECTOR_VRAM_PAGE   ("%var(_p)_inspector_vram_page")
 
 global VAR_P_META_ATTACHED: str;
 
 global VAR_P_INSPECTOR_RAM_PAGE: num;
 global VAR_P_INSPECTOR_ROM_PAGE: num;
+global VAR_P_INSPECTOR_VRAM_PAGE: num;

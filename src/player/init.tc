@@ -11,6 +11,7 @@ PARAM _p: var;
 global VAR_P_META_ATTACHED = C_ATTACHED_NONE;
 global VAR_P_INSPECTOR_RAM_PAGE = 0;
 global VAR_P_INSPECTOR_ROM_PAGE = 0;
+global VAR_P_INSPECTOR_VRAM_PAGE = 0;
 
 if (global g_debug_enabled == TRUE) {
     default:SetSidebarVisible(){"Sidebar" = "Enable"};

@@ -74,6 +74,6 @@ default:SendMessage(
     s"<green><click:run_command:@inspect cpu>[CPU]</click></green> " +
     s"<yellow><click:run_command:@inspect ram>[RAM]</click></yellow> " +
     s"<dark_gray>[ROM]</dark_gray> " +
-    s"<light_purple><click:run_command:@inspect bus>[BUS]</click></light_purple> " +
+    s"<light_purple><click:run_command:@inspect vram>[VRAM]</click></light_purple> " +
     s"<aqua><click:run_command:@inspect mn>[MN]</click></aqua>"
 );

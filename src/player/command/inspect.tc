@@ -43,6 +43,13 @@ if (game?CommandEquals("inspect"){"Check Mode" = "Check beginning"}) {
         call p_inspector_rom(line _p, global VAR_P_META_ATTACHED, global VAR_P_INSPECTOR_ROM_PAGE);
         return;
     }
+    if (line mode == "vram") {
+        if (line alen > 2) {
+            global VAR_P_INSPECTOR_VRAM_PAGE = num:Parse(game.EventCommandArguments[3]);
+        }
+        call p_inspector_vram(line _p, global VAR_P_META_ATTACHED, global VAR_P_INSPECTOR_VRAM_PAGE);
+        return;
+    }
 
     default:SendMessage(s"<red>Invalid inspector mode.</red>");
     return;
