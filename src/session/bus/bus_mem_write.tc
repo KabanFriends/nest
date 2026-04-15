@@ -76,4 +76,4 @@ if (line address <= C_BUS_MEM_PPU_END) {
     }
 }
 
-call s_log_error(line _id, s"Memory write to unsupported address: " + call u_num_to_radix(line address, 4) + " (PC=" + call u_num_to_radix(global VAR_S_CPU_PC, 4) + ")");
+call s_log_error(line _id, s"Memory write to unsupported address: " + call u_num_to_radix(line address, 4) + " (PC=" + call u_num_to_radix(global VAR_S_CPU_REG_PC, 4) + ")");

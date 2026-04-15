@@ -34,5 +34,5 @@ if (line addr <= C_PPU_MEM_PALETTE_END) {
     return global VAR_S_PPU_PALETTE_TABLE[line addr];
 }
 
-call s_log_error(line _id, s"PPU data read from unsupported address: " + call u_num_to_radix(line addr, 4));
+call s_log_error(line _id, s"PPU data read from unsupported address: " + call u_num_to_radix(line addr, 4) + " (PC=" + call u_num_to_radix(global VAR_S_CPU_REG_PC, 4) + ")");
 return 0;
