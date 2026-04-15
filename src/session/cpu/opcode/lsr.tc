@@ -20,5 +20,6 @@ if (line carry != 0) {
 }
 
 line a = line a >> 1;
+line a = line a & 0xFF;
 call s_bus_mem_write(line _id, line addr, line a);
 #!expand macro/cpu/flag_zero_negative.tcm

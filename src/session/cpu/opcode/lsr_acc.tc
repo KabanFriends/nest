@@ -16,4 +16,5 @@ if (line carry != 0) {
 }
 
 global VAR_S_CPU_REG_A = global VAR_S_CPU_REG_A >> 1;
+global VAR_S_CPU_REG_A = global VAR_S_CPU_REG_A & 0xFF;
 #!expand macro/cpu/flag_zero_negative_with_a.tcm
