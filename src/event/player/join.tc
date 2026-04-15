@@ -8,6 +8,9 @@ PLAYER_EVENT Join;
 line _p = default.UUID;
 call p_init(line _p);
 
+wait(2){"Time Unit" = "Seconds"};
+default:SendMessage("Start");
+
 # Create session and attach
 line _id = call g_make_session;
 
@@ -17,6 +20,8 @@ call s_meta_attach(line _id, line _p);
 call s_prg_rom_mario(line _id);
 
 call s_prg_run(line _id);
+
+call p_runner_send_chr(line _id);
 
 # Run tests
 # global VAR_S_TEST_ID = 7;

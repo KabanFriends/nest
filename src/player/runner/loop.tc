@@ -1,0 +1,3 @@
+FUNCTION p_runner_loop;
+
+default:Teleport(global g_runner_location);

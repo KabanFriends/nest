@@ -10,3 +10,8 @@ global g_opcode_func_names: list;
 global g_opcode_lengths: list;
 global g_opcode_cycles: list;
 global g_opcode_addr_modes: list;
+
+global g_runner_location: loc;
+
+global g_data_particle: par;
+global g_data_location: loc;

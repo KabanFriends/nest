@@ -17,4 +17,9 @@ global g_last_session_id = 0;
 global g_active_sessions = [];
 global g_ticks = 0;
 
+global g_runner_location = loc(16, 50, 16);
+
+global g_data_particle = par("Flash");
+global g_data_location = loc(16, 63, 16);
+
 start g_loop_process;

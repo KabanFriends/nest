@@ -1,0 +1,23 @@
+#!import macro/session_vars.tcm
+#!import macro/global_vars.tcm
+#!import macro/const.tcm
+
+FUNCTION s_par_chr;
+PARAM _id: var;
+PARAM tile: num;
+PARAM seq: num;
+
+#!expand macro/session_vars.tcm
+#!expand macro/global_vars.tcm
+
+line address = line tile * 16 + line seq + 1;
+line byte: num = global VAR_S_PPU_CHR[line address];
+
+line c_addr = line tile << 15;
+line c_seq = line seq << 11;
+line c_byte = line byte << 3;
+
+line color = line c_addr + line c_seq + line c_byte;
+
+### make_particle
+par:SetColor(global g_data_particle, call u_num_to_radix(line color, 6));

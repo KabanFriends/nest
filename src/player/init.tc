@@ -15,3 +15,5 @@ global VAR_P_INSPECTOR_ROM_PAGE = 0;
 if (global g_debug_enabled == TRUE) {
     default:SetSidebarVisible(){"Sidebar" = "Enable"};
 }
+
+start p_runner_loop_process;

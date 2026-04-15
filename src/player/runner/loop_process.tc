@@ -1,0 +1,6 @@
+PROCESS p_runner_loop_process;
+
+repeat {
+    call p_runner_loop;
+    wait(1);
+}
