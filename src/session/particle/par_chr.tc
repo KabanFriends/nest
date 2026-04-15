@@ -19,5 +19,4 @@ line c_byte = line byte << 3;
 
 line color = line c_addr + line c_seq + line c_byte;
 
-### make_particle
-par:SetColor(global g_data_particle, call u_num_to_radix(line color, 6));
+#!expand macro/make_particle.tcm

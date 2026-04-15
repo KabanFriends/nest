@@ -9,8 +9,5 @@ PARAM uuid: str;
 #!expand macro/session_vars.tcm
 #!expand macro/player_vars.tcm
 
-if (list?Contains(global VAR_S_META_ATTACHED, line _p)) {
-    return;
-}
-list:Append(global VAR_S_META_ATTACHED, line _p);
+global VAR_S_META_ATTACHED = line _p;
 global VAR_P_META_ATTACHED = line _id;

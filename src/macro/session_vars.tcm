@@ -49,6 +49,7 @@
 #!define    VAR_S_PPU_ADDR_LATCH    ("%var(_id)_ppu_addr_latch")
 #!define    VAR_S_PPU_SCRL_LATCH    ("%var(_id)_ppu_scrl_latch")
 #!define    VAR_S_PPU_MIRRORING     ("%var(_id)_ppu_mirroring")
+#!define    VAR_S_PPU_DIRTY_VRAM    ("%var(_id)_ppu_dirty_vram")
 
 global VAR_S_DEBUG_LEVEL: num;
 global VAR_S_DEBUG_STEP_MODE: num;
@@ -56,7 +57,7 @@ global VAR_S_DEBUG_PAUSE_AT: num;
 global VAR_S_TEST_ID: num;
 global VAR_S_TEST_NAME: str;
 
-global VAR_S_META_ATTACHED: list;
+global VAR_S_META_ATTACHED: str;
 
 global VAR_S_MANAGER_STATE: num;
 global VAR_S_MANAGER_CPU_SUSPEND: num;
@@ -99,3 +100,4 @@ global VAR_S_PPU_REG_STATUS: num;
 global VAR_S_PPU_ADDR_LATCH: num;
 global VAR_S_PPU_SCRL_LATCH: num;
 global VAR_S_PPU_MIRRORING: num;
+global VAR_S_PPU_DIRTY_VRAM: dict;

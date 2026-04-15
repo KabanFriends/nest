@@ -1,0 +1,17 @@
+#!import macro/session_vars.tcm
+
+FUNCTION s_par_vram;
+PARAM _id: var;
+PARAM addr: num;
+
+#!expand macro/session_vars.tcm
+
+line byte: num = global VAR_S_PPU_VRAM[line addr];
+
+line addr -= 1;
+line c_addr = line addr << 13;
+line c_byte = line byte << 5;
+
+line color = line c_addr + line c_byte;
+
+#!expand macro/make_particle.tcm

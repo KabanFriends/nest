@@ -1,6 +1,7 @@
 #!import macro/enum/ppu.tcm
 #!import macro/const.tcm
 #!import macro/session_vars.tcm
+#!import macro/global_vars.tcm
 
 FUNCTION s_ppu_data_write;
 PARAM _id: var;
@@ -9,6 +10,7 @@ PARAM value: var;
 line value: num;
 
 #!expand macro/session_vars.tcm
+#!expand macro/global_vars.tcm
 
 #!define    ADDR    global VAR_S_PPU_REG_ADDR
 
@@ -24,6 +26,9 @@ ADDR = ADDR & 0x3FFF;
 if (var?IsInRange(line addr, C_PPU_MEM_VRAM_START, C_PPU_MEM_VRAM_END)) {
 #!expand macro/ppu/mirror_vram_address.tcm
     line addr_out += 1;
+    if (global VAR_S_PPU_VRAM[line addr_out] != line value) {
+        global VAR_S_PPU_DIRTY_VRAM[global g_num_to_str[line addr_out]] = line addr_out;
+    }
     global VAR_S_PPU_VRAM[line addr_out] = line value;
     return;
 }

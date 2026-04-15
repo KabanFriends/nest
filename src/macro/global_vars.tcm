@@ -2,6 +2,9 @@ global g_debug_enabled: num;
 
 global g_radix_symbols: list;
 
+global g_num_to_str: list;
+global g_str_to_num: dict;
+
 global g_last_session_id: num;
 global g_active_sessions: list;
 global g_ticks: num;

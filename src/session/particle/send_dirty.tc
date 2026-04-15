@@ -1,0 +1,19 @@
+#!import macro/session_vars.tcm
+#!import macro/const.tcm
+
+FUNCTION s_par_send_dirty;
+PARAM _id: var;
+
+#!expand macro/session_vars.tcm
+
+#!expand macro/select_attached.tcm
+
+loc:SetCoordinate(global g_data_location, C_PAR_OPCODE_NAMETABLE){"Coordinate" = "Y"};
+for (line _, line addr in global VAR_S_PPU_DIRTY_VRAM) {
+    call s_par_vram(line _id, line addr);
+    selected:DisplayParticleEffect(global g_data_particle, global g_data_location);
+}
+
+dict:Clear(global VAR_S_PPU_DIRTY_VRAM);
+
+select Nothing;

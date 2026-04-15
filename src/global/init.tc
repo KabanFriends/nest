@@ -13,11 +13,22 @@ global g_radix_symbols = [
     "A", "B", "C", "D", "E", "F"
 ];
 
+global g_num_to_str = [];
+global g_str_to_num = {};
+
+line num = 0;
+repeat (5000) {
+    line str = str:SetToString(line num);
+    list:Append(global g_num_to_str, line str);
+    global g_str_to_num[line str] = line num;
+    line num += 1;
+}
+
 global g_last_session_id = 0;
 global g_active_sessions = [];
 global g_ticks = 0;
 
-global g_runner_location = loc(16, 50, 16);
+global g_runner_location = loc(16, 50, 16, -90, 0);
 
 global g_data_particle = par("Flash");
 global g_data_location = loc(16, 63, 16);

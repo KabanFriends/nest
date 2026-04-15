@@ -27,6 +27,10 @@ repeat {
     }
 }
 
+for (line sid in global g_active_sessions) {
+    call s_par_send_dirty(line sid);
+}
+
 if (global g_debug_enabled == TRUE) {
     line tps = game.ServerTPS;
     allPlayers:SetScoreboardObjectiveName(s"<red>TPS:</red> %var(tps)");
