@@ -25,4 +25,4 @@ if (line old_carry != 0) {
     line a = line a | 0b10000000;
 }
 call s_bus_mem_write(line _id, line addr, line a);
-#!expand macro/cpu/flag_zero_negative.tcm
+#!expand macro/cpu/flag_negative.tcm
