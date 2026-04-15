@@ -4,7 +4,7 @@
 
 FUNCTION s_bus_mem_read;
 PARAM _id: var;
-PARAM address: num;
+PARAM address: var;
 RETURNS num;
 
 #!expand macro/session_vars.tcm

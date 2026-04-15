@@ -4,7 +4,8 @@
 
 line addr: num;
 
+line addr2 = line addr + 1;
 line lo = call s_bus_mem_read(line _id, line addr);
-line a = call s_bus_mem_read(line _id, line addr + 1);
+line a = call s_bus_mem_read(line _id, line addr2);
 line a = line a << 8;
 line a = line a | line lo;
