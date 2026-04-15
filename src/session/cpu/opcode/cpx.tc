@@ -1,4 +1,5 @@
 #!import macro/enum/cpu.tcm
+#!import macro/const.tcm
 #!import macro/session_vars.tcm
 
 FUNCTION s_cpu_op_cpx;
@@ -20,3 +21,7 @@ if (line b <= line a) {
 
 #!expand macro/util/wrapping_sub.tcm
 #!expand macro/cpu/flag_zero_negative.tcm
+
+if (line page_cross == TRUE) {
+    global VAR_S_MANAGER_BUS_TICKS_LEFT += 1;
+}

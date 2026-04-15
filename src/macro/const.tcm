@@ -27,6 +27,7 @@
 #!define    C_PPU_MEM_VRAM_END      0x2FFF
 #!define    C_PPU_MEM_PALETTE_START 0x3F00
 #!define    C_PPU_MEM_PALETTE_END   0x3FFF
+#!define    C_PPU_STATUS_RESET      0b00010000
 
 #!define    C_BUS_MEM_RAM_START 0x0000
 #!define    C_BUS_MEM_RAM_END   0x1FFF

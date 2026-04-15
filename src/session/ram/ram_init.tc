@@ -8,6 +8,13 @@ PARAM _id: var;
 
 global VAR_S_RAM = [];
 
+line addr = 0;
 repeat (C_RAM_SIZE) {
-    list:Append(global VAR_S_RAM, 0);
+    line eight = line addr % 8;
+    if (line eight >= 4) {
+        list:Append(global VAR_S_RAM, 0xFF);
+    } else {
+        list:Append(global VAR_S_RAM, 0x00);
+    }
+    line addr += 1;
 }

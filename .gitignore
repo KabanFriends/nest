@@ -4,6 +4,8 @@
 
 src/macro/rom/*.tcm
 *.nes
+*.fdb
+*.nl
 rom_chr.txt
 rom_prg.txt
 

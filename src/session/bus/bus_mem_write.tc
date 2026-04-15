@@ -24,7 +24,7 @@ if (line address <= C_BUS_MEM_PPU_END) {
     line ppuAddress = line address & C_PPU_WRAP_MASK;
 
     if (line ppuAddress == 0x2000) {
-        call s_log_debug_low(line _id, s"[BUS] Write to PPU CTRL");
+        #call s_log_debug_low(line _id, s"[BUS] Write to PPU CTRL");
         line prevNmi = global VAR_S_PPU_REG_CTRL & E_PPU_CTRL_FLAG_GENERATE_NMI;
         global VAR_S_PPU_REG_CTRL = line value;
         if (line prevNmi == 0) {
@@ -38,19 +38,19 @@ if (line address <= C_BUS_MEM_PPU_END) {
     }
 
     if (line ppuAddress == 0x2001) {
-        call s_log_debug_low(line _id, s"[BUS] Write to PPU MASK");
+        #call s_log_debug_low(line _id, s"[BUS] Write to PPU MASK");
         global VAR_S_PPU_REG_MASK = line value;
         return;
     }
 
     if (line ppuAddress == 0x2003) {
-        call s_log_debug_low(line _id, s"[BUS] Write to PPU OAM ADDR");
+        #call s_log_debug_low(line _id, s"[BUS] Write to PPU OAM ADDR");
         global VAR_S_PPU_OAM_ADDR = line value;
         return;
     }
 
     if (line ppuAddress == 0x2004) {
-        call s_log_debug_low(line _id, s"[BUS] Write to PPU OAM DATA");
+        #call s_log_debug_low(line _id, s"[BUS] Write to PPU OAM DATA");
         global VAR_S_PPU_OAM_DATA[global VAR_S_PPU_OAM_ADDR + 1] = line value;
         global VAR_S_PPU_OAM_ADDR += 1;
         global VAR_S_PPU_OAM_ADDR = global VAR_S_PPU_OAM_ADDR & 0xFF;
@@ -58,19 +58,19 @@ if (line address <= C_BUS_MEM_PPU_END) {
     }
 
     if (line ppuAddress == 0x2005) {
-        call s_log_debug_low(line _id, s"[BUS] Write to PPU SCRL");
+        #call s_log_debug_low(line _id, s"[BUS] Write to PPU SCRL");
         call s_ppu_scrl_write(line _id, line value);
         return;
     }
 
     if (line ppuAddress == 0x2006) {
-        call s_log_debug_low(line _id, s"[BUS] Write to PPU ADDR");
+        #call s_log_debug_low(line _id, s"[BUS] Write to PPU ADDR");
         call s_ppu_addr_write(line _id, line value);
         return;
     }
 
     if (line ppuAddress == 0x2007) {
-        call s_log_debug_low(line _id, s"[BUS] Write to PPU DATA");
+        #call s_log_debug_low(line _id, s"[BUS] Write to PPU DATA");
         call s_ppu_data_write(line _id, line value);
         return;
     }
