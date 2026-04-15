@@ -1,0 +1,26 @@
+#!import macro/enum/debug.tcm
+#!import macro/const.tcm
+#!import macro/player_vars.tcm
+#!import macro/session_vars.tcm
+
+FUNCTION p_command_cpudebug;
+PARAM _p: var;
+
+#!expand macro/player_vars.tcm
+#!expand macro/session_vars.tcm
+
+if (game?CommandEquals("cpudebug"){"Check Mode" = "Check beginning"}) {
+        if (!default?HasPlotPermission(){"Permission" = "Developer"}) {
+        default:SendMessage(s"<red>You do not have permission to use this command.</red>");
+        return;
+    }
+
+    if (global VAR_P_META_ATTACHED == C_ATTACHED_NONE) {
+        default:SendMessage(s"<red>You are not attached to a session.</red>");
+        return;
+    }
+
+    line _id = global VAR_P_META_ATTACHED;
+    global VAR_S_DEBUG_STEP_MODE = E_DEBUG_STEP_MODE_CPU;
+    default:SendMessage(s"<green>CPU step enabled</green>");
+}

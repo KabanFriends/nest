@@ -4,3 +4,4 @@ line _p = default.UUID;
 
 call p_command_inspect(line _p);
 call p_command_step(line _p);
+call p_command_cpudebug(line _p);
