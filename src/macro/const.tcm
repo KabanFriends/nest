@@ -3,12 +3,11 @@
 
 #!define    C_ATTACHED_NONE "null"
 
-#!define    C_CPU_STACK                 0x0100
-#!define    C_CPU_PC_RESET              0x8000
-#!define    C_CPU_SP_RESET              0xFD
-#!define    C_CPU_P_RESET               0b100100
-#!define    C_CPU_NMI_HANDLER_LOW       0xFFFA
-#!define    C_CPU_NMI_HANDLER_HIGH      0xFFFB
+#!define    C_CPU_STACK             0x0100
+#!define    C_CPU_PC_RESET          0x8000
+#!define    C_CPU_SP_RESET          0xFD
+#!define    C_CPU_P_RESET           0b100100
+#!define    C_CPU_NMI_HANDLER       0xFFFA
 
 #!define    C_RAM_SIZE      0x0800
 #!define    C_RAM_WRAP_MASK 0x07FF

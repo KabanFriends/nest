@@ -12,14 +12,26 @@ line value: num;
 
 #!define    ADDR    global VAR_S_PPU_REG_ADDR
 
-if (var?IsInRange(ADDR, C_PPU_MEM_VRAM_START, C_PPU_MEM_VRAM_END)) {
-    line addr = ADDR;
-#!expand macro/ppu/mirror_vram_address.tcm
-    global VAR_S_PPU_VRAM[line addr_out + 1] = line value;
+# increment addr register address
+line addr = ADDR;
+if (global VAR_S_PPU_REG_CTRL & E_PPU_CTRL_FLAG_VRAM_ADDR_INCREMENT > 0) {
+    ADDR += 32;
+} else {
+    ADDR += 1;
 }
-if (var?IsInRange(ADDR, C_PPU_MEM_PALETTE_START, C_PPU_MEM_PALETTE_END)) {
-    line index = (ADDR & 0x1F) + 1;
-    global VAR_S_PPU_PALETTE_TABLE[line index] = line value;
+ADDR = ADDR & 0x3FFF;
+
+if (var?IsInRange(line addr, C_PPU_MEM_VRAM_START, C_PPU_MEM_VRAM_END)) {
+#!expand macro/ppu/mirror_vram_address.tcm
+    line addr_out += 1;
+    global VAR_S_PPU_VRAM[line addr_out] = line value;
+    return;
+}
+if (var?IsInRange(line addr, C_PPU_MEM_PALETTE_START, C_PPU_MEM_PALETTE_END)) {
+    line addr = line addr & 0x1F;
+    line addr += 1;
+    global VAR_S_PPU_PALETTE_TABLE[line addr] = line value;
+    return;
 }
 
-call s_log_error(line _id, s"PPU data write to unsupported address: " + call u_num_to_radix(ADDR, 4));
+call s_log_error(line _id, s"PPU data write to unsupported address: " + call u_num_to_radix(line addr, 4));
