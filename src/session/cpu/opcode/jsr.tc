@@ -7,7 +7,7 @@ PARAM addr_mode: var;
 
 #!expand macro/session_vars.tcm
 
-line a = global VAR_S_CPU_REG_SP + 1;
+line a = global VAR_S_CPU_REG_PC + 1;
 
 #!expand macro/cpu/stack_push_16.tcm
 
