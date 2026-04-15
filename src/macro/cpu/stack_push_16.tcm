@@ -4,13 +4,13 @@
 #!import macro/const.tcm
 #!import macro/session_vars.tcm
 
-line b = line a >> 8;
-line a = line a & 0xFF;
+line b = line a >> 8;    # hi
+line a = line a & 0xFF;  # lo
 
-call s_bus_mem_write(line _id, C_CPU_STACK + global VAR_S_CPU_REG_SP, line a);
+call s_bus_mem_write(line _id, C_CPU_STACK + global VAR_S_CPU_REG_SP, line b);
 global VAR_S_CPU_REG_SP -= 1;
 global VAR_S_CPU_REG_SP = global VAR_S_CPU_REG_SP & 0xFF;
 
-call s_bus_mem_write(line _id, C_CPU_STACK + global VAR_S_CPU_REG_SP, line b);
+call s_bus_mem_write(line _id, C_CPU_STACK + global VAR_S_CPU_REG_SP, line a);
 global VAR_S_CPU_REG_SP -= 1;
 global VAR_S_CPU_REG_SP = global VAR_S_CPU_REG_SP & 0xFF;

@@ -7,11 +7,11 @@
 global VAR_S_CPU_REG_SP += 1;
 global VAR_S_CPU_REG_SP = global VAR_S_CPU_REG_SP & 0xFF;
 line addr = C_CPU_STACK + global VAR_S_CPU_REG_SP;
-line a = call s_bus_mem_read(line _id, line addr);
+line a = call s_bus_mem_read(line _id, line addr); # lo
 
 global VAR_S_CPU_REG_SP += 1;
 global VAR_S_CPU_REG_SP = global VAR_S_CPU_REG_SP & 0xFF;
 line addr = C_CPU_STACK + global VAR_S_CPU_REG_SP;
-line b = call s_bus_mem_read(line _id, line addr);
+line b = call s_bus_mem_read(line _id, line addr); # hi
 
-line a = line a | (line b << 8);
+line a = (line b << 8) | line a;
