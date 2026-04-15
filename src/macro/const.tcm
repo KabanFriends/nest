@@ -4,7 +4,7 @@
 #!define    C_ATTACHED_NONE         "null"
 
 #!define    C_CPU_STACK             0x0100
-#!define    C_CPU_PC_RESET          0x8000
+#!define    C_CPU_PC_RESET          0xFFFC
 #!define    C_CPU_SP_RESET          0xFD
 #!define    C_CPU_P_RESET           0b100100
 #!define    C_CPU_NMI_HANDLER       0xFFFA
