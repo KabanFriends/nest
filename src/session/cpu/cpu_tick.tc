@@ -16,12 +16,8 @@ if (global VAR_S_MANAGER_CPU_SUSPEND == 0) {
 }
 
 line index = global VAR_S_CPU_CODE + 1;
-line funcName: str = global g_opcode_func_names[line index];
-line length: num = global g_opcode_lengths[line index];
-line cycles: num = global g_opcode_cycles[line index];
-line addrMode: num = global g_opcode_addr_modes[line index];
 
-call ("%var(funcName)")(line _id, line addrMode);
+call ("%index(g_opcode_func_names, %var(index))")(line _id, global g_opcode_addr_modes[line index]);
 
 # CPU entered the suspended state during the instruction. Skip to the bus tick
 if (global VAR_S_MANAGER_CPU_SUSPEND > 0) {
@@ -45,7 +41,7 @@ if (global VAR_S_CPU_ERROR_STATE != E_CPU_ERROR_STATE_NONE) {
 
 # If the instruction didn't change the program counter, increment it by the instruction length
 if (global VAR_S_CPU_PC_STATE == global VAR_S_CPU_REG_PC) {
-    global VAR_S_CPU_REG_PC += line length - 1;
+    global VAR_S_CPU_REG_PC += global g_opcode_lengths[line index];
 }
 
-global VAR_S_MANAGER_BUS_TICKS_LEFT += line cycles;
+global VAR_S_MANAGER_BUS_TICKS_LEFT += global g_opcode_cycles[line index];
