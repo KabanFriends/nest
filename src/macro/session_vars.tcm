@@ -50,7 +50,6 @@
 #!define    VAR_S_PPU_DATA_BUFFER   ("%var(_id)_ppu_data_buffer")
 #!define    VAR_S_PPU_ADDR_TEMP     ("%var(_id)_ppu_addr_temp")
 #!define    VAR_S_PPU_LATCH         ("%var(_id)_ppu_latch")
-#!define    VAR_S_PPU_OPEN_BUS      ("%var(_id)_ppu_open_bus")
 #!define    VAR_S_PPU_MIRRORING     ("%var(_id)_ppu_mirroring")
 #!define    VAR_S_PPU_DIRTY_VRAM    ("%var(_id)_ppu_dirty_vram")
 
@@ -109,7 +108,6 @@ global VAR_S_PPU_REG_STATUS: num;
 global VAR_S_PPU_DATA_BUFFER: num;
 global VAR_S_PPU_ADDR_TEMP: num;
 global VAR_S_PPU_LATCH: num;
-global VAR_S_PPU_OPEN_BUS: num;
 global VAR_S_PPU_MIRRORING: num;
 global VAR_S_PPU_DIRTY_VRAM: dict;
 

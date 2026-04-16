@@ -20,14 +20,11 @@ if (line address <= C_BUS_MEM_PPU_END) {
     line ppuAddress = line address & C_PPU_WRAP_MASK;
 
     if (line ppuAddress == 0x2002) {
-        # lower 5 bits are open bus, upper 3 bits are status flags
-        global VAR_S_PPU_OPEN_BUS = global VAR_S_PPU_OPEN_BUS & 0x1F;
-        global VAR_S_PPU_OPEN_BUS += global VAR_S_PPU_REG_STATUS & 0xE0;
-
+        line ret = global VAR_S_PPU_REG_STATUS;
         global VAR_S_PPU_REG_STATUS = global VAR_S_PPU_REG_STATUS & ~E_PPU_STATUS_FLAG_VBLANK_STARTED;
         global VAR_S_PPU_ADDR_LATCH = FALSE;
         global VAR_S_PPU_SCRL_LATCH = FALSE;
-        return global VAR_S_PPU_OPEN_BUS;
+        return line ret;
     }
     
     if (line ppuAddress == 0x2004) {
@@ -36,10 +33,6 @@ if (line address <= C_BUS_MEM_PPU_END) {
 
     if (line ppuAddress == 0x2007) {
         return call s_ppu_data_read(line _id);
-    }
-
-    if (var?Equals(line ppuAddress, 0x2000, 0x2001, 0x2003, 0x2005, 0x2006)) {
-        return global VAR_S_PPU_OPEN_BUS;
     }
 }
 
