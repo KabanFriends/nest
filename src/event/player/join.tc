@@ -17,7 +17,7 @@ line _id = call g_make_session;
 call s_init_device(line _id);
 call s_meta_attach(line _id, line _p);
 
-call s_prg_rom_nestest(line _id);
+call s_prg_rom_accuracy(line _id);
 
 call s_prg_run(line _id);
 
