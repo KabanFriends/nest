@@ -13,9 +13,18 @@ if (global VAR_S_PPU_CYCLES >= 341) {
     global VAR_S_PPU_CYCLES -= 341;
     global VAR_S_PPU_SCANLINE += 1;
 
+    if (global VAR_S_PPU_OAM_DATA[4] == global VAR_S_PPU_SCANLINE) {
+        if (global VAR_S_PPU_OAM_DATA[1] <= global VAR_S_PPU_CYCLES) {
+            if (global VAR_S_PPU_REG_MASK & E_PPU_MASK_FLAG_SHOW_SPR != 0) {
+                global VAR_S_PPU_REG_STATUS = global VAR_S_PPU_REG_STATUS | E_PPU_STATUS_FLAG_SPRITE_ZERO_HIT;
+            }
+        }
+    }
+
     if (global VAR_S_PPU_SCANLINE == 241) {
         #call s_log_debug_low(line _id, s"[PPU] Entering VBlank - flag set");
         global VAR_S_PPU_REG_STATUS = global VAR_S_PPU_REG_STATUS | E_PPU_STATUS_FLAG_VBLANK_STARTED;
+        global VAR_S_PPU_REG_STATUS = global VAR_S_PPU_REG_STATUS & ~E_PPU_STATUS_FLAG_SPRITE_ZERO_HIT;
         if (global VAR_S_PPU_REG_CTRL & E_PPU_CTRL_FLAG_GENERATE_NMI != 0) {
             global VAR_S_BUS_NMI = TRUE;
         }
@@ -24,6 +33,7 @@ if (global VAR_S_PPU_CYCLES >= 341) {
     if (global VAR_S_PPU_SCANLINE >= 262) {
         global VAR_S_PPU_SCANLINE = 0;
         global VAR_S_PPU_REG_STATUS = global VAR_S_PPU_REG_STATUS & ~E_PPU_STATUS_FLAG_VBLANK_STARTED;
+        global VAR_S_PPU_REG_STATUS = global VAR_S_PPU_REG_STATUS & ~E_PPU_STATUS_FLAG_SPRITE_ZERO_HIT;
         return;
     }
 }
