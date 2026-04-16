@@ -76,6 +76,20 @@ if (line address <= C_BUS_MEM_PPU_END) {
     }
 }
 
+# OAM DMA write
+if (line address == 0x4014) {
+    line addr = line value << 8;
+    line addr = line addr & 0xFFFF;
+    repeat (C_PPU_OAM_SIZE) {
+        global VAR_S_PPU_OAM_DATA[global VAR_S_PPU_OAM_ADDR + 1] = call s_bus_mem_read(line _id, line addr);
+        global VAR_S_PPU_OAM_ADDR += 1;
+        global VAR_S_PPU_OAM_ADDR = global VAR_S_PPU_OAM_ADDR & 0xFF;
+        line addr += 1;
+        line addr = line addr & 0xFFFF;
+    }
+    return;
+}
+
 if (line address == C_BUS_MEM_JOY1) {
     call s_joy_write(line _id, line value);
     return;
