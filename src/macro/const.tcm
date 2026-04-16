@@ -36,6 +36,8 @@
 #!define    C_BUS_MEM_PPU_END       0x3FFF
 #!define    C_BUS_MEM_PRG_START     0x8000
 #!define    C_BUS_MEM_PRG_END       0xFFFF
+#!define    C_BUS_MEM_JOY1          0x4016
+#!define    C_BUS_MEM_JOY2          0x4017
 
 #!define    C_PAR_OPCODE_CHR        64
 #!define    C_PAR_OPCODE_NAMETABLE  65

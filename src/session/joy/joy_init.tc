@@ -1,0 +1,17 @@
+#!import macro/session_vars.tcm
+#!import macro/enum/joy.tcm
+#!import macro/const.tcm
+
+FUNCTION s_joy_init;
+PARAM _id: var;
+
+#!expand macro/session_vars.tcm
+
+repeat (line index to 8) {
+    list:Append(global VAR_S_JOY_STATE_1, FALSE);
+    list:Append(global VAR_S_JOY_STATE_2, FALSE);
+}
+
+global VAR_S_JOY_INDEX_1 = E_JOY_BUTTON_A;
+global VAR_S_JOY_INDEX_2 = E_JOY_BUTTON_A;
+global VAR_S_JOY_STROBE = FALSE;

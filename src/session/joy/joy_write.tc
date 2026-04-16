@@ -1,0 +1,17 @@
+#!import macro/session_vars.tcm
+#!import macro/const.tcm
+
+FUNCTION s_joy_write;
+PARAM _id: var;
+PARAM value: var;
+
+line value: num;
+
+#!expand macro/session_vars.tcm
+
+global VAR_S_JOY_STROBE = line value & 1;
+
+if (global VAR_S_JOY_STROBE == TRUE) {
+    global VAR_S_JOY_INDEX_1 = 1;
+    global VAR_S_JOY_INDEX_2 = 1;
+}

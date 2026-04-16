@@ -4,8 +4,14 @@
 #!define    VAR_P_INSPECTOR_ROM_PAGE    ("%var(_p)_inspector_rom_page")
 #!define    VAR_P_INSPECTOR_VRAM_PAGE   ("%var(_p)_inspector_vram_page")
 
+#!define    VAR_P_JOY_BUFFER_SELECT     ("%var(_p)_joy_buffer_select")
+#!define    VAR_P_JOY_BUFFER_START      ("%var(_p)_joy_buffer_start")
+
 global VAR_P_META_ATTACHED: str;
 
 global VAR_P_INSPECTOR_RAM_PAGE: num;
 global VAR_P_INSPECTOR_ROM_PAGE: num;
 global VAR_P_INSPECTOR_VRAM_PAGE: num;
+
+global VAR_P_JOY_BUFFER_SELECT: num;
+global VAR_P_JOY_BUFFER_START: num;

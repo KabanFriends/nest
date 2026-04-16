@@ -25,6 +25,7 @@ if (global VAR_S_MANAGER_STATE == E_MANAGER_STATE_CHECK_NMI) {
         # After setting up the interrupt, bus tick will be set to 2
         # (does this mean remaining bus ticks before the interrupt are lost???)
         call s_cpu_interrupt_setup(line _id);
+        global VAR_S_MANAGER_NMI_READY = TRUE;
     }
     # If there are bus ticks left, go tick the bus first
     if (global VAR_S_MANAGER_BUS_TICKS_LEFT > 0) {
@@ -77,14 +78,14 @@ if (global VAR_S_MANAGER_STATE == E_MANAGER_STATE_CPU_TICK) {
 }
 
 if (global VAR_S_MANAGER_STATE == E_MANAGER_STATE_BUS_TICK) {
-    line nmiState = global VAR_S_BUS_NMI;
     if (global VAR_S_MANAGER_BUS_TICKS_LEFT > 0) {
         call s_ppu_tick(line _id);
         global VAR_S_MANAGER_BUS_TICKS_LEFT -= 1;
     }
     # If we're in the interrupt, set up the program counter and go to CPU
-    if (line nmiState == TRUE) {
+    if (global VAR_S_MANAGER_NMI_READY == TRUE) {
         global VAR_S_BUS_NMI = FALSE;
+        global VAR_S_MANAGER_NMI_READY = FALSE;
         global VAR_S_MANAGER_STATE = E_MANAGER_STATE_CPU_TICK;
         global VAR_S_MANAGER_CPU_TICKS_LEFT = 1;
         call s_cpu_interrupt_run(line _id);
@@ -96,7 +97,7 @@ if (global VAR_S_MANAGER_STATE == E_MANAGER_STATE_BUS_TICK) {
         return;
     }
     global VAR_S_MANAGER_STATE = E_MANAGER_STATE_CHECK_NMI;
-    # When we're done ticking the bus, go tick the CPu
+    # When we're done ticking the bus, go tick the CPU
     if (global VAR_S_MANAGER_BUS_TICKS_LEFT == 0) {
         global VAR_S_MANAGER_CPU_TICKS_LEFT += 1;
         return;

@@ -4,6 +4,7 @@
 
 src/macro/rom/*.tcm
 !src/macro/rom/nestest.tcm
+!src/macro/rom/accuracy.tcm
 
 *.nes
 *.fdb

@@ -1,0 +1,14 @@
+#!import macro/player_vars.tcm
+#!import macro/const.tcm
+
+PLAYER_EVENT DropItem;
+
+#!expand macro/player_vars.tcm
+
+line _p = default.UUID;
+
+game:CancelEvent();
+
+if (global VAR_P_META_ATTACHED != C_ATTACHED_NONE) {
+    global VAR_P_JOY_BUFFER_SELECT = 10;
+}

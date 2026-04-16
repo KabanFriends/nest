@@ -11,6 +11,7 @@
 #!define    VAR_S_MANAGER_CPU_SUSPEND       ("%var(_id)_mn_cpu_suspend")
 #!define    VAR_S_MANAGER_CPU_TICKS_LEFT    ("%var(_id)_mn_cpu_ticks")
 #!define    VAR_S_MANAGER_BUS_TICKS_LEFT    ("%var(_id)_mn_bus_ticks")
+#!define    VAR_S_MANAGER_NMI_READY         ("%var(_id)_manager_nmi_ready")
 
 #!define    VAR_S_BUS_NMI   ("%var(_id)_bus_nmi")
 
@@ -50,6 +51,12 @@
 #!define    VAR_S_PPU_LATCH         ("%var(_id)_ppu_latch")
 #!define    VAR_S_PPU_MIRRORING     ("%var(_id)_ppu_mirroring")
 #!define    VAR_S_PPU_DIRTY_VRAM    ("%var(_id)_ppu_dirty_vram")
+
+#!define    VAR_S_JOY_STATE_1       ("%var(_id)_joy_state_1")
+#!define    VAR_S_JOY_INDEX_1       ("%var(_id)_joy_index_1")
+#!define    VAR_S_JOY_STATE_2       ("%var(_id)_joy_state_2")
+#!define    VAR_S_JOY_INDEX_2       ("%var(_id)_joy_index_2")
+#!define    VAR_S_JOY_STROBE        ("%var(_id)_joy_strobe")
 
 global VAR_S_DEBUG_LEVEL: num;
 global VAR_S_DEBUG_STEP_MODE: num;
@@ -101,3 +108,9 @@ global VAR_S_PPU_ADDR_TEMP: num;
 global VAR_S_PPU_LATCH: num;
 global VAR_S_PPU_MIRRORING: num;
 global VAR_S_PPU_DIRTY_VRAM: dict;
+
+global VAR_S_JOY_STATE_1: list;
+global VAR_S_JOY_INDEX_1: num;
+global VAR_S_JOY_STATE_2: list;
+global VAR_S_JOY_INDEX_2: num;
+global VAR_S_JOY_STROBE: num;

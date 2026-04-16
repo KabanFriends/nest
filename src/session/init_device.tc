@@ -19,3 +19,4 @@ call s_ram_init(line _id);
 call s_prg_init(line _id);
 call s_ppu_init(line _id);
 call s_cpu_init(line _id);
+call s_joy_init(line _id);

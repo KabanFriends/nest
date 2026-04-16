@@ -1,0 +1,19 @@
+#!import macro/session_vars.tcm
+#!import macro/enum/joy.tcm
+#!import macro/const.tcm
+
+FUNCTION s_joy_read_2;
+PARAM _id: var;
+RETURNS num;
+
+#!expand macro/session_vars.tcm
+
+if (global VAR_S_JOY_INDEX_2 > E_JOY_BUTTON_RIGHT) {
+    return TRUE;
+}
+
+line ret = global VAR_S_JOY_STATE_2[global VAR_S_JOY_INDEX_2];
+if (global VAR_S_JOY_STROBE == FALSE) {
+    global VAR_S_JOY_INDEX_2 += 1;
+}
+return line ret;

@@ -12,9 +12,13 @@ global VAR_P_META_ATTACHED = C_ATTACHED_NONE;
 global VAR_P_INSPECTOR_RAM_PAGE = 0;
 global VAR_P_INSPECTOR_ROM_PAGE = 0;
 global VAR_P_INSPECTOR_VRAM_PAGE = 0;
+global VAR_P_JOY_BUFFER_SELECT = 0;
+global VAR_P_JOY_BUFFER_START = 0;
 
 if (global g_debug_enabled == TRUE) {
     default:SetSidebarVisible(){"Sidebar" = "Enable"};
 }
+
+default:SetHotbarItems(item("stone_button", 64));
 
 start p_runner_loop_process;
