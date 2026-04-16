@@ -21,6 +21,7 @@ if (line carry != 0) {
 }
 
 line a = line a << 1;
+line a = line a & 0xFF;
 if (line old_carry != 0) {
     line a = line a | 0b00000001;
 }

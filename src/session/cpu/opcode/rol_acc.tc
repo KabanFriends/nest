@@ -18,6 +18,7 @@ if (line carry != 0) {
 }
 
 global VAR_S_CPU_REG_A = global VAR_S_CPU_REG_A << 1;
+global VAR_S_CPU_REG_A = global VAR_S_CPU_REG_A & 0xFF;
 if (line old_carry != 0) {
     global VAR_S_CPU_REG_A = global VAR_S_CPU_REG_A | 0b00000001;
 }
