@@ -23,6 +23,8 @@ if (line address <= C_BUS_MEM_PPU_END) {
     # PPU register addresses are mirrored every 8 bytes
     line ppuAddress = line address & C_PPU_WRAP_MASK;
 
+    global VAR_S_PPU_OPEN_BUS = line value;
+
     if (line ppuAddress == 0x2000) {
         #call s_log_debug_low(line _id, s"[BUS] Write to PPU CTRL");
         line prevNmi = global VAR_S_PPU_REG_CTRL & E_PPU_CTRL_FLAG_GENERATE_NMI;

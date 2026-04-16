@@ -42,6 +42,7 @@ global VAR_S_PPU_REG_STATUS = C_PPU_STATUS_RESET;
 global VAR_S_PPU_DATA_BUFFER = 0;
 global VAR_S_PPU_ADDR_TEMP = 0;
 global VAR_S_PPU_LATCH = FALSE;
+global VAR_S_PPU_OPEN_BUS = 0;
 global VAR_S_PPU_MIRRORING = E_PPU_MIRRORING_VERTICAL;
 
 # Fill the variable once to pre-expand its underlying Java HashMap capacity
