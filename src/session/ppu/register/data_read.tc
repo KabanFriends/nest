@@ -21,12 +21,16 @@ ADDR = ADDR & 0x3FFF;
 
 if (line addr <= C_PPU_MEM_CHR_END) {
     line addr += 1;
-    return global VAR_S_PPU_CHR[line addr];
+    line ret = global VAR_S_PPU_DATA_BUFFER;
+    global VAR_S_PPU_DATA_BUFFER = global VAR_S_PPU_CHR[line addr];
+    return line ret;
 }
 if (line addr <= C_PPU_MEM_VRAM_END) {
 #!expand macro/ppu/mirror_vram_address.tcm
     line addr_out += 1;
-    return global VAR_S_PPU_VRAM[line addr_out];
+    line ret = global VAR_S_PPU_DATA_BUFFER;
+    global VAR_S_PPU_DATA_BUFFER = global VAR_S_PPU_VRAM[line addr_out];
+    return line ret;
 }
 if (line addr <= C_PPU_MEM_PALETTE_END) {
     line addr = line addr & 0x1F;

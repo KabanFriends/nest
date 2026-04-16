@@ -47,6 +47,7 @@
 #!define    VAR_S_PPU_REG_SCRL_X    ("%var(_id)_ppu_reg_scrl_x")
 #!define    VAR_S_PPU_REG_SCRL_Y    ("%var(_id)_ppu_reg_scrl_y")
 #!define    VAR_S_PPU_REG_STATUS    ("%var(_id)_ppu_reg_status")
+#!define    VAR_S_PPU_DATA_BUFFER   ("%var(_id)_ppu_data_buffer")
 #!define    VAR_S_PPU_ADDR_TEMP     ("%var(_id)_ppu_addr_temp")
 #!define    VAR_S_PPU_LATCH         ("%var(_id)_ppu_latch")
 #!define    VAR_S_PPU_MIRRORING     ("%var(_id)_ppu_mirroring")
@@ -104,6 +105,7 @@ global VAR_S_PPU_REG_MASK: num;
 global VAR_S_PPU_REG_SCRL_X: num;
 global VAR_S_PPU_REG_SCRL_Y: num;
 global VAR_S_PPU_REG_STATUS: num;
+global VAR_S_PPU_DATA_BUFFER: num;
 global VAR_S_PPU_ADDR_TEMP: num;
 global VAR_S_PPU_LATCH: num;
 global VAR_S_PPU_MIRRORING: num;
