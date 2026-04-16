@@ -12,6 +12,7 @@ PARAM _id: var;
 if (global VAR_S_MANAGER_CPU_SUSPEND == 0) {
     global VAR_S_CPU_CODE = call s_bus_mem_read(line _id, global VAR_S_CPU_REG_PC);
     global VAR_S_CPU_REG_PC += 1;
+    global VAR_S_CPU_REG_PC = global VAR_S_CPU_REG_PC & 0xFFFF;
     global VAR_S_CPU_PC_STATE = global VAR_S_CPU_REG_PC;
 }
 
@@ -42,6 +43,7 @@ if (global VAR_S_CPU_ERROR_STATE != E_CPU_ERROR_STATE_NONE) {
 # If the instruction didn't change the program counter, increment it by the instruction length
 if (global VAR_S_CPU_PC_STATE == global VAR_S_CPU_REG_PC) {
     global VAR_S_CPU_REG_PC += global g_opcode_lengths[line index]: num;
+    global VAR_S_CPU_REG_PC = global VAR_S_CPU_REG_PC & 0xFFFF;
 }
 
 global VAR_S_MANAGER_BUS_TICKS_LEFT += global g_opcode_cycles[line index]: num;

@@ -9,6 +9,7 @@ PARAM addr_mode: var;
 
 line lo = call s_bus_mem_read(line _id, global VAR_S_CPU_REG_PC);
 global VAR_S_CPU_REG_PC += 1;
+global VAR_S_CPU_REG_PC = global VAR_S_CPU_REG_PC & 0xFFFF;
 global VAR_S_CPU_REG_PC = call s_bus_mem_read(line _id, global VAR_S_CPU_REG_PC);
 global VAR_S_CPU_REG_PC = global VAR_S_CPU_REG_PC << 8;
 global VAR_S_CPU_REG_PC = global VAR_S_CPU_REG_PC | line lo;
@@ -29,6 +30,7 @@ if (global VAR_S_CPU_REG_PC & 0x00FF == 0x00FF) {
 } else {
     line lo = call s_bus_mem_read(line _id, global VAR_S_CPU_REG_PC);
     global VAR_S_CPU_REG_PC += 1;
+    global VAR_S_CPU_REG_PC = global VAR_S_CPU_REG_PC & 0xFFFF;
     global VAR_S_CPU_REG_PC = call s_bus_mem_read(line _id, global VAR_S_CPU_REG_PC);
     global VAR_S_CPU_REG_PC = global VAR_S_CPU_REG_PC << 8;
     global VAR_S_CPU_REG_PC = global VAR_S_CPU_REG_PC | line lo;
