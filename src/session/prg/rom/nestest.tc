@@ -8,6 +8,10 @@ line prg = [
     "ROM_PRG0",
     "ROM_PRG1",
     "ROM_PRG2",
+    "ROM_PRG3",
+    "ROM_PRG0",
+    "ROM_PRG1",
+    "ROM_PRG2",
     "ROM_PRG3"
 ];
 
