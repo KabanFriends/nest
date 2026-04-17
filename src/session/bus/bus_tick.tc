@@ -18,8 +18,14 @@ if (line nmiBefore == FALSE) {
         global VAR_S_RUNNER_BUFFER_OAM = global VAR_S_PPU_OAM_DATA;
 
         # Read joypad states for the next frame
-        global VAR_SJOY_STATE_1 = global VAR_S_RUNNER_BUFFER_JOY_1;
-        global VAR_SJOY_STATE_2 = global VAR_S_RUNNER_BUFFER_JOY_2;
+        global VAR_S_JOY_STATE_1 = global VAR_S_RUNNER_BUFFER_JOY_1;
+        global VAR_S_JOY_STATE_2 = global VAR_S_RUNNER_BUFFER_JOY_2;
+
+        # Clear buffered inputs
+        repeat (line index to 8) {
+            global VAR_S_RUNNER_BUFFER_JOY_1[line index] = FALSE;
+            global VAR_S_RUNNER_BUFFER_JOY_2[line index] = FALSE;
+        }
 
         # Copy dirty VRAM addresses and clear current ones
         global VAR_S_RUNNER_BUFFER_DIRTY_VRAM = global VAR_S_PPU_DIRTY_VRAM;

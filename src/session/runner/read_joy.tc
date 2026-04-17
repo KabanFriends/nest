@@ -1,11 +1,13 @@
 #!import macro/enum/joy.tcm
 #!import macro/session_vars.tcm
+#!import macro/player_vars.tcm
 #!import macro/const.tcm
 
 FUNCTION s_runner_read_joy;
 PARAM _id: var;
 
 #!expand macro/session_vars.tcm
+#!expand macro/player_vars.tcm
 
 #!expand macro/select_attached.tcm
 
@@ -13,45 +15,19 @@ line _p = global VAR_S_META_ATTACHED;
 
 if (selected?IsMovementKeyPressed(){"Forward (W)" = "Pressed"}) {
     global VAR_S_RUNNER_BUFFER_JOY_1[E_JOY_BUTTON_UP] = TRUE;
-} else {
-    global VAR_S_RUNNER_BUFFER_JOY_1[E_JOY_BUTTON_UP] = FALSE;
 }
 if (selected?IsMovementKeyPressed(){"Backward (S)" = "Pressed"}) {
     global VAR_S_RUNNER_BUFFER_JOY_1[E_JOY_BUTTON_DOWN] = TRUE;
-} else {
-    global VAR_S_RUNNER_BUFFER_JOY_1[E_JOY_BUTTON_DOWN] = FALSE;
 }
 if (selected?IsMovementKeyPressed(){"Left (A)" = "Pressed"}) {
     global VAR_S_RUNNER_BUFFER_JOY_1[E_JOY_BUTTON_LEFT] = TRUE;
-} else {
-    global VAR_S_RUNNER_BUFFER_JOY_1[E_JOY_BUTTON_LEFT] = FALSE;
 }
 if (selected?IsMovementKeyPressed(){"Right (D)" = "Pressed"}) {
     global VAR_S_RUNNER_BUFFER_JOY_1[E_JOY_BUTTON_RIGHT] = TRUE;
-} else {
-    global VAR_S_RUNNER_BUFFER_JOY_1[E_JOY_BUTTON_RIGHT] = FALSE;
 }
 if (selected?IsMovementKeyPressed(){"Jump (Space)" = "Pressed"}) {
     global VAR_S_RUNNER_BUFFER_JOY_1[E_JOY_BUTTON_A] = TRUE;
-} else {
-    global VAR_S_RUNNER_BUFFER_JOY_1[E_JOY_BUTTON_A] = FALSE;
 }
 if (selected?IsMovementKeyPressed(){"Sneak (Left Shift)" = "Pressed"}) {
     global VAR_S_RUNNER_BUFFER_JOY_1[E_JOY_BUTTON_B] = TRUE;
-} else {
-    global VAR_S_RUNNER_BUFFER_JOY_1[E_JOY_BUTTON_B] = FALSE;
-}
-
-if (global VAR_P_JOY_BUFFER_SELECT > 0) {
-    global VAR_P_JOY_BUFFER_SELECT -= 1;
-    global VAR_S_RUNNER_BUFFER_JOY_1[E_JOY_BUTTON_SELECT] = TRUE;
-} else {
-    global VAR_S_RUNNER_BUFFER_JOY_1[E_JOY_BUTTON_SELECT] = FALSE;
-}
-
-if (global VAR_P_JOY_BUFFER_START > 0) {
-    global VAR_P_JOY_BUFFER_START -= 1;
-    global VAR_S_RUNNER_BUFFER_JOY_1[E_JOY_BUTTON_START] = TRUE;
-} else {
-    global VAR_S_RUNNER_BUFFER_JOY_1[E_JOY_BUTTON_START] = FALSE;
 }

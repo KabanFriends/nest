@@ -1,14 +1,18 @@
-#!import macro/player_vars.tcm
+#!import macro/enum/joy.tcm
 #!import macro/const.tcm
+#!import macro/player_vars.tcm
+#!import macro/session_vars.tcm
 
 PLAYER_EVENT DropItem;
 
 #!expand macro/player_vars.tcm
+#!expand macro/session_vars.tcm
 
 line _p = default.UUID;
 
 game:CancelEvent();
 
-if (global VAR_P_META_ATTACHED != C_ATTACHED_NONE) {
-    global VAR_P_JOY_BUFFER_SELECT = 10;
+if (global VAR_P_META_ATTACHED != NULL) {
+    line _id = global VAR_P_META_ATTACHED;
+    global VAR_S_RUNNER_BUFFER_JOY_1[E_JOY_BUTTON_SELECT] = TRUE;
 }

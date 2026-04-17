@@ -1,0 +1,9 @@
+#!import macro/global_vars.tcm
+
+FUNCTION p_spectate_camera;
+
+#!expand macro/global_vars.tcm
+
+default:SetToSpectatorMode();
+default:SpectateTarget(global g_camera_npc);
+default:SetToAdventureMode();

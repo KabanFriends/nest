@@ -1,7 +1,7 @@
 #!define    FALSE                   0
 #!define    TRUE                    1
 
-#!define    C_ATTACHED_NONE         "null"
+#!define    NULL                    "null"
 
 #!define    C_CPU_STACK             0x0100
 #!define    C_CPU_PC_RESET          0xFFFC

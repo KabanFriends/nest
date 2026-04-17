@@ -10,7 +10,7 @@ if (game?CommandEquals("inspect"){"Check Mode" = "Check beginning"}) {
         return;
     }
 
-    if (global VAR_P_META_ATTACHED == C_ATTACHED_NONE) {
+    if (global VAR_P_META_ATTACHED == NULL) {
         default:SendMessage(s"<red>You are not attached to a session.</red>");
         return;
     }

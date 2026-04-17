@@ -10,5 +10,5 @@ PARAM uuid: str;
 #!expand macro/session_vars.tcm
 #!expand macro/player_vars.tcm
 
-global VAR_S_META_ATTACHED = C_ATTACHED_NONE;
-global VAR_P_META_ATTACHED = C_ATTACHED_NONE;
+global VAR_S_META_ATTACHED = NULL;
+global VAR_P_META_ATTACHED = NULL;
