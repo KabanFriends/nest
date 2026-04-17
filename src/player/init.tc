@@ -19,6 +19,6 @@ if (global g_debug_enabled == TRUE) {
     default:SetSidebarVisible(){"Sidebar" = "Enable"};
 }
 
-default:SetHotbarItems(item("stone_button", 64));
-
-start p_runner_loop_process;
+repeat (line slot to 9) {
+    default:SetItemInSlot(line slot, item("stone_button", 64));
+}

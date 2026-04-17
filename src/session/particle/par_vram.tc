@@ -6,7 +6,7 @@ PARAM addr: num;
 
 #!expand macro/session_vars.tcm
 
-line byte: num = global VAR_S_PPU_VRAM[line addr];
+line byte: num = global VAR_S_RUNNER_BUFFER_VRAM[line addr];
 
 line addr -= 1;
 line c_addr = line addr << 13;

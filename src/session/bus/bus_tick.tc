@@ -7,4 +7,22 @@ PARAM cycles: num;
 
 #!expand macro/session_vars.tcm
 
+line nmiBefore = global VAR_S_BUS_NMI;
+
 call s_ppu_tick(line _id, line cycles * C_PPU_CYCLES_PER_CPU);
+
+if (line nmiBefore == FALSE) {
+    if (global VAR_S_BUS_NMI == TRUE) {
+        # Write the frame data to the buffer
+        global VAR_S_RUNNER_BUFFER_VRAM = global VAR_S_PPU_VRAM;
+        global VAR_S_RUNNER_BUFFER_OAM = global VAR_S_PPU_OAM_DATA;
+
+        # Read joypad states for the next frame
+        global VAR_SJOY_STATE_1 = global VAR_S_RUNNER_BUFFER_JOY_1;
+        global VAR_SJOY_STATE_2 = global VAR_S_RUNNER_BUFFER_JOY_2;
+
+        # Copy dirty VRAM addresses and clear current ones
+        global VAR_S_RUNNER_BUFFER_DIRTY_VRAM = global VAR_S_PPU_DIRTY_VRAM;
+        dict:Clear(global VAR_S_PPU_DIRTY_VRAM);
+    }
+}
