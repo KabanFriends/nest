@@ -1,6 +1,5 @@
 #!define    VAR_S_DEBUG_LEVEL       ("%var(_id)_debug_level")
 #!define    VAR_S_DEBUG_STEP_MODE   ("%var(_id)_debug_step_mode")
-#!define    VAR_S_DEBUG_PAUSE_AT    ("%var(_id)_debug_pause_at")
 
 #!define    VAR_S_TEST_ID   ("%var(_id)_test_id")
 #!define    VAR_S_TEST_NAME ("%var(_id)_test_name")
@@ -8,10 +7,6 @@
 #!define    VAR_S_META_ATTACHED     ("%var(_id)_meta_attached")
 
 #!define    VAR_S_MANAGER_STATE             ("%var(_id)_mn_state")
-#!define    VAR_S_MANAGER_CPU_SUSPEND       ("%var(_id)_mn_cpu_suspend")
-#!define    VAR_S_MANAGER_CPU_TICKS_LEFT    ("%var(_id)_mn_cpu_ticks")
-#!define    VAR_S_MANAGER_BUS_TICKS_LEFT    ("%var(_id)_mn_bus_ticks")
-#!define    VAR_S_MANAGER_NMI_READY         ("%var(_id)_manager_nmi_ready")
 
 #!define    VAR_S_BUS_NMI   ("%var(_id)_bus_nmi")
 
@@ -28,7 +23,6 @@
 #!define    VAR_S_CPU_REG_PC        ("%var(_id)_cpu_reg_pc")
 #!define    VAR_S_CPU_REG_SP        ("%var(_id)_cpu_reg_sp")
 #!define    VAR_S_CPU_REG_P         ("%var(_id)_cpu_reg_p")
-#!define    VAR_S_CPU_TEMP          ("%var(_id)_cpu_temp")
 #!define    VAR_S_CPU_CODE          ("%var(_id)_cpu_code")
 #!define    VAR_S_CPU_PC_STATE      ("%var(_id)_cpu_pc_state")
 #!define    VAR_S_CPU_ERROR_STATE   ("%var(_id)_cpu_error_state")
@@ -61,16 +55,13 @@
 
 global VAR_S_DEBUG_LEVEL: num;
 global VAR_S_DEBUG_STEP_MODE: num;
-global VAR_S_DEBUG_PAUSE_AT: num;
 global VAR_S_TEST_ID: num;
 global VAR_S_TEST_NAME: str;
 
 global VAR_S_META_ATTACHED: str;
 
 global VAR_S_MANAGER_STATE: num;
-global VAR_S_MANAGER_CPU_SUSPEND: num;
-global VAR_S_MANAGER_CPU_TICKS_LEFT: num;
-global VAR_S_MANAGER_BUS_TICKS_LEFT: num;
+
 global VAR_S_BUS_NMI: num;
 
 global VAR_S_RAM: list;
@@ -86,7 +77,6 @@ global VAR_S_CPU_REG_Y: num;
 global VAR_S_CPU_REG_PC: num;
 global VAR_S_CPU_REG_SP: num;
 global VAR_S_CPU_REG_P: num;
-global VAR_S_CPU_TEMP: num;
 global VAR_S_CPU_CODE: num;
 global VAR_S_CPU_PC_STATE: num;
 global VAR_S_CPU_ERROR_STATE: num;

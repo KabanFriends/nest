@@ -13,5 +13,5 @@ PARAM addr_mode: var;
 call s_cpu_u_sub_from_reg_a(line _id, call s_bus_mem_read(line _id, line addr));
 
 if (line page_cross == TRUE) {
-    global VAR_S_MANAGER_BUS_TICKS_LEFT += 1;
+    call s_bus_tick(line _id, 1);
 }

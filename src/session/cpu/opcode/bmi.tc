@@ -7,22 +7,8 @@ PARAM addr_mode: var;
 
 #!expand macro/session_vars.tcm
 
-# Logic flow:
-# 1. Check the branching condition
-# 2. Suspend the CPU to tick bus once
-# 3. After returning from the suspended state, jump to the target address
-# 4. Suspend again (optional if page cross happens)
-
-# flow 1
-if (global VAR_S_MANAGER_CPU_SUSPEND == 0) {
-    line negative = global VAR_S_CPU_REG_P & E_CPU_FLAG_NEGATIVE;
-    if (line negative == 0) {
-        return;
-    }
-
-    global VAR_S_MANAGER_CPU_SUSPEND = 1;
-    global VAR_S_MANAGER_BUS_TICKS_LEFT += 1;
+if (global VAR_S_CPU_REG_P & E_CPU_FLAG_NEGATIVE == 0) {
     return;
 }
 
-#!expand macro/branch_flow.tcm
+#!expand macro/branch.tcm

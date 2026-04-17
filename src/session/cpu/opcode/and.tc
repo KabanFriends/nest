@@ -14,5 +14,5 @@ global VAR_S_CPU_REG_A = global VAR_S_CPU_REG_A & call s_bus_mem_read(line _id, 
 #!expand macro/cpu/flag_zero_negative_with_a.tcm
 
 if (line page_cross == TRUE) {
-    global VAR_S_MANAGER_BUS_TICKS_LEFT += 1;
+    call s_bus_tick(line _id, 1);
 }

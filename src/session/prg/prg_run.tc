@@ -10,4 +10,4 @@ PARAM _id: var;
 global VAR_S_CPU_REG_PC = C_CPU_PC_RESET;
 #!expand macro/util/mem_read_16_jump.tcm
 
-global VAR_S_MANAGER_STATE = E_MANAGER_STATE_BEGIN_LOOP;
+global VAR_S_MANAGER_STATE = E_MANAGER_STATE_RUNNING;

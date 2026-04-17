@@ -1,0 +1,10 @@
+#!import macro/session_vars.tcm
+#!import macro/const.tcm
+
+FUNCTION s_bus_tick;
+PARAM _id: var;
+PARAM cycles: num;
+
+#!expand macro/session_vars.tcm
+
+call s_ppu_tick(line _id, line cycles * C_PPU_CYCLES_PER_CPU);
