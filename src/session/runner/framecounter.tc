@@ -1,0 +1,23 @@
+#!import macro/session_vars.tcm
+
+FUNCTION s_runner_framecounter;
+PARAM _id: var;
+
+#!expand macro/session_vars.tcm
+
+# update every second
+if (global VAR_S_RUNNER_FRAMECOUNTER_TICKS % 20 == 0) {
+    line framesPerTick = global VAR_S_RUNNER_FRAMECOUNTER_DRAWS / 20;
+    line framesPerSecond = global VAR_S_RUNNER_FRAMECOUNTER_DRAWS;
+
+#!expand macro/select_attached.tcm
+    selected:ClearScoreboard();
+    selected:SetSidebarVisible(){"Sidebar" = "Enable"};
+    selected:SetScoreboardDefaultNumberFormat(s""){"Number Format" = "Blank"};
+    selected:SetScoreboardScore("%var(framesPerTick) FPT / %var(framesPerSecond) FPS", 0);
+    select Nothing;
+
+    global VAR_S_RUNNER_FRAMECOUNTER_DRAWS = 0;
+}
+
+global VAR_S_RUNNER_FRAMECOUNTER_TICKS += 1;

@@ -33,6 +33,7 @@ repeat {
 
 for (line sid in global g_active_sessions) {
     call s_runner_send_dirty(line sid);
+    call s_runner_framecounter(line sid);
 }
 
 if (global g_debug_enabled == TRUE) {

@@ -6,6 +6,8 @@
 
 #!define    VAR_S_META_ATTACHED     ("%var(_id)_meta_attached")
 
+#!define    VAR_S_RUNNER_FRAMECOUNTER_TICKS ("%var(_id)_runner_fc_ticks")
+#!define    VAR_S_RUNNER_FRAMECOUNTER_DRAWS ("%var(_id)_runner_fc_draws")
 #!define    VAR_S_RUNNER_BUFFER_JOY_1       ("%var(_id)_runner_buffer_joy_1")
 #!define    VAR_S_RUNNER_BUFFER_JOY_2       ("%var(_id)_runner_buffer_joy_2")
 #!define    VAR_S_RUNNER_BUFFER_VRAM        ("%var(_id)_runner_buffer_vram")
@@ -64,6 +66,8 @@ global VAR_S_DEBUG_STEP_MODE: num;
 global VAR_S_TEST_ID: num;
 global VAR_S_TEST_NAME: str;
 
+global VAR_S_RUNNER_FRAMECOUNTER_TICKS: num;
+global VAR_S_RUNNER_FRAMECOUNTER_DRAWS: num;
 global VAR_S_RUNNER_BUFFER_JOY_1: list;
 global VAR_S_RUNNER_BUFFER_JOY_2: list;
 global VAR_S_RUNNER_BUFFER_VRAM: list;
