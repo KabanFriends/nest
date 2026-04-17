@@ -9,4 +9,4 @@ PARAM _id: var;
 call s_log_debug_high(line _id, s"Running test...");
 
 global VAR_S_CPU_REG_PC = 0x200;
-global VAR_S_MANAGER_STATE = E_MANAGER_STATE_BEGIN_LOOP;
+global VAR_S_MANAGER_STATE = E_MANAGER_STATE_RUNNING;

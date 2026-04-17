@@ -23,5 +23,5 @@ if (line b <= line a) {
 #!expand macro/cpu/flag_zero_negative.tcm
 
 if (line page_cross == TRUE) {
-    global VAR_S_MANAGER_BUS_TICKS_LEFT += 1;
+    call s_bus_tick(line _id, 1);
 }

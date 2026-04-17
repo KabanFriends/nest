@@ -1,8 +1,0 @@
-PROCESS p_runner_loop_process;
-
-line _p = default.UUID;
-
-repeat {
-    call p_runner_loop(line _p);
-    wait(1);
-}

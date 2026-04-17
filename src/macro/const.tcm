@@ -1,7 +1,7 @@
 #!define    FALSE                   0
 #!define    TRUE                    1
 
-#!define    C_ATTACHED_NONE         "null"
+#!define    NULL                    "null"
 
 #!define    C_CPU_STACK             0x0100
 #!define    C_CPU_PC_RESET          0xFFFC
@@ -15,7 +15,7 @@
 #!define    C_ROM_PRG_SIZE          0x8000
 #!define    C_ROM_PRG_PART_SIZE     0x2000
 
-#!define    C_PPU_CYCLES_PER_TICK   3
+#!define    C_PPU_CYCLES_PER_CPU    3
 #!define    C_PPU_CHR_SIZE          0x2000
 #!define    C_PPU_CHR_COUNT         512
 #!define    C_PPU_VRAM_SIZE         0x0800

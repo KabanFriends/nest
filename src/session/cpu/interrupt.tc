@@ -2,11 +2,12 @@
 #!import macro/const.tcm
 #!import macro/session_vars.tcm
 
-FUNCTION s_cpu_interrupt_setup;
+FUNCTION s_cpu_interrupt;
 PARAM _id: var;
 
 #!expand macro/session_vars.tcm
 
+# Push the old PC and P to the stack
 line hi = global VAR_S_CPU_REG_PC >> 8;
 line lo = global VAR_S_CPU_REG_PC & 0xFF;
 
@@ -23,5 +24,15 @@ line a = line a | E_CPU_FLAG_BREAK2;
 
 #!expand macro/cpu/stack_push.tcm
 
+# Set the interrupt disable flag
+# this only lets the program know, the flag itself doesn't do anything
 global VAR_S_CPU_REG_P = global VAR_S_CPU_REG_P | E_CPU_FLAG_INTERRUPT_DISABLE;
-global VAR_S_MANAGER_BUS_TICKS_LEFT += 2;
+
+# Set up the PC to the NMI handler
+line addr = C_CPU_NMI_HANDLER;
+line lo = call s_bus_mem_read(line _id, line addr);
+line addr += 1;
+line addr = line addr & 0xFFFF;
+global VAR_S_CPU_REG_PC = call s_bus_mem_read(line _id, line addr);
+global VAR_S_CPU_REG_PC = global VAR_S_CPU_REG_PC << 8;
+global VAR_S_CPU_REG_PC = global VAR_S_CPU_REG_PC | line lo;

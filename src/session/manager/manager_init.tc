@@ -8,7 +8,3 @@ PARAM _id: var;
 #!expand macro/session_vars.tcm
 
 global VAR_S_MANAGER_STATE = E_MANAGER_STATE_IDLE;
-global VAR_S_MANAGER_CPU_SUSPEND = 0;
-global VAR_S_MANAGER_CPU_TICKS_LEFT = 0;
-global VAR_S_MANAGER_BUS_TICKS_LEFT = 0;
-global VAR_S_MANAGER_NMI_READY = FALSE;

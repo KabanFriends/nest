@@ -1,0 +1,34 @@
+#!import macro/session_vars.tcm
+#!import macro/const.tcm
+
+FUNCTION s_bus_tick;
+PARAM _id: var;
+PARAM cycles: num;
+
+#!expand macro/session_vars.tcm
+
+line nmiBefore = global VAR_S_BUS_NMI;
+
+call s_ppu_tick(line _id, line cycles * C_PPU_CYCLES_PER_CPU);
+
+if (line nmiBefore == FALSE) {
+    if (global VAR_S_BUS_NMI == TRUE) {
+        # Write the frame data to the buffer
+        global VAR_S_RUNNER_BUFFER_VRAM = global VAR_S_PPU_VRAM;
+        global VAR_S_RUNNER_BUFFER_OAM = global VAR_S_PPU_OAM_DATA;
+
+        # Read joypad states for the next frame
+        global VAR_S_JOY_STATE_1 = global VAR_S_RUNNER_BUFFER_JOY_1;
+        global VAR_S_JOY_STATE_2 = global VAR_S_RUNNER_BUFFER_JOY_2;
+
+        # Clear buffered inputs
+        repeat (line index to 8) {
+            global VAR_S_RUNNER_BUFFER_JOY_1[line index] = FALSE;
+            global VAR_S_RUNNER_BUFFER_JOY_2[line index] = FALSE;
+        }
+
+        # Copy dirty VRAM addresses and clear current ones
+        global VAR_S_RUNNER_BUFFER_DIRTY_VRAM = global VAR_S_PPU_DIRTY_VRAM;
+        dict:Clear(global VAR_S_PPU_DIRTY_VRAM);
+    }
+}

@@ -13,6 +13,7 @@ global VAR_S_DEBUG_PAUSE_AT = E_MANAGER_STATE_IDLE;
 
 call s_test_init(line _id);
 call s_meta_init(line _id);
+call s_runner_init(line _id);
 call s_manager_init(line _id);
 call s_bus_init(line _id);
 call s_ram_init(line _id);

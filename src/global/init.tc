@@ -26,11 +26,15 @@ repeat (5000) {
 
 global g_last_session_id = 0;
 global g_active_sessions = [];
-global g_ticks = 0;
 
-global g_runner_location = loc(16, 50, 16, -90, 0);
+global g_camera_location = loc(16, 50, 16, -90, 0);
+global g_camera_npc = NULL;
+
+global g_ticks = 0;
 
 global g_data_particle = par("Flash");
 global g_data_location = loc(16, 63, 16);
+
+call g_spawn_camera_npc;
 
 start g_loop_process;

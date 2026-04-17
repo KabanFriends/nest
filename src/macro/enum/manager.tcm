@@ -1,5 +1,3 @@
 #!define    E_MANAGER_STATE_IDLE        0
-#!define    E_MANAGER_STATE_BEGIN_LOOP  1
-#!define    E_MANAGER_STATE_CHECK_NMI   2
-#!define    E_MANAGER_STATE_CPU_TICK    3
-#!define    E_MANAGER_STATE_BUS_TICK    4
+#!define    E_MANAGER_STATE_PAUSE       1
+#!define    E_MANAGER_STATE_RUNNING     2

@@ -1,0 +1,12 @@
+#!import macro/global_vars.tcm
+
+FUNCTION g_spawn_camera_npc;
+
+#!expand macro/global_vars.tcm
+
+while (!game?ChunkIsLoaded(global g_camera_location)) {
+    wait(1);
+}
+
+game:SpawnMannequin("Jeremaster", global g_camera_location);
+global g_camera_npc = lastEntity.UUID;

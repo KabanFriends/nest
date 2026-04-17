@@ -10,96 +10,26 @@ PARAM _id: var;
 #!expand macro/global_vars.tcm
 #!expand macro/session_vars.tcm
 
-if (global VAR_S_MANAGER_STATE == E_MANAGER_STATE_IDLE) {
+if (global VAR_S_MANAGER_STATE != E_MANAGER_STATE_RUNNING) {
     return;
 }
 
-if (global VAR_S_MANAGER_STATE == E_MANAGER_STATE_BEGIN_LOOP) {
-    global VAR_S_MANAGER_STATE = E_MANAGER_STATE_CHECK_NMI;
-    global VAR_S_MANAGER_CPU_TICKS_LEFT = 1;
-    return;
+call s_cpu_tick(line _id);
+
+# If CPU encountered an error, stop the emulation and run test checks
+if (global VAR_S_CPU_ERROR_STATE != E_CPU_ERROR_STATE_NONE) {
+    global VAR_S_MANAGER_STATE = E_MANAGER_STATE_IDLE;
+    if (global VAR_S_TEST_ID > 0) {
+        call ("s_test_verify_%var(%var(_id)_test_id)")(line result, line _id);
+        call s_test_result(line _id, line result);
+    }
 }
 
-if (global VAR_S_MANAGER_STATE == E_MANAGER_STATE_CHECK_NMI) {
-    if (global VAR_S_BUS_NMI == TRUE) {
-        # After setting up the interrupt, bus tick will be set to 2
-        # (does this mean remaining bus ticks before the interrupt are lost???)
-        call s_cpu_interrupt_setup(line _id);
-        global VAR_S_MANAGER_NMI_READY = TRUE;
-    }
-    # If there are bus ticks left, go tick the bus first
-    if (global VAR_S_MANAGER_BUS_TICKS_LEFT > 0) {
-        global VAR_S_MANAGER_STATE = E_MANAGER_STATE_BUS_TICK;
-        return;
-    }
-    global VAR_S_MANAGER_STATE = E_MANAGER_STATE_CPU_TICK;
-    return;
-}
-
-if (global VAR_S_MANAGER_STATE == E_MANAGER_STATE_CPU_TICK) {
-    if (global VAR_S_MANAGER_CPU_TICKS_LEFT > 0) {
-        call s_cpu_tick(line _id);
-        # Consume a CPU tick if the last instruction didn't suspend
-        if (global VAR_S_MANAGER_CPU_SUSPEND == 0) {
-            global VAR_S_MANAGER_CPU_TICKS_LEFT -= 1;
-        }
-    }
-    global VAR_S_MANAGER_STATE = E_MANAGER_STATE_BUS_TICK;
-    if (global VAR_S_CPU_ERROR_STATE != E_CPU_ERROR_STATE_NONE) {
-        global VAR_S_MANAGER_STATE = E_MANAGER_STATE_IDLE;
-        if (global VAR_S_TEST_ID > 0) {
-            call ("s_test_verify_%var(%var(_id)_test_id)")(line result, line _id);
-            call s_test_result(line _id, line result);
-        }
-    }
-    # If CPU step is ON, put the manager in idle after CPU tick
-    if (global VAR_S_DEBUG_STEP_MODE == E_DEBUG_STEP_MODE_CPU) {
-        if (global VAR_S_MANAGER_CPU_SUSPEND == 0) {
-            global VAR_S_DEBUG_PAUSE_AT = global VAR_S_MANAGER_STATE;
-            global VAR_S_MANAGER_STATE = E_MANAGER_STATE_IDLE;
-            call s_log_debug_high(line _id, s"CPU stepped - <white><click:run_command:@inspect cpu>Click to open inspector</click></white>");
-            line funcName: str = global g_opcode_func_names[global VAR_S_CPU_CODE + 1];
-            line code = call u_num_to_radix(global VAR_S_CPU_CODE);
-            call s_log_debug_high(line _id, s"Executed: <white>%var(funcName) | %var(code)</white>");
-        }
-    }
-    # test
-    if (global VAR_S_CPU_REG_PC == 0x94F7) {
-        if (global VAR_S_MANAGER_CPU_SUSPEND == 0) {
-            global VAR_S_DEBUG_PAUSE_AT = global VAR_S_MANAGER_STATE;
-            global VAR_S_MANAGER_STATE = E_MANAGER_STATE_IDLE;
-            call s_log_debug_high(line _id, s"CPU stepped - <white><click:run_command:@inspect cpu>Click to open inspector</click></white>");
-            line funcName: str = global g_opcode_func_names[global VAR_S_CPU_CODE + 1];
-            line code = call u_num_to_radix(global VAR_S_CPU_CODE);
-            call s_log_debug_high(line _id, s"Executed: <white>%var(funcName) | %var(code)</white>");
-        }
-    }
-    return;
-}
-
-if (global VAR_S_MANAGER_STATE == E_MANAGER_STATE_BUS_TICK) {
-    if (global VAR_S_MANAGER_BUS_TICKS_LEFT > 0) {
-        call s_ppu_tick(line _id);
-        global VAR_S_MANAGER_BUS_TICKS_LEFT -= 1;
-    }
-    # If we're in the interrupt, set up the program counter and go to CPU
-    if (global VAR_S_MANAGER_NMI_READY == TRUE) {
-        global VAR_S_BUS_NMI = FALSE;
-        global VAR_S_MANAGER_NMI_READY = FALSE;
-        global VAR_S_MANAGER_STATE = E_MANAGER_STATE_CPU_TICK;
-        global VAR_S_MANAGER_CPU_TICKS_LEFT = 1;
-        call s_cpu_interrupt_run(line _id);
-        return;
-    }
-    # If CPU is suspended, return immediately to executing the CPU instruction
-    if (global VAR_S_MANAGER_CPU_SUSPEND > 0) {
-        global VAR_S_MANAGER_STATE = E_MANAGER_STATE_CPU_TICK;
-        return;
-    }
-    global VAR_S_MANAGER_STATE = E_MANAGER_STATE_CHECK_NMI;
-    # When we're done ticking the bus, go tick the CPU
-    if (global VAR_S_MANAGER_BUS_TICKS_LEFT == 0) {
-        global VAR_S_MANAGER_CPU_TICKS_LEFT += 1;
-        return;
-    }
+# If CPU step is ON, pause the emulation
+if (global VAR_S_DEBUG_STEP_MODE == E_DEBUG_STEP_MODE_CPU) {
+    global VAR_S_MANAGER_STATE = E_MANAGER_STATE_PAUSE;
+    call s_log_debug_high(line _id, s"CPU stepped - <white><click:run_command:@inspect cpu>Click to open inspector</click></white>");
+    line funcName: str = global g_opcode_func_names[global VAR_S_CPU_CODE + 1];
+    line code = call u_num_to_radix(global VAR_S_CPU_CODE);
+    call s_log_debug_high(line _id, s"Executed: <white>%var(funcName) | %var(code)</white>");
 }

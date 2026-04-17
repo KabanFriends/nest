@@ -4,10 +4,11 @@
 
 FUNCTION s_ppu_tick;
 PARAM _id: var;
+PARAM cycles: num;
 
 #!expand macro/session_vars.tcm
 
-global VAR_S_PPU_CYCLES += C_PPU_CYCLES_PER_TICK;
+global VAR_S_PPU_CYCLES += line cycles;
 
 if (global VAR_S_PPU_CYCLES >= 341) {
     if (global VAR_S_PPU_OAM_DATA[4] == global VAR_S_PPU_SCANLINE) {

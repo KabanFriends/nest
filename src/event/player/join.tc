@@ -1,12 +1,21 @@
+#!import macro/const.tcm
+#!import macro/global_vars.tcm
 #!import macro/session_vars.tcm
 
 PLAYER_EVENT Join;
 
+#!expand macro/global_vars.tcm
 #!expand macro/session_vars.tcm
 
 # Init player
 line _p = default.UUID;
 call p_init(line _p);
+
+while (global g_camera_npc == NULL) {
+    wait(1);
+}
+
+call p_spectate_camera;
 
 wait(2){"Time Unit" = "Seconds"};
 default:SendMessage("Start");
@@ -21,7 +30,7 @@ call s_prg_rom_accuracy(line _id);
 
 call s_prg_run(line _id);
 
-call s_par_send_chr(line _id);
+call s_runner_send_chr(line _id);
 
 # Run tests
 # global VAR_S_TEST_ID = 7;
