@@ -16,6 +16,8 @@ repeat (line index to 8) {
 # TODO: META_ATTACHED should be in here too
 global VAR_S_RUNNER_FRAMECOUNTER_TICKS = 0;
 global VAR_S_RUNNER_FRAMECOUNTER_DRAWS = 0;
+global VAR_S_RUNNER_LAST_OAM = [];
 global VAR_S_RUNNER_BUFFER_VRAM = [];
 global VAR_S_RUNNER_BUFFER_DIRTY_VRAM = {};
 global VAR_S_RUNNER_BUFFER_OAM = [];
+global VAR_S_RUNNER_BUFFER_DIRTY_SPR = {};

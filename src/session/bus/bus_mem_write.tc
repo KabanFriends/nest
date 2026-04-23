@@ -11,6 +11,7 @@ line address: num;
 line value: num;
 
 #!expand macro/session_vars.tcm
+#!expand macro/global_vars.tcm
 
 if (line address <= C_BUS_MEM_RAM_END) {
     # RAM address is mirrored every C_RAM_SIZE bytes
@@ -51,8 +52,12 @@ if (line address <= C_BUS_MEM_PPU_END) {
 
     if (line ppuAddress == 0x2004) {
         #call s_log_debug_low(line _id, s"[BUS] Write to PPU OAM DATA");
-        global VAR_S_PPU_OAM_DATA[global VAR_S_PPU_OAM_ADDR + 1] = line value;
+        if (global VAR_S_PPU_OAM_DATA[global VAR_S_PPU_OAM_ADDR + 1] != line value) {
+            line spriteIndex = num:Round(global VAR_S_PPU_OAM_ADDR / 4){"Round Mode" = "Floor"} + 1;
+            global VAR_S_PPU_DIRTY_SPR[global g_num_to_str[line spriteIndex]] = line spriteIndex;
+        }
         global VAR_S_PPU_OAM_ADDR += 1;
+        global VAR_S_PPU_OAM_DATA[global VAR_S_PPU_OAM_ADDR] = line value;
         global VAR_S_PPU_OAM_ADDR = global VAR_S_PPU_OAM_ADDR & 0xFF;
         return;
     }
@@ -81,8 +86,13 @@ if (line address == 0x4014) {
     line addr = line value << 8;
     line addr = line addr & 0xFFFF;
     repeat (C_PPU_OAM_SIZE) {
-        global VAR_S_PPU_OAM_DATA[global VAR_S_PPU_OAM_ADDR + 1] = call s_bus_mem_read(line _id, line addr);
+        line newValue = call s_bus_mem_read(line _id, line addr);
+        if (global VAR_S_PPU_OAM_DATA[global VAR_S_PPU_OAM_ADDR + 1] != line newValue) {
+            line spriteIndex = num:Round(global VAR_S_PPU_OAM_ADDR / 4){"Round Mode" = "Floor"} + 1;
+            global VAR_S_PPU_DIRTY_SPR[global g_num_to_str[line spriteIndex]] = line spriteIndex;
+        }
         global VAR_S_PPU_OAM_ADDR += 1;
+        global VAR_S_PPU_OAM_DATA[global VAR_S_PPU_OAM_ADDR] = line newValue;
         global VAR_S_PPU_OAM_ADDR = global VAR_S_PPU_OAM_ADDR & 0xFF;
         line addr += 1;
         line addr = line addr & 0xFFFF;

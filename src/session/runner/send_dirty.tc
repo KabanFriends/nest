@@ -14,4 +14,55 @@ for (line _, line addr in global VAR_S_RUNNER_BUFFER_DIRTY_VRAM) {
     selected:DisplayParticleEffect(global g_data_particle, global g_data_location);
 }
 
+loc:SetCoordinate(global g_data_location, C_PAR_OPCODE_OAM){"Coordinate" = "Y"};
+for (line _, line index: num in global VAR_S_RUNNER_BUFFER_DIRTY_SPR) {
+    line addr = (line index - 1) * 4;
+    line sendIndex = (line index - 1) * 2;
+
+    line addr += 1;
+    line ypos = global VAR_S_RUNNER_BUFFER_OAM[line addr];
+    line yposLast = global VAR_S_RUNNER_LAST_OAM[line addr];
+
+    line addr += 1;
+    line tile = global VAR_S_RUNNER_BUFFER_OAM[line addr];
+    line tileLast = global VAR_S_RUNNER_LAST_OAM[line addr];
+
+    line addr += 1;
+    line attr = global VAR_S_RUNNER_BUFFER_OAM[line addr];
+    line attrLast = global VAR_S_RUNNER_LAST_OAM[line addr];
+
+    line addr += 1;
+    line xpos = global VAR_S_RUNNER_BUFFER_OAM[line addr];
+    line xposLast = global VAR_S_RUNNER_LAST_OAM[line addr];
+
+    # Diff check the first part
+    line dirty = FALSE;
+    if (line ypos != line yposLast) {
+        line dirty = TRUE;
+    }
+    if (line xpos != line xposLast) {
+        line dirty = TRUE;
+    }
+
+    if (line dirty == TRUE) {
+        call s_par_oam(line sendIndex, line ypos, line xpos);
+        selected:DisplayParticleEffect(global g_data_particle, global g_data_location);
+    }
+
+    # Diff check the last part
+    line sendIndex += 1;
+    line dirty = FALSE;
+    if (line tile != line tileLast) {
+        line dirty = TRUE;
+    }
+    if (line attr != line attrLast) {
+        line dirty = TRUE;
+    }
+    
+    if (line dirty == TRUE) {
+        call s_par_oam(line sendIndex, line tile, line attr);
+        selected:DisplayParticleEffect(global g_data_particle, global g_data_location);
+    }
+} 
+
 select Nothing;

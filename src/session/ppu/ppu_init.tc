@@ -50,3 +50,9 @@ repeat (line num to C_PPU_VRAM_SIZE) {
     global VAR_S_PPU_DIRTY_VRAM[global g_num_to_str[line num]] = -1;
 }
 dict:Clear(global VAR_S_PPU_DIRTY_VRAM);
+
+global VAR_S_PPU_DIRTY_SPR = {};
+repeat (line num to C_PPU_SPRITE_COUNT) {
+    global VAR_S_PPU_DIRTY_SPR[global g_num_to_str[line num]] = -1;
+}
+dict:Clear(global VAR_S_PPU_DIRTY_SPR);

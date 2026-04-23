@@ -16,7 +16,7 @@ global g_radix_symbols = [
 global g_num_to_str = [];
 global g_str_to_num = {};
 
-line num = 0;
+line num = 1;
 repeat (5000) {
     line str = str:SetToString(line num);
     list:Append(global g_num_to_str, line str);

@@ -1,0 +1,16 @@
+#!import macro/session_vars.tcm
+
+FUNCTION s_par_oam;
+PARAM index: num;
+PARAM data1: num;
+PARAM data2: num;
+
+#!expand macro/session_vars.tcm
+
+line c_index = line index << 17;
+line c_data1 = line data1 << 9;
+line c_data2 = line data2 << 1;
+
+line color = line c_index + line c_data1 + line c_data2;
+
+#!expand macro/make_particle.tcm
