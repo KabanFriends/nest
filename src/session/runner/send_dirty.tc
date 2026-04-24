@@ -68,4 +68,11 @@ if (global VAR_S_RUNNER_BUFFER_META_DIRTY == TRUE) {
     selected:DisplayParticleEffect(global g_data_particle, global g_data_location);
 }
 
+# TODO: this must be optimized to only send when the data actually differs
+loc:SetCoordinate(global g_data_location, C_PAR_OPCODE_SCROLL){"Coordinate" = "Y"};
+if (global VAR_S_RUNNER_BUFFER_SCRL_DIRTY == TRUE) {
+    call s_par_scrl(line _id);
+    selected:DisplayParticleEffect(global g_data_particle, global g_data_location);
+}
+
 select Nothing;

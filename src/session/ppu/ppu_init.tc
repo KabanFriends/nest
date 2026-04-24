@@ -44,6 +44,7 @@ global VAR_S_PPU_ADDR_TEMP = 0;
 global VAR_S_PPU_LATCH = FALSE;
 global VAR_S_PPU_MIRRORING = E_PPU_MIRRORING_VERTICAL;
 global VAR_S_PPU_META_DIRTY = FALSE;
+global VAR_S_PPU_SCRL_DIRTY = FALSE;
 
 # Fill the variable once to pre-expand its underlying Java HashMap capacity
 global VAR_S_PPU_DIRTY_VRAM = {};

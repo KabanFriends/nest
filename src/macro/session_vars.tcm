@@ -17,6 +17,9 @@
 #!define    VAR_S_RUNNER_BUFFER_DIRTY_SPR   ("%var(_id)_runner_buffer_dirty_spr")
 #!define    VAR_S_RUNNER_BUFFER_CTRL        ("%var(_id)_runner_buffer_ctrl")
 #!define    VAR_S_RUNNER_BUFFER_META_DIRTY  ("%var(_id)_runner_buffer_meta_dirty")
+#!define    VAR_S_RUNNER_BUFFER_SCRL_X      ("%var(_id)_runner_buffer_scrl_x")
+#!define    VAR_S_RUNNER_BUFFER_SCRL_Y      ("%var(_id)_runner_buffer_scrl_y")
+#!define    VAR_S_RUNNER_BUFFER_SCRL_DIRTY  ("%var(_id)_runner_buffer_scrl_dirty")
 
 #!define    VAR_S_MANAGER_STATE             ("%var(_id)_mn_state")
 
@@ -60,6 +63,7 @@
 #!define    VAR_S_PPU_DIRTY_VRAM    ("%var(_id)_ppu_dirty_vram")
 #!define    VAR_S_PPU_DIRTY_SPR     ("%var(_id)_ppu_dirty_spr")
 #!define    VAR_S_PPU_META_DIRTY    ("%var(_id)_ppu_meta_dirty")
+#!define    VAR_S_PPU_SCRL_DIRTY    ("%var(_id)_ppu_scrl_dirty")
 
 #!define    VAR_S_JOY_STATE_1       ("%var(_id)_joy_state_1")
 #!define    VAR_S_JOY_INDEX_1       ("%var(_id)_joy_index_1")
@@ -83,6 +87,9 @@ global VAR_S_RUNNER_BUFFER_OAM: list;
 global VAR_S_RUNNER_BUFFER_DIRTY_SPR: dict;
 global VAR_S_RUNNER_BUFFER_CTRL: num;
 global VAR_S_RUNNER_BUFFER_META_DIRTY: num;
+global VAR_S_RUNNER_BUFFER_SCRL_X: num;
+global VAR_S_RUNNER_BUFFER_SCRL_Y: num;
+global VAR_S_RUNNER_BUFFER_SCRL_DIRTY: num;
 
 global VAR_S_META_ATTACHED: str;
 
@@ -128,6 +135,7 @@ global VAR_S_PPU_MIRRORING: num;
 global VAR_S_PPU_DIRTY_VRAM: dict;
 global VAR_S_PPU_DIRTY_SPR: dict;
 global VAR_S_PPU_META_DIRTY: num;
+global VAR_S_PPU_SCRL_DIRTY: num;
 
 global VAR_S_JOY_STATE_1: list;
 global VAR_S_JOY_INDEX_1: num;

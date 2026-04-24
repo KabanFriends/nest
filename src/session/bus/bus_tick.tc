@@ -23,6 +23,11 @@ if (line nmiBefore == FALSE) {
         global VAR_S_RUNNER_BUFFER_CTRL = global VAR_S_PPU_REG_CTRL;
         global VAR_S_RUNNER_BUFFER_META_DIRTY = global VAR_S_PPU_META_DIRTY;
 
+        # Store the PPU SCRL register
+        global VAR_S_RUNNER_BUFFER_SCRL_X = global VAR_S_PPU_REG_SCRL_X;
+        global VAR_S_RUNNER_BUFFER_SCRL_Y = global VAR_S_PPU_REG_SCRL_Y;
+        global VAR_S_RUNNER_BUFFER_SCRL_DIRTY = global VAR_S_PPU_SCRL_DIRTY;
+
         # Write the frame data to the buffer
         global VAR_S_RUNNER_BUFFER_VRAM = global VAR_S_PPU_VRAM;
         global VAR_S_RUNNER_BUFFER_OAM = global VAR_S_PPU_OAM_DATA;
@@ -48,5 +53,8 @@ if (line nmiBefore == FALSE) {
 
         # Reset dirty meta flag
         global VAR_S_PPU_META_DIRTY = FALSE;
+
+        # Reset dirty scroll flag
+        global VAR_S_PPU_SCRL_DIRTY = FALSE;
     }
 }

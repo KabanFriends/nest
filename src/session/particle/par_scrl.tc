@@ -1,0 +1,15 @@
+#!import macro/enum/ppu.tcm
+#!import macro/session_vars.tcm
+
+FUNCTION s_par_scrl;
+PARAM _id: var;
+
+#!expand macro/session_vars.tcm
+
+line c_scrlX = global VAR_S_RUNNER_BUFFER_SCRL_X << 16;
+line c_scrlY = global VAR_S_RUNNER_BUFFER_SCRL_Y << 8;
+line c_nametableBase = (global VAR_S_RUNNER_BUFFER_CTRL & 0b00000011) << 6;
+
+line color = line c_scrlX + line c_scrlY + line c_nametableBase;
+
+#!expand macro/make_particle.tcm
