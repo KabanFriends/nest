@@ -19,21 +19,17 @@ for (line _, line index: num in global VAR_S_RUNNER_BUFFER_DIRTY_SPR) {
     line addr = (line index - 1) * 4;
     line sendIndex = (line index - 1) * 2;
 
-    line addr += 1;
-    line ypos = global VAR_S_RUNNER_BUFFER_OAM[line addr];
-    line yposLast = global VAR_S_RUNNER_LAST_OAM[line addr];
+    line ypos = global VAR_S_RUNNER_BUFFER_OAM[line addr + 1];
+    line yposLast = global VAR_S_RUNNER_LAST_OAM[line addr + 1];
 
-    line addr += 1;
-    line tile = global VAR_S_RUNNER_BUFFER_OAM[line addr];
-    line tileLast = global VAR_S_RUNNER_LAST_OAM[line addr];
+    line tile = global VAR_S_RUNNER_BUFFER_OAM[line addr + 2];
+    line tileLast = global VAR_S_RUNNER_LAST_OAM[line addr + 2];
 
-    line addr += 1;
-    line attr = global VAR_S_RUNNER_BUFFER_OAM[line addr];
-    line attrLast = global VAR_S_RUNNER_LAST_OAM[line addr];
+    line attr = global VAR_S_RUNNER_BUFFER_OAM[line addr + 3];
+    line attrLast = global VAR_S_RUNNER_LAST_OAM[line addr + 3];
 
-    line addr += 1;
-    line xpos = global VAR_S_RUNNER_BUFFER_OAM[line addr];
-    line xposLast = global VAR_S_RUNNER_LAST_OAM[line addr];
+    line xpos = global VAR_S_RUNNER_BUFFER_OAM[line addr + 4];
+    line xposLast = global VAR_S_RUNNER_LAST_OAM[line addr + 4];
 
     # Diff check the first part
     line dirty = FALSE;
@@ -63,6 +59,13 @@ for (line _, line index: num in global VAR_S_RUNNER_BUFFER_DIRTY_SPR) {
         call s_par_oam(line sendIndex, line tile, line attr);
         selected:DisplayParticleEffect(global g_data_particle, global g_data_location);
     }
-} 
+}
+
+# TODO: this must be optimized to only send when the data actually differs
+loc:SetCoordinate(global g_data_location, C_PAR_OPCODE_META){"Coordinate" = "Y"};
+if (global VAR_S_RUNNER_BUFFER_META_DIRTY == TRUE) {
+    call s_par_meta(line _id);
+    selected:DisplayParticleEffect(global g_data_particle, global g_data_location);
+}
 
 select Nothing;

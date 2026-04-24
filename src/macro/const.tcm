@@ -44,6 +44,6 @@
 #!define    C_PAR_OPCODE_NAMETABLE  65
 #!define    C_PAR_OPCODE_BACKDROP   66
 #!define    C_PAR_OPCODE_PALETTE    67
-#!define    C_PAR_OPCODE_FLAGS      68
+#!define    C_PAR_OPCODE_META       68
 #!define    C_PAR_OPCODE_SCROLL     69
 #!define    C_PAR_OPCODE_OAM        70

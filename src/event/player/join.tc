@@ -32,6 +32,11 @@ call s_prg_run(line _id);
 
 call s_runner_send_chr(line _id);
 
+# Send meta to set up mirroring on the client
+loc:SetCoordinate(global g_data_location, C_PAR_OPCODE_META){"Coordinate" = "Y"};
+call s_par_meta(line _id);
+default:DisplayParticleEffect(global g_data_particle, global g_data_location);
+
 # Run tests
 # global VAR_S_TEST_ID = 7;
 

@@ -25,6 +25,10 @@ if (line address <= C_BUS_MEM_PPU_END) {
     line ppuAddress = line address & C_PPU_WRAP_MASK;
 
     if (line ppuAddress == 0x2000) {
+        if (global VAR_S_PPU_REG_CTRL != line value) {
+            global VAR_S_PPU_META_DIRTY = TRUE;
+        }
+
         #call s_log_debug_low(line _id, s"[BUS] Write to PPU CTRL");
         line prevNmi = global VAR_S_PPU_REG_CTRL & E_PPU_CTRL_FLAG_GENERATE_NMI;
         global VAR_S_PPU_REG_CTRL = line value;
