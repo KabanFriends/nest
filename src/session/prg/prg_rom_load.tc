@@ -55,3 +55,6 @@ for (line code: str in line prg) {
         call s_log_error(line _id, s"ROM data overflow! " + call u_num_to_radix(line addr, 4));
     }
 }
+
+# Set mirroring mode
+global VAR_S_PPU_MIRRORING = line mirroring;
