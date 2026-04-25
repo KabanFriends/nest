@@ -15,46 +15,30 @@ if (line nmiBefore == FALSE) {
     if (global VAR_S_BUS_NMI == TRUE) {
         global VAR_S_RUNNER_FRAMECOUNTER_DRAWS += 1;
 
-        # TODO: do this at the MC tick end
-        # Save the last OAM
-        global VAR_S_RUNNER_LAST_OAM = global VAR_S_RUNNER_BUFFER_OAM;
+        # Read joypad states for the next frame
+        global VAR_S_JOY_STATE_1 = global VAR_S_RUNNER_BUFFER_JOY_1;
+        global VAR_S_JOY_STATE_2 = global VAR_S_RUNNER_BUFFER_JOY_2;
 
+        # Move the data of this frame to the buffer
         # Store the PPU CTRL register
         global VAR_S_RUNNER_BUFFER_CTRL = global VAR_S_PPU_REG_CTRL;
-        global VAR_S_RUNNER_BUFFER_META_DIRTY = global VAR_S_PPU_META_DIRTY;
+        global VAR_S_RUNNER_BUFFER_META_DIRTY = global VAR_S_PPU_META_DIRTY | global VAR_S_RUNNER_BUFFER_META_DIRTY;
+        global VAR_S_PPU_META_DIRTY = FALSE;
 
         # Store the PPU SCRL register
         global VAR_S_RUNNER_BUFFER_SCRL_X = global VAR_S_PPU_REG_SCRL_X;
         global VAR_S_RUNNER_BUFFER_SCRL_Y = global VAR_S_PPU_REG_SCRL_Y;
-        global VAR_S_RUNNER_BUFFER_SCRL_DIRTY = global VAR_S_PPU_SCRL_DIRTY;
+        global VAR_S_RUNNER_BUFFER_SCRL_DIRTY = global VAR_S_PPU_SCRL_DIRTY | global VAR_S_RUNNER_BUFFER_SCRL_DIRTY;
+        global VAR_S_PPU_SCRL_DIRTY = FALSE;
 
         # Write the frame data to the buffer
         global VAR_S_RUNNER_BUFFER_VRAM = global VAR_S_PPU_VRAM;
         global VAR_S_RUNNER_BUFFER_OAM = global VAR_S_PPU_OAM_DATA;
 
-        # Read joypad states for the next frame
-        global VAR_S_JOY_STATE_1 = global VAR_S_RUNNER_BUFFER_JOY_1;
-        global VAR_S_JOY_STATE_2 = global VAR_S_RUNNER_BUFFER_JOY_2;
-
-        # Clear buffered inputs
-        repeat (line index to 8) {
-            global VAR_S_RUNNER_BUFFER_JOY_1[line index] = FALSE;
-            global VAR_S_RUNNER_BUFFER_JOY_2[line index] = FALSE;
-        }
-
-        # TODO: clear the dirty addresses at the MC tick end
-        # Copy dirty VRAM addresses and clear current ones
-        global VAR_S_RUNNER_BUFFER_DIRTY_VRAM = global VAR_S_PPU_DIRTY_VRAM;
+        # Copy dirty VRAM and OAM addresses
+        dict:Append(global VAR_S_RUNNER_BUFFER_DIRTY_VRAM, global VAR_S_PPU_DIRTY_VRAM);
+        dict:Append(global VAR_S_RUNNER_BUFFER_DIRTY_SPR, global VAR_S_PPU_DIRTY_SPR);
         dict:Clear(global VAR_S_PPU_DIRTY_VRAM);
-
-        # Copy dirty sprite indexes and clear current ones
-        global VAR_S_RUNNER_BUFFER_DIRTY_SPR = global VAR_S_PPU_DIRTY_SPR;
         dict:Clear(global VAR_S_PPU_DIRTY_SPR);
-
-        # Reset dirty meta flag
-        global VAR_S_PPU_META_DIRTY = FALSE;
-
-        # Reset dirty scroll flag
-        global VAR_S_PPU_SCRL_DIRTY = FALSE;
     }
 }

@@ -1,0 +1,22 @@
+#!import macro/session_vars.tcm
+#!import macro/const.tcm
+
+FUNCTION s_runner_post_tick;
+PARAM _id: var;
+
+#!expand macro/session_vars.tcm
+
+# Save the last OAM
+global VAR_S_RUNNER_LAST_OAM = global VAR_S_RUNNER_BUFFER_OAM;
+
+# Clear dirty addresses and flags
+global VAR_S_RUNNER_BUFFER_META_DIRTY = FALSE;
+global VAR_S_RUNNER_BUFFER_SCRL_DIRTY = FALSE;
+dict:Clear(global VAR_S_RUNNER_BUFFER_DIRTY_VRAM);
+dict:Clear(global VAR_S_RUNNER_BUFFER_DIRTY_SPR);
+
+# Clear buffered inputs
+repeat (line index to 8) {
+    global VAR_S_RUNNER_BUFFER_JOY_1[line index] = FALSE;
+    global VAR_S_RUNNER_BUFFER_JOY_2[line index] = FALSE;
+}

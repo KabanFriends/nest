@@ -25,7 +25,10 @@ if (line address <= C_BUS_MEM_PPU_END) {
     line ppuAddress = line address & C_PPU_WRAP_MASK;
 
     if (line ppuAddress == 0x2000) {
-        if (global VAR_S_PPU_REG_CTRL != line value) {
+        if (global VAR_S_PPU_REG_CTRL & 0b00000011 != line value & 0b00000011) {
+            global VAR_S_PPU_SCRL_DIRTY = TRUE;
+        }
+        if (global VAR_S_PPU_REG_CTRL & 0b00011000 != line value & 0b00011000) {
             global VAR_S_PPU_META_DIRTY = TRUE;
         }
 
