@@ -1,5 +1,7 @@
 > [!CAUTION]
-> Nest is under development! Currently it cannot run any games yet due to the incomplete CPU implementation.
+> Nest is under development!  
+> It can run most NROM games, although with 3-4 FPS on average. Optimizations are planned after the basic implementation completes.  
+> Also, the required client-side resource pack is not included in the repository yet.
 
 # 🪺 Nest
 Nest is an NES (Nintendo Entertainment System) emulator written in [Terracotta](https://owlfroggy.github.io/terracotta-docs/), a programming language that compiles into the block code for the [DiamondFire](https://mcdiamondfire.com/) Minecraft server.
