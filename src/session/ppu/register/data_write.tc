@@ -41,7 +41,7 @@ if (var?IsInRange(line addr, C_PPU_MEM_PALETTE_START, C_PPU_MEM_PALETTE_END)) {
     } else {
         # Index 0 of each palette is not drawn so doesn't need to be sent to the client
         if (line addr % 4 != 0) {
-            line paletteIndex = num:Round(line addr / 4){"Round Mode" = "Ceiling"};
+            line paletteIndex = num:Round(line addr / 4){"Round Mode" = "Floor"};
             line paletteIndex += 1;
             global VAR_S_PPU_PALETTE_DIRTY[global g_num_to_str[line paletteIndex]] = line paletteIndex;
         }
