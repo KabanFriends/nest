@@ -107,6 +107,12 @@ if (line address == 0x4014) {
     return;
 }
 
+if (var?IsInRange(line address, 0x4000, 0x4015)) {
+    # Ignore APU
+    # 0x4014 is OAM DMA but it's handled above
+    return;
+}
+
 if (line address == C_BUS_MEM_JOY1) {
     call s_joy_write(line _id, line value);
     return;

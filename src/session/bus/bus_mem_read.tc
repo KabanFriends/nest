@@ -52,6 +52,11 @@ if (line address >= C_BUS_MEM_PRG_START) {
     }
 }
 
+if (var?IsInRange(line address, 0x4000, 0x4015)) {
+    # Ignore APU
+    return 0;
+}
+
 if (line address == C_BUS_MEM_JOY1) {
     return call s_joy_read_1(line _id);
 }
