@@ -22,6 +22,7 @@
 #!define    C_PPU_OAM_SIZE          0x100
 #!define    C_PPU_SPRITE_COUNT      64       
 #!define    C_PPU_PALETTE_SIZE      0x20
+#!define    C_PPU_PALETTE_COUNT     8
 #!define    C_PPU_WRAP_MASK         0b00100000_00000111
 #!define    C_PPU_MEM_CHR_START     0x0000
 #!define    C_PPU_MEM_CHR_END       0x1FFF

@@ -31,6 +31,14 @@ if (line nmiBefore == FALSE) {
         global VAR_S_RUNNER_BUFFER_SCRL_DIRTY = global VAR_S_PPU_SCRL_DIRTY | global VAR_S_RUNNER_BUFFER_SCRL_DIRTY;
         global VAR_S_PPU_SCRL_DIRTY = FALSE;
 
+        # Store the palette table
+        global VAR_S_RUNNER_BUFFER_PALETTE_TABLE = global VAR_S_PPU_PALETTE_TABLE;
+        dict:Append(global VAR_S_RUNNER_BUFFER_PALETTE_DIRTY, global VAR_S_PPU_PALETTE_DIRTY);
+        dict:Clear(global VAR_S_PPU_PALETTE_DIRTY);
+
+        global VAR_S_RUNNER_BUFFER_BACKDROP_DIRTY = global VAR_S_PPU_BACKDROP_DIRTY | global VAR_S_RUNNER_BUFFER_BACKDROP_DIRTY;
+        global VAR_S_PPU_BACKDROP_DIRTY = FALSE;
+
         # Write the frame data to the buffer
         global VAR_S_RUNNER_BUFFER_VRAM = global VAR_S_PPU_VRAM;
         global VAR_S_RUNNER_BUFFER_OAM = global VAR_S_PPU_OAM_DATA;

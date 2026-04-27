@@ -6,20 +6,23 @@
 
 #!define    VAR_S_META_ATTACHED     ("%var(_id)_meta_attached")
 
-#!define    VAR_S_RUNNER_FRAMECOUNTER_TICKS ("%var(_id)_runner_fc_ticks")
-#!define    VAR_S_RUNNER_FRAMECOUNTER_DRAWS ("%var(_id)_runner_fc_draws")
-#!define    VAR_S_RUNNER_LAST_OAM           ("%var(_id)_runner_last_oam")
-#!define    VAR_S_RUNNER_BUFFER_JOY_1       ("%var(_id)_runner_buffer_joy_1")
-#!define    VAR_S_RUNNER_BUFFER_JOY_2       ("%var(_id)_runner_buffer_joy_2")
-#!define    VAR_S_RUNNER_BUFFER_VRAM        ("%var(_id)_runner_buffer_vram")
-#!define    VAR_S_RUNNER_BUFFER_DIRTY_VRAM  ("%var(_id)_runner_buffer_dirty_vram")
-#!define    VAR_S_RUNNER_BUFFER_OAM         ("%var(_id)_runner_buffer_oam")
-#!define    VAR_S_RUNNER_BUFFER_DIRTY_SPR   ("%var(_id)_runner_buffer_dirty_spr")
-#!define    VAR_S_RUNNER_BUFFER_CTRL        ("%var(_id)_runner_buffer_ctrl")
-#!define    VAR_S_RUNNER_BUFFER_META_DIRTY  ("%var(_id)_runner_buffer_meta_dirty")
-#!define    VAR_S_RUNNER_BUFFER_SCRL_X      ("%var(_id)_runner_buffer_scrl_x")
-#!define    VAR_S_RUNNER_BUFFER_SCRL_Y      ("%var(_id)_runner_buffer_scrl_y")
-#!define    VAR_S_RUNNER_BUFFER_SCRL_DIRTY  ("%var(_id)_runner_buffer_scrl_dirty")
+#!define    VAR_S_RUNNER_FRAMECOUNTER_TICKS     ("%var(_id)_runner_fc_ticks")
+#!define    VAR_S_RUNNER_FRAMECOUNTER_DRAWS     ("%var(_id)_runner_fc_draws")
+#!define    VAR_S_RUNNER_LAST_OAM               ("%var(_id)_runner_last_oam")
+#!define    VAR_S_RUNNER_BUFFER_JOY_1           ("%var(_id)_runner_buffer_joy_1")
+#!define    VAR_S_RUNNER_BUFFER_JOY_2           ("%var(_id)_runner_buffer_joy_2")
+#!define    VAR_S_RUNNER_BUFFER_VRAM            ("%var(_id)_runner_buffer_vram")
+#!define    VAR_S_RUNNER_BUFFER_DIRTY_VRAM      ("%var(_id)_runner_buffer_dirty_vram")
+#!define    VAR_S_RUNNER_BUFFER_OAM             ("%var(_id)_runner_buffer_oam")
+#!define    VAR_S_RUNNER_BUFFER_DIRTY_SPR       ("%var(_id)_runner_buffer_dirty_spr")
+#!define    VAR_S_RUNNER_BUFFER_CTRL            ("%var(_id)_runner_buffer_ctrl")
+#!define    VAR_S_RUNNER_BUFFER_META_DIRTY      ("%var(_id)_runner_buffer_meta_dirty")
+#!define    VAR_S_RUNNER_BUFFER_SCRL_X          ("%var(_id)_runner_buffer_scrl_x")
+#!define    VAR_S_RUNNER_BUFFER_SCRL_Y          ("%var(_id)_runner_buffer_scrl_y")
+#!define    VAR_S_RUNNER_BUFFER_SCRL_DIRTY      ("%var(_id)_runner_buffer_scrl_dirty")
+#!define    VAR_S_RUNNER_BUFFER_PALETTE_TABLE   ("%var(_id)_runner_buffer_palette")
+#!define    VAR_S_RUNNER_BUFFER_PALETTE_DIRTY   ("%var(_id)_runner_buffer_palette_dirty")
+#!define    VAR_S_RUNNER_BUFFER_BACKDROP_DIRTY  ("%var(_id)_runner_buffer_backdrop_dirty")
 
 #!define    VAR_S_MANAGER_STATE             ("%var(_id)_mn_state")
 
@@ -42,28 +45,30 @@
 #!define    VAR_S_CPU_PC_STATE      ("%var(_id)_cpu_pc_state")
 #!define    VAR_S_CPU_ERROR_STATE   ("%var(_id)_cpu_error_state")
 
-#!define    VAR_S_PPU_CYCLES        ("%var(_id)_ppu_cycles")
-#!define    VAR_S_PPU_SCANLINE      ("%var(_id)_ppu_scanline")
-#!define    VAR_S_PPU_CHR           ("%var(_id)_ppu_chr")
-#!define    VAR_S_PPU_VRAM          ("%var(_id)_ppu_vram")
-#!define    VAR_S_PPU_PALETTE_TABLE ("%var(_id)_ppu_pal")
-#!define    VAR_S_PPU_OAM_DATA      ("%var(_id)_ppu_oam")
-#!define    VAR_S_PPU_OAM_ADDR      ("%var(_id)_ppu_oam_addr")
-#!define    VAR_S_PPU_REG_ADDR      ("%var(_id)_ppu_reg_addr")
-#!define    VAR_S_PPU_REG_DATA      ("%var(_id)_ppu_reg_data")
-#!define    VAR_S_PPU_REG_CTRL      ("%var(_id)_ppu_reg_ctrl")
-#!define    VAR_S_PPU_REG_MASK      ("%var(_id)_ppu_reg_mask")
-#!define    VAR_S_PPU_REG_SCRL_X    ("%var(_id)_ppu_reg_scrl_x")
-#!define    VAR_S_PPU_REG_SCRL_Y    ("%var(_id)_ppu_reg_scrl_y")
-#!define    VAR_S_PPU_REG_STATUS    ("%var(_id)_ppu_reg_status")
-#!define    VAR_S_PPU_DATA_BUFFER   ("%var(_id)_ppu_data_buffer")
-#!define    VAR_S_PPU_ADDR_TEMP     ("%var(_id)_ppu_addr_temp")
-#!define    VAR_S_PPU_LATCH         ("%var(_id)_ppu_latch")
-#!define    VAR_S_PPU_MIRRORING     ("%var(_id)_ppu_mirroring")
-#!define    VAR_S_PPU_DIRTY_VRAM    ("%var(_id)_ppu_dirty_vram")
-#!define    VAR_S_PPU_DIRTY_SPR     ("%var(_id)_ppu_dirty_spr")
-#!define    VAR_S_PPU_META_DIRTY    ("%var(_id)_ppu_meta_dirty")
-#!define    VAR_S_PPU_SCRL_DIRTY    ("%var(_id)_ppu_scrl_dirty")
+#!define    VAR_S_PPU_CYCLES            ("%var(_id)_ppu_cycles")
+#!define    VAR_S_PPU_SCANLINE          ("%var(_id)_ppu_scanline")
+#!define    VAR_S_PPU_CHR               ("%var(_id)_ppu_chr")
+#!define    VAR_S_PPU_VRAM              ("%var(_id)_ppu_vram")
+#!define    VAR_S_PPU_PALETTE_TABLE     ("%var(_id)_ppu_pal")
+#!define    VAR_S_PPU_PALETTE_DIRTY     ("%var(_id)_ppu_palette_dirty")
+#!define    VAR_S_PPU_BACKDROP_DIRTY    ("%var(_id)_ppu_backdrop_dirty")
+#!define    VAR_S_PPU_OAM_DATA          ("%var(_id)_ppu_oam")
+#!define    VAR_S_PPU_OAM_ADDR          ("%var(_id)_ppu_oam_addr")
+#!define    VAR_S_PPU_REG_ADDR          ("%var(_id)_ppu_reg_addr")
+#!define    VAR_S_PPU_REG_DATA          ("%var(_id)_ppu_reg_data")
+#!define    VAR_S_PPU_REG_CTRL          ("%var(_id)_ppu_reg_ctrl")
+#!define    VAR_S_PPU_REG_MASK          ("%var(_id)_ppu_reg_mask")
+#!define    VAR_S_PPU_REG_SCRL_X        ("%var(_id)_ppu_reg_scrl_x")
+#!define    VAR_S_PPU_REG_SCRL_Y        ("%var(_id)_ppu_reg_scrl_y")
+#!define    VAR_S_PPU_REG_STATUS        ("%var(_id)_ppu_reg_status")
+#!define    VAR_S_PPU_DATA_BUFFER       ("%var(_id)_ppu_data_buffer")
+#!define    VAR_S_PPU_ADDR_TEMP         ("%var(_id)_ppu_addr_temp")
+#!define    VAR_S_PPU_LATCH             ("%var(_id)_ppu_latch")
+#!define    VAR_S_PPU_MIRRORING         ("%var(_id)_ppu_mirroring")
+#!define    VAR_S_PPU_DIRTY_VRAM        ("%var(_id)_ppu_dirty_vram")
+#!define    VAR_S_PPU_DIRTY_SPR         ("%var(_id)_ppu_dirty_spr")
+#!define    VAR_S_PPU_META_DIRTY        ("%var(_id)_ppu_meta_dirty")
+#!define    VAR_S_PPU_SCRL_DIRTY        ("%var(_id)_ppu_scrl_dirty")
 
 #!define    VAR_S_JOY_STATE_1       ("%var(_id)_joy_state_1")
 #!define    VAR_S_JOY_INDEX_1       ("%var(_id)_joy_index_1")
@@ -90,6 +95,9 @@ global VAR_S_RUNNER_BUFFER_META_DIRTY: num;
 global VAR_S_RUNNER_BUFFER_SCRL_X: num;
 global VAR_S_RUNNER_BUFFER_SCRL_Y: num;
 global VAR_S_RUNNER_BUFFER_SCRL_DIRTY: num;
+global VAR_S_RUNNER_BUFFER_PALETTE_TABLE: list;
+global VAR_S_RUNNER_BUFFER_PALETTE_DIRTY: dict;
+global VAR_S_RUNNER_BUFFER_BACKDROP_DIRTY: num;
 
 global VAR_S_META_ATTACHED: str;
 
@@ -119,6 +127,8 @@ global VAR_S_PPU_SCANLINE: num;
 global VAR_S_PPU_CHR: list;
 global VAR_S_PPU_VRAM: list;
 global VAR_S_PPU_PALETTE_TABLE: list;
+global VAR_S_PPU_PALETTE_DIRTY: dict;
+global VAR_S_PPU_BACKDROP_DIRTY: num;
 global VAR_S_PPU_OAM_DATA: list;
 global VAR_S_PPU_OAM_ADDR: num;
 global VAR_S_PPU_REG_ADDR: num;

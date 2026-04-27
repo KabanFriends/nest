@@ -12,8 +12,10 @@ global VAR_S_RUNNER_LAST_OAM = global VAR_S_RUNNER_BUFFER_OAM;
 # Clear dirty addresses and flags
 global VAR_S_RUNNER_BUFFER_META_DIRTY = FALSE;
 global VAR_S_RUNNER_BUFFER_SCRL_DIRTY = FALSE;
+global VAR_S_RUNNER_BUFFER_BACKDROP_DIRTY = FALSE;
 dict:Clear(global VAR_S_RUNNER_BUFFER_DIRTY_VRAM);
 dict:Clear(global VAR_S_RUNNER_BUFFER_DIRTY_SPR);
+dict:Clear(global VAR_S_RUNNER_BUFFER_PALETTE_DIRTY);
 
 # Clear buffered inputs
 repeat (line index to 8) {

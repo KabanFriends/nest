@@ -61,8 +61,6 @@ for (line _, line index: num in global VAR_S_RUNNER_BUFFER_DIRTY_SPR) {
     }
 }
 
-# TODO: this must be optimized to only send when the data actually differs
-# PS. might not be needed actually
 loc:SetCoordinate(global g_data_location, C_PAR_OPCODE_META){"Coordinate" = "Y"};
 if (global VAR_S_RUNNER_BUFFER_META_DIRTY == TRUE) {
     call s_par_meta(line _id);
@@ -72,6 +70,18 @@ if (global VAR_S_RUNNER_BUFFER_META_DIRTY == TRUE) {
 loc:SetCoordinate(global g_data_location, C_PAR_OPCODE_SCROLL){"Coordinate" = "Y"};
 if (global VAR_S_RUNNER_BUFFER_SCRL_DIRTY == TRUE) {
     call s_par_scrl(line _id);
+    selected:DisplayParticleEffect(global g_data_particle, global g_data_location);
+}
+
+loc:SetCoordinate(global g_data_location, C_PAR_OPCODE_BACKDROP){"Coordinate" = "Y"};
+if (global VAR_S_RUNNER_BUFFER_BACKDROP_DIRTY == TRUE) {
+    call s_par_backdrop(line _id);
+    selected:DisplayParticleEffect(global g_data_particle, global g_data_location);
+}
+
+loc:SetCoordinate(global g_data_location, C_PAR_OPCODE_PALETTE){"Coordinate" = "Y"};
+for (line _, line index: num in global VAR_S_RUNNER_BUFFER_PALETTE_DIRTY) {
+    call s_par_palette(line _id, line index);
     selected:DisplayParticleEffect(global g_data_particle, global g_data_location);
 }
 

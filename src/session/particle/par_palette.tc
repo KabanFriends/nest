@@ -1,0 +1,25 @@
+#!import macro/session_vars.tcm
+#!import macro/const.tcm
+
+FUNCTION s_par_palette;
+PARAM _id: var;
+PARAM index: num;
+
+#!expand macro/session_vars.tcm
+
+# parameter is 1-indexed
+line index -= 1;
+
+# base address in the palette table
+line base = line index * 4;
+line base += 1;
+
+line c_index = line index << 21;
+# skips color 0 (transparent) which is redundant
+line c_col1 = global VAR_S_RUNNER_BUFFER_PALETTE_TABLE[line base + 1]: num << 15;
+line c_col2 = global VAR_S_RUNNER_BUFFER_PALETTE_TABLE[line base + 2]: num << 9;
+line c_col3 = global VAR_S_RUNNER_BUFFER_PALETTE_TABLE[line base + 3]: num << 3;
+
+line color = line c_index + line c_col1 + line c_col2 + line c_col3;
+
+#!expand macro/make_particle.tcm
